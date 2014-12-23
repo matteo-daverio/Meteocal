@@ -11,13 +11,13 @@
             <p:layoutUnit position="north" size="70">
                 MeteoCal <p:spacer width="400" height="10" /> Search:
                 <p:spacer width="15" height="10" />
-                <p:tooltip />
-                <p:inputText title="Insert username you want to search" />
+                <p:inputText id="searchTxt" />
+                <p:watermark for="searchTxt" value="Insert username" />
                 <p:spacer width="350" height="10" />
                 <p:commandButton value="Log in" type="button" 
                                  onclick="PF('dlgLog').show();" />
                 <p:spacer width="10" height="10" />
-                <p:commandButton value="Sign in" type="button" />
+                <p:button value="Sign in" outcome="register" />
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <p:schedule id="schedule" value="#{scheduleBean.model}" 
@@ -33,12 +33,13 @@
         
         
         <p:dialog header="Log in" widgetVar="dlgLog" showEffect="explode" 
-                  hideEffect="bounce" height="100" position="right,top">
-            <h:outputText value="Username: " /> 
-            <p:inputText />
-            <br/>
-            <h:outputText value="Password:   " /> 
-            <p:inputText />
+                  hideEffect="bounce" height="130" position="right,top">
+            <h:panelGrid columns="2">
+                <h:outputText value="Username: " /> 
+                <p:inputText />
+                <h:outputText value="Password: " /> 
+                <p:inputText />
+            </h:panelGrid>
             <br/>
             <p:commandButton value="Log in" type="button" />
         </p:dialog>
