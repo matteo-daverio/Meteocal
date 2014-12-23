@@ -5,7 +5,7 @@
  */
 package MeteoCal.businness.security.control;
 
-import MeteoCal.business.security.entity.User;
+import MeteoCal.business.security.entity.Users;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -28,7 +28,7 @@ public class PasswordEncrypter {
             BigInteger bigInt = new BigInteger(1, hash);
             encPass = bigInt.toString(16);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
         }
         return encPass;
     }
