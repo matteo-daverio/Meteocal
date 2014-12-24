@@ -5,7 +5,6 @@
  */
 package MeteoCal.business.security.entity;
 
-import MeteoCal.businness.security.control.PasswordEncrypter;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.CascadeType;
@@ -31,58 +30,74 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "users")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users1.findAll", query = "SELECT u FROM Users1 u"),
-    @NamedQuery(name = "Users1.findByIdUsers", query = "SELECT u FROM Users1 u WHERE u.users1PK.idUsers = :idUsers"),
-    @NamedQuery(name = "Users1.findByName", query = "SELECT u FROM Users1 u WHERE u.name = :name"),
-    @NamedQuery(name = "Users1.findBySurname", query = "SELECT u FROM Users1 u WHERE u.surname = :surname"),
-    @NamedQuery(name = "Users1.findByMail", query = "SELECT u FROM Users1 u WHERE u.mail = :mail"),
-    @NamedQuery(name = "Users1.findByPsw", query = "SELECT u FROM Users1 u WHERE u.psw = :psw"),
-    @NamedQuery(name = "Users1.findByCalendaridCalendar", query = "SELECT u FROM Users1 u WHERE u.users1PK.calendaridCalendar = :calendaridCalendar")})
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.usersPK.idUsers = :idUsers"),
+    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
+    @NamedQuery(name = "Users.findBySurname", query = "SELECT u FROM Users u WHERE u.surname = :surname"),
+    @NamedQuery(name = "Users.findByMail", query = "SELECT u FROM Users u WHERE u.mail = :mail"),
+    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw"),
+    @NamedQuery(name = "Users.findByCalendaridCalendar", query = "SELECT u FROM Users u WHERE u.usersPK.calendaridCalendar = :calendaridCalendar")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    //ATTRIBUTES
+    
     @EmbeddedId
-    protected UsersPK users1PK;
+    protected UsersPK usersPK;
     @Size(max = 45)
+    
     @Column(name = "name")
     private String name;
     @Size(max = 45)
+    
     @Column(name = "surname")
     private String surname;
     @Size(max = 45)
+    
     @Column(name = "mail")
     private String mail;
     @Size(max = 45)
+    
     @Column(name = "psw")
     private String psw;
-    @ManyToMany(mappedBy = "users1Collection")
-    private Collection<Event> event1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users1")
-    private Collection<Notification> notification1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users1")
-    private Collection<Invitation> invitation1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users1")
-    private Collection<Event> event1Collection1;
+    
+    @ManyToMany(mappedBy = "usersCollection")
+    private Collection<Event> eventCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Notification> notificationCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Invitation> invitationCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Event> eventCollection1;
+    
     @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Calendar calendar1;
+    private Calendar calendar;
 
+    //COSTRUTTORI
+    
     public Users() {
     }
 
-    public Users(UsersPK users1PK) {
-        this.users1PK = users1PK;
+    public Users(UsersPK usersPK) {
+        this.usersPK = usersPK;
     }
 
     public Users(int idUsers, int calendaridCalendar) {
-        this.users1PK = new UsersPK(idUsers, calendaridCalendar);
+        this.usersPK = new UsersPK(idUsers, calendaridCalendar);
     }
 
-    public UsersPK getUsers1PK() {
-        return users1PK;
+    //GETTERS AND SETTERS
+    
+    public UsersPK getUsersPK() {
+        return usersPK;
     }
 
-    public void setUsers1PK(UsersPK users1PK) {
-        this.users1PK = users1PK;
+    public void setUsersPK(UsersPK usersPK) {
+        this.usersPK = usersPK;
     }
 
     public String getName() {
@@ -114,57 +129,57 @@ public class Users implements Serializable {
     }
 
     public void setPsw(String psw) {
-        this.psw = PasswordEncrypter.encryptPassword(psw);
+        this.psw = psw;
     }
 
     @XmlTransient
-    public Collection<Event> getEvent1Collection() {
-        return event1Collection;
+    public Collection<Event> getEventCollection() {
+        return eventCollection;
     }
 
-    public void setEvent1Collection(Collection<Event> event1Collection) {
-        this.event1Collection = event1Collection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotification1Collection() {
-        return notification1Collection;
-    }
-
-    public void setNotification1Collection(Collection<Notification> notification1Collection) {
-        this.notification1Collection = notification1Collection;
+    public void setEventCollection(Collection<Event> eventCollection) {
+        this.eventCollection = eventCollection;
     }
 
     @XmlTransient
-    public Collection<Invitation> getInvitation1Collection() {
-        return invitation1Collection;
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
     }
 
-    public void setInvitation1Collection(Collection<Invitation> invitation1Collection) {
-        this.invitation1Collection = invitation1Collection;
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
     }
 
     @XmlTransient
-    public Collection<Event> getEvent1Collection1() {
-        return event1Collection1;
+    public Collection<Invitation> getInvitationCollection() {
+        return invitationCollection;
     }
 
-    public void setEvent1Collection1(Collection<Event> event1Collection1) {
-        this.event1Collection1 = event1Collection1;
+    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+        this.invitationCollection = invitationCollection;
     }
 
-    public Calendar getCalendar1() {
-        return calendar1;
+    @XmlTransient
+    public Collection<Event> getEventCollection1() {
+        return eventCollection1;
     }
 
-    public void setCalendar1(Calendar calendar1) {
-        this.calendar1 = calendar1;
+    public void setEventCollection1(Collection<Event> eventCollection1) {
+        this.eventCollection1 = eventCollection1;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (users1PK != null ? users1PK.hashCode() : 0);
+        hash += (usersPK != null ? usersPK.hashCode() : 0);
         return hash;
     }
 
@@ -175,7 +190,7 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) object;
-        if ((this.users1PK == null && other.users1PK != null) || (this.users1PK != null && !this.users1PK.equals(other.users1PK))) {
+        if ((this.usersPK == null && other.usersPK != null) || (this.usersPK != null && !this.usersPK.equals(other.usersPK))) {
             return false;
         }
         return true;
@@ -183,7 +198,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Users1[ users1PK=" + users1PK + " ]";
+        return "MeteoCal.business.security.entity.Users[ usersPK=" + usersPK + " ]";
     }
     
 }

@@ -76,7 +76,7 @@ public class EventPK implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Event1PK[ idEvent=" + idEvent + ", usersidUsers=" + usersidUsers + " ]";
+        return "MeteoCal.business.security.entity.EventPK[ idEvent=" + idEvent + ", usersidUsers=" + usersidUsers + " ]";
     }
     
 }

@@ -34,71 +34,90 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "event")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Event1.findAll", query = "SELECT e FROM Event1 e"),
-    @NamedQuery(name = "Event1.findByIdEvent", query = "SELECT e FROM Event1 e WHERE e.event1PK.idEvent = :idEvent"),
-    @NamedQuery(name = "Event1.findByIsPublic", query = "SELECT e FROM Event1 e WHERE e.isPublic = :isPublic"),
-    @NamedQuery(name = "Event1.findByWhere", query = "SELECT e FROM Event1 e WHERE e.where = :where"),
-    @NamedQuery(name = "Event1.findByIsOutdoor", query = "SELECT e FROM Event1 e WHERE e.isOutdoor = :isOutdoor"),
-    @NamedQuery(name = "Event1.findByWeather", query = "SELECT e FROM Event1 e WHERE e.weather = :weather"),
-    @NamedQuery(name = "Event1.findByStartTime", query = "SELECT e FROM Event1 e WHERE e.startTime = :startTime"),
-    @NamedQuery(name = "Event1.findByEndTime", query = "SELECT e FROM Event1 e WHERE e.endTime = :endTime"),
-    @NamedQuery(name = "Event1.findByDate", query = "SELECT e FROM Event1 e WHERE e.date = :date"),
-    @NamedQuery(name = "Event1.findByUsersidUsers", query = "SELECT e FROM Event1 e WHERE e.event1PK.usersidUsers = :usersidUsers")})
+    @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),
+    @NamedQuery(name = "Event.findByIdEvent", query = "SELECT e FROM Event e WHERE e.eventPK.idEvent = :idEvent"),
+    @NamedQuery(name = "Event.findByIsPublic", query = "SELECT e FROM Event e WHERE e.isPublic = :isPublic"),
+    @NamedQuery(name = "Event.findByWhere", query = "SELECT e FROM Event e WHERE e.where = :where"),
+    @NamedQuery(name = "Event.findByIsOutdoor", query = "SELECT e FROM Event e WHERE e.isOutdoor = :isOutdoor"),
+    @NamedQuery(name = "Event.findByWeather", query = "SELECT e FROM Event e WHERE e.weather = :weather"),
+    @NamedQuery(name = "Event.findByStartTime", query = "SELECT e FROM Event e WHERE e.startTime = :startTime"),
+    @NamedQuery(name = "Event.findByEndTime", query = "SELECT e FROM Event e WHERE e.endTime = :endTime"),
+    @NamedQuery(name = "Event.findByDate", query = "SELECT e FROM Event e WHERE e.date = :date"),
+    @NamedQuery(name = "Event.findByUsersidUsers", query = "SELECT e FROM Event e WHERE e.eventPK.usersidUsers = :usersidUsers")})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    //ATTRIBUTES
+    
     @EmbeddedId
-    protected EventPK event1PK;
+    protected EventPK eventPK;
+    
     @Column(name = "isPublic")
     private Boolean isPublic;
+    
     @Size(max = 45)
     @Column(name = "where")
     private String where;
+    
     @Column(name = "isOutdoor")
     private Boolean isOutdoor;
+    
     @Size(max = 45)
     @Column(name = "weather")
     private String weather;
+    
     @Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
+    
     @Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @JoinTable(name = "participation", joinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")}, inverseJoinColumns = {
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")})
     @ManyToMany
-    private Collection<Users> users1Collection;
-    @ManyToMany(mappedBy = "event1Collection")
-    private Collection<Calendar> calendar1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event1")
-    private Collection<Notification> notification1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event1")
-    private Collection<Invitation> invitation1Collection;
+    private Collection<Users> usersCollection;
+    
+    @ManyToMany(mappedBy = "eventCollection")
+    private Collection<Calendar> calendarCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private Collection<Notification> notificationCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private Collection<Invitation> invitationCollection;
+    
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Users users1;
+    private Users users;
 
+    //COSTRUTTORI
+    
     public Event() {
     }
 
-    public Event(EventPK event1PK) {
-        this.event1PK = event1PK;
+    public Event(EventPK eventPK) {
+        this.eventPK = eventPK;
     }
 
     public Event(int idEvent, int usersidUsers) {
-        this.event1PK = new EventPK(idEvent, usersidUsers);
+        this.eventPK = new EventPK(idEvent, usersidUsers);
     }
 
-    public EventPK getEvent1PK() {
-        return event1PK;
+    //GETTERS AND SETTERS
+    
+    public EventPK getEventPK() {
+        return eventPK;
     }
 
-    public void setEvent1PK(EventPK event1PK) {
-        this.event1PK = event1PK;
+    public void setEventPK(EventPK eventPK) {
+        this.eventPK = eventPK;
     }
 
     public Boolean getIsPublic() {
@@ -158,53 +177,53 @@ public class Event implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Users> getUsers1Collection() {
-        return users1Collection;
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
     }
 
-    public void setUsers1Collection(Collection<Users> users1Collection) {
-        this.users1Collection = users1Collection;
-    }
-
-    @XmlTransient
-    public Collection<Calendar> getCalendar1Collection() {
-        return calendar1Collection;
-    }
-
-    public void setCalendar1Collection(Collection<Calendar> calendar1Collection) {
-        this.calendar1Collection = calendar1Collection;
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @XmlTransient
-    public Collection<Notification> getNotification1Collection() {
-        return notification1Collection;
+    public Collection<Calendar> getCalendarCollection() {
+        return calendarCollection;
     }
 
-    public void setNotification1Collection(Collection<Notification> notification1Collection) {
-        this.notification1Collection = notification1Collection;
+    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
+        this.calendarCollection = calendarCollection;
     }
 
     @XmlTransient
-    public Collection<Invitation> getInvitation1Collection() {
-        return invitation1Collection;
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
     }
 
-    public void setInvitation1Collection(Collection<Invitation> invitation1Collection) {
-        this.invitation1Collection = invitation1Collection;
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
     }
 
-    public Users getUsers1() {
-        return users1;
+    @XmlTransient
+    public Collection<Invitation> getInvitationCollection() {
+        return invitationCollection;
     }
 
-    public void setUsers1(Users users1) {
-        this.users1 = users1;
+    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+        this.invitationCollection = invitationCollection;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (event1PK != null ? event1PK.hashCode() : 0);
+        hash += (eventPK != null ? eventPK.hashCode() : 0);
         return hash;
     }
 
@@ -215,7 +234,7 @@ public class Event implements Serializable {
             return false;
         }
         Event other = (Event) object;
-        if ((this.event1PK == null && other.event1PK != null) || (this.event1PK != null && !this.event1PK.equals(other.event1PK))) {
+        if ((this.eventPK == null && other.eventPK != null) || (this.eventPK != null && !this.eventPK.equals(other.eventPK))) {
             return false;
         }
         return true;
@@ -223,7 +242,7 @@ public class Event implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Event1[ event1PK=" + event1PK + " ]";
+        return "MeteoCal.business.security.entity.Event[ eventPK=" + eventPK + " ]";
     }
     
 }

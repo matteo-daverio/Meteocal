@@ -127,7 +127,7 @@ public class NotificationPK implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Notification1PK[ idNotification=" + idNotification + ", usersidUsers=" + usersidUsers + ", usersCalendaridCalendar=" + usersCalendaridCalendar + ", eventidEvent=" + eventidEvent + ", eventUsersidUsers=" + eventUsersidUsers + " ]";
+        return "MeteoCal.business.security.entity.NotificationPK[ idNotification=" + idNotification + ", usersidUsers=" + usersidUsers + ", usersCalendaridCalendar=" + usersCalendaridCalendar + ", eventidEvent=" + eventidEvent + ", eventUsersidUsers=" + eventUsersidUsers + " ]";
     }
     
 }

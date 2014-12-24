@@ -31,27 +31,35 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "calendar")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Calendar1.findAll", query = "SELECT c FROM Calendar1 c"),
-    @NamedQuery(name = "Calendar1.findByIdCalendar", query = "SELECT c FROM Calendar1 c WHERE c.idCalendar = :idCalendar"),
-    @NamedQuery(name = "Calendar1.findByIsPublic", query = "SELECT c FROM Calendar1 c WHERE c.isPublic = :isPublic")})
+    @NamedQuery(name = "Calendar.findAll", query = "SELECT c FROM Calendar c"),
+    @NamedQuery(name = "Calendar.findByIdCalendar", query = "SELECT c FROM Calendar c WHERE c.idCalendar = :idCalendar"),
+    @NamedQuery(name = "Calendar.findByIsPublic", query = "SELECT c FROM Calendar c WHERE c.isPublic = :isPublic")})
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    //ATTRIBUTES
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idCalendar")
     private Integer idCalendar;
+    
     @Column(name = "isPublic")
     private Boolean isPublic;
+    
     @JoinTable(name = "event_has_calendar", joinColumns = {
         @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")}, inverseJoinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent"),
         @JoinColumn(name = "Event_Users_idUsers", referencedColumnName = "Users_idUsers")})
     @ManyToMany
-    private Collection<Event> event1Collection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendar1")
-    private Collection<Users> users1Collection;
+    private Collection<Event> eventCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendar")
+    private Collection<Users> usersCollection;
 
+    //COSTRUTTORI
+    
     public Calendar() {
     }
 
@@ -59,6 +67,8 @@ public class Calendar implements Serializable {
         this.idCalendar = idCalendar;
     }
 
+    //GETTERS AND SETTERS
+    
     public Integer getIdCalendar() {
         return idCalendar;
     }
@@ -76,21 +86,21 @@ public class Calendar implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Event> getEvent1Collection() {
-        return event1Collection;
+    public Collection<Event> getEventCollection() {
+        return eventCollection;
     }
 
-    public void setEvent1Collection(Collection<Event> event1Collection) {
-        this.event1Collection = event1Collection;
+    public void setEventCollection(Collection<Event> eventCollection) {
+        this.eventCollection = eventCollection;
     }
 
     @XmlTransient
-    public Collection<Users> getUsers1Collection() {
-        return users1Collection;
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
     }
 
-    public void setUsers1Collection(Collection<Users> users1Collection) {
-        this.users1Collection = users1Collection;
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @Override
@@ -115,7 +125,7 @@ public class Calendar implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Calendar1[ idCalendar=" + idCalendar + " ]";
+        return "MeteoCal.business.security.entity.Calendar[ idCalendar=" + idCalendar + " ]";
     }
     
 }

@@ -76,7 +76,7 @@ public class UsersPK implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Users1PK[ idUsers=" + idUsers + ", calendaridCalendar=" + calendaridCalendar + " ]";
+        return "MeteoCal.business.security.entity.UsersPK[ idUsers=" + idUsers + ", calendaridCalendar=" + calendaridCalendar + " ]";
     }
     
 }

@@ -29,51 +29,61 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "invitation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Invitation1.findAll", query = "SELECT i FROM Invitation1 i"),
-    @NamedQuery(name = "Invitation1.findByIdNotification", query = "SELECT i FROM Invitation1 i WHERE i.invitation1PK.idNotification = :idNotification"),
-    @NamedQuery(name = "Invitation1.findByDate", query = "SELECT i FROM Invitation1 i WHERE i.date = :date"),
-    @NamedQuery(name = "Invitation1.findByUsersidUsers", query = "SELECT i FROM Invitation1 i WHERE i.invitation1PK.usersidUsers = :usersidUsers"),
-    @NamedQuery(name = "Invitation1.findByUsersCalendaridCalendar", query = "SELECT i FROM Invitation1 i WHERE i.invitation1PK.usersCalendaridCalendar = :usersCalendaridCalendar"),
-    @NamedQuery(name = "Invitation1.findByEventidEvent", query = "SELECT i FROM Invitation1 i WHERE i.invitation1PK.eventidEvent = :eventidEvent"),
-    @NamedQuery(name = "Invitation1.findByEventUsersidUsers", query = "SELECT i FROM Invitation1 i WHERE i.invitation1PK.eventUsersidUsers = :eventUsersidUsers")})
+    @NamedQuery(name = "Invitation.findAll", query = "SELECT i FROM Invitation i"),
+    @NamedQuery(name = "Invitation.findByIdNotification", query = "SELECT i FROM Invitation i WHERE i.invitationPK.idNotification = :idNotification"),
+    @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date"),
+    @NamedQuery(name = "Invitation.findByUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.invitationPK.usersidUsers = :usersidUsers"),
+    @NamedQuery(name = "Invitation.findByUsersCalendaridCalendar", query = "SELECT i FROM Invitation i WHERE i.invitationPK.usersCalendaridCalendar = :usersCalendaridCalendar"),
+    @NamedQuery(name = "Invitation.findByEventidEvent", query = "SELECT i FROM Invitation i WHERE i.invitationPK.eventidEvent = :eventidEvent"),
+    @NamedQuery(name = "Invitation.findByEventUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.invitationPK.eventUsersidUsers = :eventUsersidUsers")})
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    //ATTRIBUTES
     @EmbeddedId
-    protected InvitationPK invitation1PK;
+    protected InvitationPK invitationPK;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @Lob
     @Column(name = "text")
     private byte[] text;
+    
     @JoinColumns({
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent", insertable = false, updatable = false),
         @JoinColumn(name = "Event_Users_idUsers", referencedColumnName = "Users_idUsers", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Event event1;
+    private Event event;
+    
     @JoinColumns({
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers", insertable = false, updatable = false),
         @JoinColumn(name = "Users_Calendar_idCalendar", referencedColumnName = "Calendar_idCalendar", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Users users1;
+    private Users users;
 
+    //COSTRUTTORI
+    
     public Invitation() {
     }
 
-    public Invitation(InvitationPK invitation1PK) {
-        this.invitation1PK = invitation1PK;
+    public Invitation(InvitationPK invitationPK) {
+        this.invitationPK = invitationPK;
     }
 
     public Invitation(int idNotification, int usersidUsers, int usersCalendaridCalendar, int eventidEvent, int eventUsersidUsers) {
-        this.invitation1PK = new InvitationPK(idNotification, usersidUsers, usersCalendaridCalendar, eventidEvent, eventUsersidUsers);
+        this.invitationPK = new InvitationPK(idNotification, usersidUsers, usersCalendaridCalendar, eventidEvent, eventUsersidUsers);
     }
 
-    public InvitationPK getInvitation1PK() {
-        return invitation1PK;
+    //GETTERS AND SETTERS
+    
+    public InvitationPK getInvitationPK() {
+        return invitationPK;
     }
 
-    public void setInvitation1PK(InvitationPK invitation1PK) {
-        this.invitation1PK = invitation1PK;
+    public void setInvitationPK(InvitationPK invitationPK) {
+        this.invitationPK = invitationPK;
     }
 
     public Date getDate() {
@@ -92,26 +102,26 @@ public class Invitation implements Serializable {
         this.text = text;
     }
 
-    public Event getEvent1() {
-        return event1;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEvent1(Event event1) {
-        this.event1 = event1;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public Users getUsers1() {
-        return users1;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUsers1(Users users1) {
-        this.users1 = users1;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (invitation1PK != null ? invitation1PK.hashCode() : 0);
+        hash += (invitationPK != null ? invitationPK.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +132,7 @@ public class Invitation implements Serializable {
             return false;
         }
         Invitation other = (Invitation) object;
-        if ((this.invitation1PK == null && other.invitation1PK != null) || (this.invitation1PK != null && !this.invitation1PK.equals(other.invitation1PK))) {
+        if ((this.invitationPK == null && other.invitationPK != null) || (this.invitationPK != null && !this.invitationPK.equals(other.invitationPK))) {
             return false;
         }
         return true;
@@ -130,7 +140,7 @@ public class Invitation implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Invitation1[ invitation1PK=" + invitation1PK + " ]";
+        return "MeteoCal.business.security.entity.Invitation[ invitationPK=" + invitationPK + " ]";
     }
     
 }
