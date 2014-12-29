@@ -8,16 +8,22 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="70">
-                MeteoCal <p:spacer width="400" height="10" /> Search:
+            <p:layoutUnit position="north" size="80">
+                <div class="content">
+                <span class="siteName"> MeteoCal </span> 
+                <p:spacer width="240" height="10" /> SeaRch:
                 <p:spacer width="15" height="10" />
-                <p:inputText id="searchTxt" />
+                <p:autoComplete id="searchTxt" value="#{autoCompleteView.theme}" 
+                                completeMethod="#{autoCompleteView.completeTheme}"
+                                var="theme" itemLabel="#{theme.displayName}" 
+                                itemValue="#{theme}" converter="themeConverter" forceSelection="true" />
                 <p:watermark for="searchTxt" value="Insert username" />
-                <p:spacer width="350" height="10" />
+                <p:spacer width="270" height="10" />
                 <p:commandButton value="Log in" type="button" 
                                  onclick="PF('dlgLog').show();" />
                 <p:spacer width="10" height="10" />
                 <p:button value="Sign in" outcome="register" />
+                </div>
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <p:schedule id="schedule" value="#{scheduleBean.model}" 
@@ -50,6 +56,27 @@
             .schedule{
                 width:available;
             }
+            
+            .content{
+                text-align: center;
+                color: #444;
+                font-family:"Helvetica Neue",Helvetica,Arial;
+            }
+            
+            .siteName:before{
+                content:"MeteoCal";
+                position:absolute;
+                color: rgba(0,0,0,.3)
+            }
+
+            .siteName {
+                margin: 10px auto;
+                text-align: center;
+                text-shadow: 1px -1px 0px rgba(255,255,255,0.1), 1px -1px 0px rgba(0,0,0,0.4);
+                color: #444;
+                font: 700 50px 'Helvetica Neue';
+            }
+            
         </style>
         
         
