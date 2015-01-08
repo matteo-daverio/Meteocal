@@ -7,17 +7,16 @@ package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,57 +28,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
-    @NamedQuery(name = "Notification.findByIdNotification", query = "SELECT n FROM Notification n WHERE n.notificationPK.idNotification = :idNotification"),
+    @NamedQuery(name = "Notification.findByIdNotification", query = "SELECT n FROM Notification n WHERE n.idNotification = :idNotification"),
     @NamedQuery(name = "Notification.findByDate", query = "SELECT n FROM Notification n WHERE n.date = :date"),
-    @NamedQuery(name = "Notification.findByUsersidUsers", query = "SELECT n FROM Notification n WHERE n.notificationPK.usersidUsers = :usersidUsers"),
-    @NamedQuery(name = "Notification.findByUsersCalendaridCalendar", query = "SELECT n FROM Notification n WHERE n.notificationPK.usersCalendaridCalendar = :usersCalendaridCalendar"),
-    @NamedQuery(name = "Notification.findByEventidEvent", query = "SELECT n FROM Notification n WHERE n.notificationPK.eventidEvent = :eventidEvent"),
-    @NamedQuery(name = "Notification.findByEventUsersidUsers", query = "SELECT n FROM Notification n WHERE n.notificationPK.eventUsersidUsers = :eventUsersidUsers")})
+    @NamedQuery(name = "Notification.findByUsersidUsers", query = "SELECT n FROM Notification n WHERE n.usersidUsers = :usersidUsers"),
+    @NamedQuery(name = "Notification.findByEventidEvent", query = "SELECT n FROM Notification n WHERE n.eventidEvent = :eventidEvent")})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    //ATTRIBUTES
-    
-    @EmbeddedId
-    protected NotificationPK notificationPK;
-    
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idNotification")
+    private Integer idNotification;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
-    @JoinColumns({
-        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent", insertable = false, updatable = false),
-        @JoinColumn(name = "Event_Users_idUsers", referencedColumnName = "Users_idUsers", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Event event;
-    
-    @JoinColumns({
-        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers", insertable = false, updatable = false),
-        @JoinColumn(name = "Users_Calendar_idCalendar", referencedColumnName = "Calendar_idCalendar", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Users users;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Users_idUsers")
+    private int usersidUsers;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Event_idEvent")
+    private int eventidEvent;
 
-    //COSTRUTTORI
-    
     public Notification() {
     }
 
-    public Notification(NotificationPK notificationPK) {
-        this.notificationPK = notificationPK;
+    public Notification(Integer idNotification) {
+        this.idNotification = idNotification;
     }
 
-    public Notification(int idNotification, int usersidUsers, int usersCalendaridCalendar, int eventidEvent, int eventUsersidUsers) {
-        this.notificationPK = new NotificationPK(idNotification, usersidUsers, usersCalendaridCalendar, eventidEvent, eventUsersidUsers);
+    public Notification(Integer idNotification, int usersidUsers, int eventidEvent) {
+        this.idNotification = idNotification;
+        this.usersidUsers = usersidUsers;
+        this.eventidEvent = eventidEvent;
     }
 
-    //GETTERS AND SETTERS
-    
-    public NotificationPK getNotificationPK() {
-        return notificationPK;
+    public Integer getIdNotification() {
+        return idNotification;
     }
 
-    public void setNotificationPK(NotificationPK notificationPK) {
-        this.notificationPK = notificationPK;
+    public void setIdNotification(Integer idNotification) {
+        this.idNotification = idNotification;
     }
 
     public Date getDate() {
@@ -90,26 +80,26 @@ public class Notification implements Serializable {
         this.date = date;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getUsersidUsers() {
+        return usersidUsers;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setUsersidUsers(int usersidUsers) {
+        this.usersidUsers = usersidUsers;
     }
 
-    public Users getUsers() {
-        return users;
+    public int getEventidEvent() {
+        return eventidEvent;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setEventidEvent(int eventidEvent) {
+        this.eventidEvent = eventidEvent;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (notificationPK != null ? notificationPK.hashCode() : 0);
+        hash += (idNotification != null ? idNotification.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +110,7 @@ public class Notification implements Serializable {
             return false;
         }
         Notification other = (Notification) object;
-        if ((this.notificationPK == null && other.notificationPK != null) || (this.notificationPK != null && !this.notificationPK.equals(other.notificationPK))) {
+        if ((this.idNotification == null && other.idNotification != null) || (this.idNotification != null && !this.idNotification.equals(other.idNotification))) {
             return false;
         }
         return true;
@@ -128,7 +118,7 @@ public class Notification implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Notification[ notificationPK=" + notificationPK + " ]";
+        return "MeteoCal.business.security.entity.Notification[ idNotification=" + idNotification + " ]";
     }
     
 }

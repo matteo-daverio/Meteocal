@@ -7,10 +7,11 @@ package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -31,75 +33,51 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.usersPK.idUsers = :idUsers"),
+    @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.idUsers = :idUsers"),
     @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
     @NamedQuery(name = "Users.findBySurname", query = "SELECT u FROM Users u WHERE u.surname = :surname"),
     @NamedQuery(name = "Users.findByMail", query = "SELECT u FROM Users u WHERE u.mail = :mail"),
-    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw"),
-    @NamedQuery(name = "Users.findByCalendaridCalendar", query = "SELECT u FROM Users u WHERE u.usersPK.calendaridCalendar = :calendaridCalendar")})
+    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    
-    
-    //ATTRIBUTES
-    
-    @EmbeddedId
-    protected UsersPK usersPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idUsers")
+    private Integer idUsers;
     @Size(max = 45)
-    
     @Column(name = "name")
     private String name;
     @Size(max = 45)
-    
     @Column(name = "surname")
     private String surname;
     @Size(max = 45)
-    
     @Column(name = "mail")
     private String mail;
     @Size(max = 45)
-    
     @Column(name = "psw")
     private String psw;
-    
     @ManyToMany(mappedBy = "usersCollection")
     private Collection<Event> eventCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private Collection<Notification> notificationCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private Collection<Invitation> invitationCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
     private Collection<Event> eventCollection1;
-    
-    @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar", insertable = false, updatable = false)
+    @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
     @ManyToOne(optional = false)
-    private Calendar calendar;
+    private Calendar calendaridCalendar;
 
-    //COSTRUTTORI
-    
     public Users() {
     }
 
-    public Users(UsersPK usersPK) {
-        this.usersPK = usersPK;
+    public Users(Integer idUsers) {
+        this.idUsers = idUsers;
     }
 
-    public Users(int idUsers, int calendaridCalendar) {
-        this.usersPK = new UsersPK(idUsers, calendaridCalendar);
+    public Integer getIdUsers() {
+        return idUsers;
     }
 
-    //GETTERS AND SETTERS
-    
-    public UsersPK getUsersPK() {
-        return usersPK;
-    }
-
-    public void setUsersPK(UsersPK usersPK) {
-        this.usersPK = usersPK;
+    public void setIdUsers(Integer idUsers) {
+        this.idUsers = idUsers;
     }
 
     public String getName() {
@@ -144,24 +122,6 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Invitation> getInvitationCollection() {
-        return invitationCollection;
-    }
-
-    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
-        this.invitationCollection = invitationCollection;
-    }
-
-    @XmlTransient
     public Collection<Event> getEventCollection1() {
         return eventCollection1;
     }
@@ -170,18 +130,18 @@ public class Users implements Serializable {
         this.eventCollection1 = eventCollection1;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
+    public Calendar getCalendaridCalendar() {
+        return calendaridCalendar;
     }
 
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
+    public void setCalendaridCalendar(Calendar calendaridCalendar) {
+        this.calendaridCalendar = calendaridCalendar;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (usersPK != null ? usersPK.hashCode() : 0);
+        hash += (idUsers != null ? idUsers.hashCode() : 0);
         return hash;
     }
 
@@ -192,7 +152,7 @@ public class Users implements Serializable {
             return false;
         }
         Users other = (Users) object;
-        if ((this.usersPK == null && other.usersPK != null) || (this.usersPK != null && !this.usersPK.equals(other.usersPK))) {
+        if ((this.idUsers == null && other.idUsers != null) || (this.idUsers != null && !this.idUsers.equals(other.idUsers))) {
             return false;
         }
         return true;
@@ -200,7 +160,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Users[ usersPK=" + usersPK + " ]";
+        return "MeteoCal.business.security.entity.Users[ idUsers=" + idUsers + " ]";
     }
     
 }

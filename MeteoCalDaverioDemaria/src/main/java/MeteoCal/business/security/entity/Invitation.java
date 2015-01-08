@@ -7,18 +7,17 @@ package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
+import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,60 +29,51 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Invitation.findAll", query = "SELECT i FROM Invitation i"),
-    @NamedQuery(name = "Invitation.findByIdNotification", query = "SELECT i FROM Invitation i WHERE i.invitationPK.idNotification = :idNotification"),
+    @NamedQuery(name = "Invitation.findByIdInvitation", query = "SELECT i FROM Invitation i WHERE i.idInvitation = :idInvitation"),
     @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date"),
-    @NamedQuery(name = "Invitation.findByUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.invitationPK.usersidUsers = :usersidUsers"),
-    @NamedQuery(name = "Invitation.findByUsersCalendaridCalendar", query = "SELECT i FROM Invitation i WHERE i.invitationPK.usersCalendaridCalendar = :usersCalendaridCalendar"),
-    @NamedQuery(name = "Invitation.findByEventidEvent", query = "SELECT i FROM Invitation i WHERE i.invitationPK.eventidEvent = :eventidEvent"),
-    @NamedQuery(name = "Invitation.findByEventUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.invitationPK.eventUsersidUsers = :eventUsersidUsers")})
+    @NamedQuery(name = "Invitation.findByUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.usersidUsers = :usersidUsers"),
+    @NamedQuery(name = "Invitation.findByEventidEvent", query = "SELECT i FROM Invitation i WHERE i.eventidEvent = :eventidEvent")})
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    //ATTRIBUTES
-    @EmbeddedId
-    protected InvitationPK invitationPK;
-    
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idInvitation")
+    private Integer idInvitation;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
     @Lob
     @Column(name = "text")
     private byte[] text;
-    
-    @JoinColumns({
-        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent", insertable = false, updatable = false),
-        @JoinColumn(name = "Event_Users_idUsers", referencedColumnName = "Users_idUsers", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Event event;
-    
-    @JoinColumns({
-        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers", insertable = false, updatable = false),
-        @JoinColumn(name = "Users_Calendar_idCalendar", referencedColumnName = "Calendar_idCalendar", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Users users;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Users_idUsers")
+    private int usersidUsers;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Event_idEvent")
+    private int eventidEvent;
 
-    //COSTRUTTORI
-    
     public Invitation() {
     }
 
-    public Invitation(InvitationPK invitationPK) {
-        this.invitationPK = invitationPK;
+    public Invitation(Integer idInvitation) {
+        this.idInvitation = idInvitation;
     }
 
-    public Invitation(int idNotification, int usersidUsers, int usersCalendaridCalendar, int eventidEvent, int eventUsersidUsers) {
-        this.invitationPK = new InvitationPK(idNotification, usersidUsers, usersCalendaridCalendar, eventidEvent, eventUsersidUsers);
+    public Invitation(Integer idInvitation, int usersidUsers, int eventidEvent) {
+        this.idInvitation = idInvitation;
+        this.usersidUsers = usersidUsers;
+        this.eventidEvent = eventidEvent;
     }
 
-    //GETTERS AND SETTERS
-    
-    public InvitationPK getInvitationPK() {
-        return invitationPK;
+    public Integer getIdInvitation() {
+        return idInvitation;
     }
 
-    public void setInvitationPK(InvitationPK invitationPK) {
-        this.invitationPK = invitationPK;
+    public void setIdInvitation(Integer idInvitation) {
+        this.idInvitation = idInvitation;
     }
 
     public Date getDate() {
@@ -102,26 +92,26 @@ public class Invitation implements Serializable {
         this.text = text;
     }
 
-    public Event getEvent() {
-        return event;
+    public int getUsersidUsers() {
+        return usersidUsers;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setUsersidUsers(int usersidUsers) {
+        this.usersidUsers = usersidUsers;
     }
 
-    public Users getUsers() {
-        return users;
+    public int getEventidEvent() {
+        return eventidEvent;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setEventidEvent(int eventidEvent) {
+        this.eventidEvent = eventidEvent;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (invitationPK != null ? invitationPK.hashCode() : 0);
+        hash += (idInvitation != null ? idInvitation.hashCode() : 0);
         return hash;
     }
 
@@ -132,7 +122,7 @@ public class Invitation implements Serializable {
             return false;
         }
         Invitation other = (Invitation) object;
-        if ((this.invitationPK == null && other.invitationPK != null) || (this.invitationPK != null && !this.invitationPK.equals(other.invitationPK))) {
+        if ((this.idInvitation == null && other.idInvitation != null) || (this.idInvitation != null && !this.idInvitation.equals(other.idInvitation))) {
             return false;
         }
         return true;
@@ -140,7 +130,7 @@ public class Invitation implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Invitation[ invitationPK=" + invitationPK + " ]";
+        return "MeteoCal.business.security.entity.Invitation[ idInvitation=" + idInvitation + " ]";
     }
     
 }

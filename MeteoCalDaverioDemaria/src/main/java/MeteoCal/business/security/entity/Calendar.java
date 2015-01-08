@@ -36,30 +36,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Calendar.findByIsPublic", query = "SELECT c FROM Calendar c WHERE c.isPublic = :isPublic")})
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    //ATTRIBUTES
-    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idCalendar")
     private Integer idCalendar;
-    
     @Column(name = "isPublic")
     private Boolean isPublic;
-    
     @JoinTable(name = "event_has_calendar", joinColumns = {
         @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")}, inverseJoinColumns = {
-        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent"),
-        @JoinColumn(name = "Event_Users_idUsers", referencedColumnName = "Users_idUsers")})
+        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
     @ManyToMany
     private Collection<Event> eventCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendar")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendaridCalendar")
     private Collection<Users> usersCollection;
 
-    //COSTRUTTORI
-    
     public Calendar() {
     }
 
@@ -67,8 +58,6 @@ public class Calendar implements Serializable {
         this.idCalendar = idCalendar;
     }
 
-    //GETTERS AND SETTERS
-    
     public Integer getIdCalendar() {
         return idCalendar;
     }
