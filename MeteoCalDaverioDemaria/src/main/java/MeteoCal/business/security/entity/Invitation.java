@@ -35,26 +35,35 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Invitation.findByEventidEvent", query = "SELECT i FROM Invitation i WHERE i.eventidEvent = :eventidEvent")})
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idInvitation")
     private Integer idInvitation;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @Lob
     @Column(name = "text")
     private byte[] text;
+    
+    //FOREIGN KEY(utente invitato)
     @Basic(optional = false)
     @NotNull
     @Column(name = "Users_idUsers")
     private int usersidUsers;
+    
+    //FOREIGN KEY(evento)
     @Basic(optional = false)
     @NotNull
     @Column(name = "Event_idEvent")
     private int eventidEvent;
 
+    //costruttori
+    
     public Invitation() {
     }
 
@@ -68,6 +77,8 @@ public class Invitation implements Serializable {
         this.eventidEvent = eventidEvent;
     }
 
+    //getters and setters
+    
     public Integer getIdInvitation() {
         return idInvitation;
     }

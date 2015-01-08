@@ -45,41 +45,55 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Event.findByDate", query = "SELECT e FROM Event e WHERE e.date = :date")})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idEvent")
     private Integer idEvent;
+    
     @Column(name = "isPublic")
     private Boolean isPublic;
+    
     @Size(max = 45)
     @Column(name = "where")
     private String where;
+    
     @Column(name = "isOutdoor")
     private Boolean isOutdoor;
+    
     @Size(max = 45)
     @Column(name = "weather")
     private String weather;
+    
     @Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
+    
     @Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @JoinTable(name = "participation", joinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")}, inverseJoinColumns = {
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")})
     @ManyToMany
     private Collection<Users> usersCollection;
+    
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Calendar> calendarCollection;
+    
+    //FOREIGN KEY (creatore evento)
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
     @ManyToOne(optional = false)
     private Users usersidUsers;
 
+    //costruttori
+    
     public Event() {
     }
 
@@ -87,6 +101,8 @@ public class Event implements Serializable {
         this.idEvent = idEvent;
     }
 
+    //getters and setters
+    
     public Integer getIdEvent() {
         return idEvent;
     }

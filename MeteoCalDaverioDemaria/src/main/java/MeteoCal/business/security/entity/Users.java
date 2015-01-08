@@ -40,31 +40,45 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    //DEFINIZIONE COLONNE
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idUsers")
     private Integer idUsers;
+    
     @Size(max = 45)
     @Column(name = "name")
     private String name;
+    
     @Size(max = 45)
     @Column(name = "surname")
     private String surname;
+    
     @Size(max = 45)
     @Column(name = "mail")
     private String mail;
+    
     @Size(max = 45)
     @Column(name = "psw")
     private String psw;
+    
     @ManyToMany(mappedBy = "usersCollection")
     private Collection<Event> eventCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
     private Collection<Event> eventCollection1;
+    
+    //FOREIGN KEY
+    
     @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
     @ManyToOne(optional = false)
     private Calendar calendaridCalendar;
 
+    //costruttori
+    
     public Users() {
     }
 
@@ -72,6 +86,9 @@ public class Users implements Serializable {
         this.idUsers = idUsers;
     }
 
+    
+    //getters and setters
+    
     public Integer getIdUsers() {
         return idUsers;
     }
