@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,9 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
     @NamedQuery(name = "Notification.findByIdNotification", query = "SELECT n FROM Notification n WHERE n.idNotification = :idNotification"),
-    @NamedQuery(name = "Notification.findByDate", query = "SELECT n FROM Notification n WHERE n.date = :date"),
-    @NamedQuery(name = "Notification.findByUsersidUsers", query = "SELECT n FROM Notification n WHERE n.usersidUsers = :usersidUsers"),
-    @NamedQuery(name = "Notification.findByEventidEvent", query = "SELECT n FROM Notification n WHERE n.eventidEvent = :eventidEvent")})
+    @NamedQuery(name = "Notification.findByDate", query = "SELECT n FROM Notification n WHERE n.date = :date")})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,26 +42,18 @@ public class Notification implements Serializable {
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Users_idUsers")
-    private int usersidUsers;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Event_idEvent")
-    private int eventidEvent;
+    @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
+    @ManyToOne
+    private Event eventidEvent;
+    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
+    @ManyToOne
+    private Users usersidUsers;
 
     public Notification() {
     }
 
     public Notification(Integer idNotification) {
         this.idNotification = idNotification;
-    }
-
-    public Notification(Integer idNotification, int usersidUsers, int eventidEvent) {
-        this.idNotification = idNotification;
-        this.usersidUsers = usersidUsers;
-        this.eventidEvent = eventidEvent;
     }
 
     public Integer getIdNotification() {
@@ -80,20 +72,20 @@ public class Notification implements Serializable {
         this.date = date;
     }
 
-    public int getUsersidUsers() {
-        return usersidUsers;
-    }
-
-    public void setUsersidUsers(int usersidUsers) {
-        this.usersidUsers = usersidUsers;
-    }
-
-    public int getEventidEvent() {
+    public Event getEventidEvent() {
         return eventidEvent;
     }
 
-    public void setEventidEvent(int eventidEvent) {
+    public void setEventidEvent(Event eventidEvent) {
         this.eventidEvent = eventidEvent;
+    }
+
+    public Users getUsersidUsers() {
+        return usersidUsers;
+    }
+
+    public void setUsersidUsers(Users usersidUsers) {
+        this.usersidUsers = usersidUsers;
     }
 
     @Override

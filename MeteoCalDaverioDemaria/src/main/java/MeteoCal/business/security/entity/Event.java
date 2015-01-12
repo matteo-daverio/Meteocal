@@ -13,11 +13,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,55 +45,42 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Event.findByDate", query = "SELECT e FROM Event e WHERE e.date = :date")})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idEvent")
     private Integer idEvent;
-    
     @Column(name = "isPublic")
     private Boolean isPublic;
-    
     @Size(max = 45)
     @Column(name = "where")
     private String where;
-    
     @Column(name = "isOutdoor")
     private Boolean isOutdoor;
-    
     @Size(max = 45)
     @Column(name = "weather")
     private String weather;
-    
     @Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
-    
     @Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
-    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
-    @JoinTable(name = "participation", joinColumns = {
-        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")}, inverseJoinColumns = {
-        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "eventCollection")
     private Collection<Users> usersCollection;
-    
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Calendar> calendarCollection;
-    
-    //FOREIGN KEY (creatore evento)
+    @OneToMany(mappedBy = "eventidEvent")
+    private Collection<Notification> notificationCollection;
+    @OneToMany(mappedBy = "eventidEvent")
+    private Collection<Invitation> invitationCollection;
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
     @ManyToOne(optional = false)
     private Users usersidUsers;
 
-    //costruttori
-    
     public Event() {
     }
 
@@ -101,8 +88,6 @@ public class Event implements Serializable {
         this.idEvent = idEvent;
     }
 
-    //getters and setters
-    
     public Integer getIdEvent() {
         return idEvent;
     }
@@ -183,6 +168,24 @@ public class Event implements Serializable {
 
     public void setCalendarCollection(Collection<Calendar> calendarCollection) {
         this.calendarCollection = calendarCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Invitation> getInvitationCollection() {
+        return invitationCollection;
+    }
+
+    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+        this.invitationCollection = invitationCollection;
     }
 
     public Users getUsersidUsers() {

@@ -11,7 +11,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,40 +32,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Invitation.findAll", query = "SELECT i FROM Invitation i"),
     @NamedQuery(name = "Invitation.findByIdInvitation", query = "SELECT i FROM Invitation i WHERE i.idInvitation = :idInvitation"),
-    @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date"),
-    @NamedQuery(name = "Invitation.findByUsersidUsers", query = "SELECT i FROM Invitation i WHERE i.usersidUsers = :usersidUsers"),
-    @NamedQuery(name = "Invitation.findByEventidEvent", query = "SELECT i FROM Invitation i WHERE i.eventidEvent = :eventidEvent")})
+    @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date")})
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idInvitation")
     private Integer idInvitation;
-    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
     @Lob
     @Column(name = "text")
     private byte[] text;
-    
-    //FOREIGN KEY(utente invitato)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Users_idUsers")
-    private int usersidUsers;
-    
-    //FOREIGN KEY(evento)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Event_idEvent")
-    private int eventidEvent;
+    @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
+    @ManyToOne
+    private Event eventidEvent;
+    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
+    @ManyToOne
+    private Users usersidUsers;
 
-    //costruttori
-    
     public Invitation() {
     }
 
@@ -71,14 +60,6 @@ public class Invitation implements Serializable {
         this.idInvitation = idInvitation;
     }
 
-    public Invitation(Integer idInvitation, int usersidUsers, int eventidEvent) {
-        this.idInvitation = idInvitation;
-        this.usersidUsers = usersidUsers;
-        this.eventidEvent = eventidEvent;
-    }
-
-    //getters and setters
-    
     public Integer getIdInvitation() {
         return idInvitation;
     }
@@ -103,20 +84,20 @@ public class Invitation implements Serializable {
         this.text = text;
     }
 
-    public int getUsersidUsers() {
-        return usersidUsers;
-    }
-
-    public void setUsersidUsers(int usersidUsers) {
-        this.usersidUsers = usersidUsers;
-    }
-
-    public int getEventidEvent() {
+    public Event getEventidEvent() {
         return eventidEvent;
     }
 
-    public void setEventidEvent(int eventidEvent) {
+    public void setEventidEvent(Event eventidEvent) {
         this.eventidEvent = eventidEvent;
+    }
+
+    public Users getUsersidUsers() {
+        return usersidUsers;
+    }
+
+    public void setUsersidUsers(Users usersidUsers) {
+        this.usersidUsers = usersidUsers;
     }
 
     @Override

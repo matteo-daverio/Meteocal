@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -34,51 +35,44 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.idUsers = :idUsers"),
-    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
-    @NamedQuery(name = "Users.findBySurname", query = "SELECT u FROM Users u WHERE u.surname = :surname"),
     @NamedQuery(name = "Users.findByMail", query = "SELECT u FROM Users u WHERE u.mail = :mail"),
-    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw")})
+    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
+    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw"),
+    @NamedQuery(name = "Users.findBySurname", query = "SELECT u FROM Users u WHERE u.surname = :surname")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    //DEFINIZIONE COLONNE
-    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idUsers")
     private Integer idUsers;
-    
-    @Size(max = 45)
-    @Column(name = "name")
-    private String name;
-    
-    @Size(max = 45)
-    @Column(name = "surname")
-    private String surname;
-    
-    @Size(max = 45)
+    @Size(max = 255)
     @Column(name = "mail")
     private String mail;
-    
-    @Size(max = 45)
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    @Size(max = 255)
     @Column(name = "psw")
     private String psw;
-    
-    @ManyToMany(mappedBy = "usersCollection")
+    @Size(max = 255)
+    @Column(name = "surname")
+    private String surname;
+    @JoinTable(name = "participation", joinColumns = {
+        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
+        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
+    @ManyToMany
     private Collection<Event> eventCollection;
-    
+    @OneToMany(mappedBy = "usersidUsers")
+    private Collection<Notification> notificationCollection;
+    @OneToMany(mappedBy = "usersidUsers")
+    private Collection<Invitation> invitationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
     private Collection<Event> eventCollection1;
-    
-    //FOREIGN KEY
-    
     @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Calendar calendaridCalendar;
 
-    //costruttori
-    
     public Users() {
     }
 
@@ -86,31 +80,12 @@ public class Users implements Serializable {
         this.idUsers = idUsers;
     }
 
-    
-    //getters and setters
-    
     public Integer getIdUsers() {
         return idUsers;
     }
 
     public void setIdUsers(Integer idUsers) {
         this.idUsers = idUsers;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public String getMail() {
@@ -121,12 +96,28 @@ public class Users implements Serializable {
         this.mail = mail;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPsw() {
         return psw;
     }
 
     public void setPsw(String psw) {
         this.psw = psw;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     @XmlTransient
@@ -136,6 +127,24 @@ public class Users implements Serializable {
 
     public void setEventCollection(Collection<Event> eventCollection) {
         this.eventCollection = eventCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Invitation> getInvitationCollection() {
+        return invitationCollection;
+    }
+
+    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+        this.invitationCollection = invitationCollection;
     }
 
     @XmlTransient

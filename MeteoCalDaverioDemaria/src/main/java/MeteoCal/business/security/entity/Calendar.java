@@ -8,7 +8,6 @@ package MeteoCal.business.security.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,27 +35,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Calendar.findByIsPublic", query = "SELECT c FROM Calendar c WHERE c.isPublic = :isPublic")})
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idCalendar")
     private Integer idCalendar;
-    
     @Column(name = "isPublic")
     private Boolean isPublic;
-    
     @JoinTable(name = "event_has_calendar", joinColumns = {
         @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")}, inverseJoinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
     @ManyToMany
     private Collection<Event> eventCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "calendaridCalendar")
+    @OneToMany(mappedBy = "calendaridCalendar")
     private Collection<Users> usersCollection;
 
-    //costruttori
-    
     public Calendar() {
     }
 
@@ -64,8 +57,6 @@ public class Calendar implements Serializable {
         this.idCalendar = idCalendar;
     }
 
-    //getters and setters
-    
     public Integer getIdCalendar() {
         return idCalendar;
     }
