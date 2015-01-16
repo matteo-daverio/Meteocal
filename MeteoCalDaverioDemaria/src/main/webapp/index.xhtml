@@ -8,19 +8,19 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="80">
+            <p:layoutUnit class="layoutClass" position="north" size="88">
                 <div class="content">
-                <span class="siteName"> MeteoCal </span> 
-                <p:spacer width="240" height="10" /> SeaRch:
-                <p:spacer width="15" height="10" />                
-                <p:inputText id="searchTxt" />
-                <p:button value="Search" outcome="searchFromGuest" />
-                <p:watermark for="searchTxt" value="Insert username" />
-                <p:spacer width="270" height="10" />
-                <p:commandButton value="Log in" type="button" 
-                                 onclick="PF('dlgLog').show();" />
-                <p:spacer width="10" height="10" />
-                <p:button value="Sign in" outcome="register" />
+                    <span class="siteName"> MeteoCal </span> 
+                    <p:spacer width="200" height="10" /> Search:
+                    <p:spacer width="15" height="10" />                
+                    <p:inputText id="searchTxt" />
+                    <p:button  outcome="searchFromGuest" icon="ui-icon-search"  />
+                    <p:watermark for="searchTxt" value="Insert username" />
+                    <p:spacer width="310" height="10" />
+                    <p:commandLink value="Log in" 
+                                 onclick="PF('dlgLog').show();" style="color:white"/>
+                    <p:spacer width="10" height="10" />
+                    <p:link value="Sign in" outcome="register" style="color:white"/>
                 </div>
             </p:layoutUnit>
             <p:layoutUnit position="center">
@@ -42,7 +42,7 @@
                 <h:outputText value="Username: " /> 
                 <p:inputText />
                 <h:outputText value="Password: " /> 
-                <p:inputText />
+                <p:password />
             </h:panelGrid>
             <br/>
             <p:commandButton value="Log in" type="button" />
@@ -51,28 +51,53 @@
         
         
         <style type="text/css">
+            
+            @import url(http://fonts.googleapis.com/css?family=Bitter:400,700);
+            
+            .layoutClass .ui-layout-unit-content{
+                background: -moz-linear-gradient(
+                    top,
+                    #6d84b4 0%,
+                    #3b5998 100%);
+                background: -webkit-gradient(
+                    linear, left top, left bottom, 
+                    from(#6d84b4),
+                    to(#3b5998));
+            }
+            
+            .layoutClass{
+                background: -moz-linear-gradient(
+                    top,
+                    #6d84b4 0%,
+                    #3b5998 100%);
+                background: -webkit-gradient(
+                    linear, left top, left bottom, 
+                    from(#6d84b4),
+                    to(#3b5998));
+            }
+            
             .schedule{
                 width:available;
             }
             
             .content{
                 text-align: center;
-                color: #444;
-                font-family:"Helvetica Neue",Helvetica,Arial;
+                color: white;
+                font-family:Helvetica,Arial;
             }
             
             .siteName:before{
                 content:"MeteoCal";
                 position:absolute;
-                color: rgba(0,0,0,.3)
+                color: rgba(0,0,0,.3);
             }
 
             .siteName {
                 margin: 10px auto;
                 text-align: center;
-                text-shadow: 1px -1px 0px rgba(255,255,255,0.1), 1px -1px 0px rgba(0,0,0,0.4);
+                text-shadow: -1px 1px 0px rgba(255,255,255,0.1), 1px -1px 0px rgba(0,0,0,0.4);
                 color: #444;
-                font: 700 50px 'Helvetica Neue';
+                font: 700 50px 'Bitter';
             }
             
         </style>
