@@ -5,6 +5,9 @@
  */
 package MeteoCal.gui.security;
 
+import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.entity.Users;
+
 
 /**
  *
@@ -12,20 +15,20 @@ package MeteoCal.gui.security;
  */
 public class RegistrationBean {
    
-/*    private UserManager um;
-    private User user;
+  private UserManager um;
+  private Users user;
     
     public RegistrationBean() {
     }
 
-    public User getUser() {
+    public Users getUser() {
         if (user == null) {
-            user = new User();
+            user = new Users();
         }
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 
@@ -33,5 +36,4 @@ public class RegistrationBean {
         um.save(user);
         return "user/home?faces-redirect=true";
     }
-*/
 } 
