@@ -21,13 +21,13 @@
                     </p:inputText>
                     <p:message id="namemsg" for="name" />
 
-                    <p:inputText id="email" value="#{registrationBean.user.email}" 
+                    <p:inputText id="email" value="#{registrationBean.user.mail}" 
                                  placeholder="Email" type="email">
                         <p:ajax update="emailmsg"/>
                     </p:inputText>
                     <p:message id="emailmsg" for="email" />
 
-                    <p:password id="password" value="#{registrationBean.user.password}"
+                    <p:password id="password" value="#{registrationBean.user.psw}"
                                 feedback="true" match="pwd2" label="Password" 
                                 placeholder="Password"/>
                     <p:message for="password" />

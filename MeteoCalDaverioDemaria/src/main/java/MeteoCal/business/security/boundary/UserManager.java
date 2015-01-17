@@ -6,6 +6,7 @@
 
 package MeteoCal.business.security.boundary;
 
+import MeteoCal.business.security.entity.Group;
 import MeteoCal.business.security.entity.Users;
 import java.security.Principal;
 import javax.ejb.Stateless;
@@ -25,8 +26,9 @@ public class UserManager {
     @Inject
     Principal principal;
     
-        public void save(Users user) {
-        em.persist(user);
+        public void save(Users users) {
+        users.setGroupName(Group.USERS);
+            em.persist(users);
         
     }
 

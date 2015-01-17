@@ -7,14 +7,20 @@ package MeteoCal.gui.security;
 
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Users;
+import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 
 
 /**
  *
  * @author Matteo
  */
+@Named
+@RequestScoped
 public class RegistrationBean {
-   
+  
+  @EJB
   private UserManager um;
   private Users user;
     

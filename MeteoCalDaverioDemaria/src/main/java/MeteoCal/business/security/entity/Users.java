@@ -58,6 +58,10 @@ public class Users implements Serializable {
     @Size(max = 255)
     @Column(name = "surname")
     private String surname;
+    
+    @NotNull(message = "May not be empty")
+    private String groupName;
+        
     @JoinTable(name = "participation", joinColumns = {
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
@@ -86,6 +90,14 @@ public class Users implements Serializable {
 
     public void setIdUsers(Integer idUsers) {
         this.idUsers = idUsers;
+    }
+    
+        public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
     }
 
     public String getMail() {
