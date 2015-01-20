@@ -6,30 +6,27 @@
 package MeteoCal.gui.security;
 
 import MeteoCal.business.security.boundary.UserManager;
-import MeteoCal.business.security.entity.Calendar;
 import MeteoCal.business.security.entity.Users;
+import java.util.List;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-
+import javax.inject.Named;
 
 /**
  *
- * @author Matteo
+ * @author DeMaria
  */
 @Named
 @RequestScoped
-public class RegistrationBean {
-  
-  @EJB
-  private UserManager um;
-  
-  
-  private Users user;
+public class SearchBean {
     
-    public RegistrationBean() {
-    }
-
+      @EJB
+      private UserManager um;
+      private Users user;
+      
+      
+    public SearchBean(){}
+    
     public Users getUser() {
         if (user == null) {
             user = new Users();
@@ -41,8 +38,13 @@ public class RegistrationBean {
         this.user = user;
     }
 
-    public String register() {
-        um.save(user);
-        return "user/home?faces-redirect=true";
+    //restituisce gli utenti che hanno quel nome
+    public List<String>Search(){
+     
+    return um.searchUsers(user);
+    
+    //
+    
     }
-} 
+    
+}

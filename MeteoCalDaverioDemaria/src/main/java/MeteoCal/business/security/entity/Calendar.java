@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,24 +31,26 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "calendar")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Calendar.findAll", query = "SELECT c FROM Calendar c"),
-    @NamedQuery(name = "Calendar.findByIdCalendar", query = "SELECT c FROM Calendar c WHERE c.idCalendar = :idCalendar"),
-    @NamedQuery(name = "Calendar.findByIsPublic", query = "SELECT c FROM Calendar c WHERE c.isPublic = :isPublic")})
+
 public class Calendar implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idCalendar")
     private Integer idCalendar;
+    
     @Column(name = "isPublic")
     private Boolean isPublic;
+    
     @JoinTable(name = "event_has_calendar", joinColumns = {
         @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")}, inverseJoinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
     @ManyToMany
     private Collection<Event> eventCollection;
+    
     @OneToMany(mappedBy = "calendaridCalendar")
     private Collection<Users> usersCollection;
 

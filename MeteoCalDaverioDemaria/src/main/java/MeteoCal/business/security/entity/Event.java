@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -33,50 +35,55 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "event")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),
-    @NamedQuery(name = "Event.findByIdEvent", query = "SELECT e FROM Event e WHERE e.idEvent = :idEvent"),
-    @NamedQuery(name = "Event.findByIsPublic", query = "SELECT e FROM Event e WHERE e.isPublic = :isPublic"),
-    @NamedQuery(name = "Event.findByWhere", query = "SELECT e FROM Event e WHERE e.where = :where"),
-    @NamedQuery(name = "Event.findByIsOutdoor", query = "SELECT e FROM Event e WHERE e.isOutdoor = :isOutdoor"),
-    @NamedQuery(name = "Event.findByWeather", query = "SELECT e FROM Event e WHERE e.weather = :weather"),
-    @NamedQuery(name = "Event.findByStartTime", query = "SELECT e FROM Event e WHERE e.startTime = :startTime"),
-    @NamedQuery(name = "Event.findByEndTime", query = "SELECT e FROM Event e WHERE e.endTime = :endTime"),
-    @NamedQuery(name = "Event.findByDate", query = "SELECT e FROM Event e WHERE e.date = :date")})
+
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idEvent")
     private Integer idEvent;
+    
     @Column(name = "isPublic")
     private Boolean isPublic;
+    
     @Size(max = 45)
     @Column(name = "where")
     private String where;
+    
     @Column(name = "isOutdoor")
     private Boolean isOutdoor;
+    
     @Size(max = 45)
     @Column(name = "weather")
     private String weather;
+    
     @Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
+    
     @Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Users> usersCollection;
+    
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Calendar> calendarCollection;
+    
     @OneToMany(mappedBy = "eventidEvent")
     private Collection<Notification> notificationCollection;
+    
     @OneToMany(mappedBy = "eventidEvent")
     private Collection<Invitation> invitationCollection;
+    
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
     @ManyToOne(optional = false)
     private Users usersidUsers;

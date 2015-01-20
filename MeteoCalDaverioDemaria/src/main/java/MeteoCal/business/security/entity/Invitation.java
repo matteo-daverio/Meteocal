@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -29,26 +31,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "invitation")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Invitation.findAll", query = "SELECT i FROM Invitation i"),
-    @NamedQuery(name = "Invitation.findByIdInvitation", query = "SELECT i FROM Invitation i WHERE i.idInvitation = :idInvitation"),
-    @NamedQuery(name = "Invitation.findByDate", query = "SELECT i FROM Invitation i WHERE i.date = :date")})
+
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idInvitation")
     private Integer idInvitation;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @Lob
     @Column(name = "text")
     private byte[] text;
+    
     @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
     @ManyToOne
     private Event eventidEvent;
+    
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
     @ManyToOne
     private Users usersidUsers;

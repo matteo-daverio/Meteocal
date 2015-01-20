@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,23 +30,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "notification")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n"),
-    @NamedQuery(name = "Notification.findByIdNotification", query = "SELECT n FROM Notification n WHERE n.idNotification = :idNotification"),
-    @NamedQuery(name = "Notification.findByDate", query = "SELECT n FROM Notification n WHERE n.date = :date")})
+
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "idNotification")
     private Integer idNotification;
+    
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
     @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
     @ManyToOne
     private Event eventidEvent;
+    
     @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
     @ManyToOne
     private Users usersidUsers;

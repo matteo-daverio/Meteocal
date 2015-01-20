@@ -5,12 +5,15 @@
  */
 package MeteoCal.business.security.entity;
 
+import MeteoCal.businness.security.control.PasswordEncrypter;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -32,47 +35,43 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "users")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-    @NamedQuery(name = "Users.findByIdUsers", query = "SELECT u FROM Users u WHERE u.idUsers = :idUsers"),
-    @NamedQuery(name = "Users.findByMail", query = "SELECT u FROM Users u WHERE u.mail = :mail"),
-    @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name"),
-    @NamedQuery(name = "Users.findByPsw", query = "SELECT u FROM Users u WHERE u.psw = :psw"),
-    @NamedQuery(name = "Users.findBySurname", query = "SELECT u FROM Users u WHERE u.surname = :surname")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idUsers")
     private Integer idUsers;
+    
     @Size(max = 255)
     @Column(name = "mail")
     private String mail;
+    
     @Size(max = 255)
     @Column(name = "name")
     private String name;
+    
     @Size(max = 255)
     @Column(name = "psw")
     private String psw;
-    @Size(max = 255)
-    @Column(name = "surname")
-    private String surname;
-    
-    @NotNull(message = "May not be empty")
-    private String groupName;
         
     @JoinTable(name = "participation", joinColumns = {
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
         @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
     @ManyToMany
     private Collection<Event> eventCollection;
+    
     @OneToMany(mappedBy = "usersidUsers")
     private Collection<Notification> notificationCollection;
+    
     @OneToMany(mappedBy = "usersidUsers")
     private Collection<Invitation> invitationCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
     private Collection<Event> eventCollection1;
+    
     @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
     @ManyToOne
     private Calendar calendaridCalendar;
@@ -92,14 +91,6 @@ public class Users implements Serializable {
         this.idUsers = idUsers;
     }
     
-        public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
     public String getMail() {
         return mail;
     }
@@ -121,15 +112,7 @@ public class Users implements Serializable {
     }
 
     public void setPsw(String psw) {
-        this.psw = psw;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+        this.psw = PasswordEncrypter.encryptPassword(psw);
     }
 
     @XmlTransient
