@@ -18,13 +18,14 @@
                     <p:button  outcome="search" icon="ui-icon-search"  />
                     <p:watermark for="searchTxt" value="Insert username" />
                     <p:spacer width="40" height="10" /> 
-                    LOGGED USER NAME
+                    #{userBean.name}
                     <p:spacer width="10" height="10" />
                     <p:link value="Home" outcome="home" style="color:white"/>
                     <p:spacer width="10" height="10" />
                     <p:commandLink onclick="PF('dlgNotify').show();" style="color:white">News<span class="count">3</span></p:commandLink>
                     <p:spacer width="20" height="10" />
-                    <p:commandLink value="Logout" style="color: white"/>
+                    <p:commandLink value="Logout" action="#{loginBean.logout()}"
+                                   style="color: white"/>
                 </div>
             </p:layoutUnit>
             <p:layoutUnit position="center">

@@ -40,12 +40,15 @@
                   hideEffect="bounce" height="130" position="right,top">
             <h:panelGrid columns="2">
                 <h:outputText value="Username: " /> 
-                <p:inputText />
+                <p:inputText id="username" value="#{loginBean.username}" 
+                                 required="true"/>
                 <h:outputText value="Password: " /> 
-                <p:password />
+                <p:password id="pass" value="#{loginBean.password}" 
+                                required="true"/>
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Log in" type="button" />
+            <p:commandButton id="submit" value="Log in" 
+                             action="#{loginBean.login()}" type="button" />
         </p:dialog>
         
         
