@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.xml.registry.infomodel.User;
 
 /**
  *
@@ -39,7 +40,7 @@ public class SearchBean {
     }
 
     //restituisce gli utenti che hanno quel nome
-    public List<String>Search(){
+    public List<User>Search(){
      
     return um.searchUsers(user);
     

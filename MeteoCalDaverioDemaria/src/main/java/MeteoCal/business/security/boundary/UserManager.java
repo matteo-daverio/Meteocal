@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.xml.registry.JAXRException;
+import javax.xml.registry.infomodel.User;
 /**
  *
  * @author DeMaria
@@ -61,28 +63,51 @@ public class UserManager {
         //salvo calendario e utente
         em.persist(calendar);
         em.persist(users);
+        
+        
+        //Query q; 
+        
+        //q =em.createQuery("SELECT c FROM  users c");
+        
+        
+        //List<Users> s;
+        //s = q.getResultList();
+       
+        //System.out.println("ciao");
+        //System.out.println("RISULTATO=>>"+ s.get(0).getName());
             
         
     }
 
+    /**
+     * unregister the actual user logged
+     */    
     public void unregister() {
         em.remove(getLoggedUser());
     }
 
-    //ritorna l'utente attualmente connesso
+
+    /**
+     * ritorna l'utente attualmente connesso
+     * @return 
+     */
     public Users getLoggedUser() {
         return em.find(Users.class, principal.getName());
     }
     
+    
+    
     //cerca tutti gli utenti che hanno quel nome
     //e il loro calendario è pubblico
-    public List<String> searchUsers(Users users){
+    public List<User> searchUsers(Users users){
         
-      query= em.createQuery("SELECT u.name FROM users u WHERE u.name != name and u.idCalendar IN(SELECT c.idCalendar from calendar c WHERE c.isPublic=1) ").setParameter("name",users.getName());
-      List<String> u;
+      query= em.createQuery("SELECT u FROM users u WHERE u.name = name and u.idCalendar IN(SELECT c.idCalendar from calendar c WHERE c.isPublic=1) ").setParameter("name",users.getName());
+      List<User> u;
       u=query.getResultList();
       return u;
     }  
+    
+
     
     
 

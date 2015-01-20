@@ -3,8 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 package MeteoCal.gui.security;
 
 import java.util.logging.Level;
@@ -16,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author DeMaria
@@ -23,7 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 @RequestScoped
 public class LoginBean {
-     //@Inject
+    
+    //@Inject
     private Logger logger;
     
 

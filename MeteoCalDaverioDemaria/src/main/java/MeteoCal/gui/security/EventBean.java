@@ -6,6 +6,7 @@
 package MeteoCal.gui.security;
 
 import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.entity.Event;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -19,6 +20,8 @@ import javax.inject.Named;
 public class EventBean implements Serializable {
     
     private EventManager em;
+    
+    Event event;
     
     public EventBean(){
         

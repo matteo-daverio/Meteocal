@@ -5,12 +5,15 @@
  */
 package MeteoCal.gui.security;
 
+
 import MeteoCal.business.security.boundary.UserManager;
-import MeteoCal.business.security.entity.Calendar;
 import MeteoCal.business.security.entity.Users;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+
+
+
 
 
 /**
@@ -41,6 +44,10 @@ public class RegistrationBean {
         this.user = user;
     }
 
+    /**
+     * registers the new user and his calendar
+     * @return 
+     */
     public String register() {
         um.save(user);
         return "user/home?faces-redirect=true";

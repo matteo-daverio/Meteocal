@@ -68,6 +68,15 @@ public class EventManager {
         return eventSet;
     }
     
+    
+    public boolean eventIsPublic(Event event){
+    
+        Query query=em.createQuery("SELECT e FROM event e WHERE e =:event").setParameter("event", event);
+        List<Event> result= new ArrayList<>(query.getResultList());
+        return result.get(0).getIsPublic();
+        
+    }
+    
     //
     public boolean isIndoor(Event event) {
         
