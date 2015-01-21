@@ -37,8 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 
 @NamedQueries({
-    //@NamedQuery(name=Users.findAll,query="SELECT u FROM users u"),
-    //@NamedQuery(name=Users.count,query="SELECT count(c) FROM users u")
+    @NamedQuery(name="Users.findAll", query="SELECT u FROM users u"),
+    @NamedQuery(name="Users.count", query="SELECT count(c) FROM users u")
+    
 })
 
 public class Users implements Serializable {
