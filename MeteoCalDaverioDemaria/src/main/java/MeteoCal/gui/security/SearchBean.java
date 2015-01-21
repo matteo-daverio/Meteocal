@@ -44,7 +44,7 @@ public class SearchBean {
 
     public List<String> complete(String query){
         
-        return um.complete(query);
+        return um.complete(value);
         
     }
     
