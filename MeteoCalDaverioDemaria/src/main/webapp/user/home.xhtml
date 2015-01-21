@@ -18,11 +18,14 @@
                     <p:button  outcome="search" icon="ui-icon-search"  />
                     <p:watermark for="searchTxt" value="Insert username" />
                     <p:spacer width="40" height="10" /> 
-                    #{userBean.name}
+                    <p:commandLink onclick="PF('dlgOption').show();" 
+                                   value="#{userBean.name}" style="color:white"/>
                     <p:spacer width="10" height="10" />
                     <p:link value="Home" outcome="home" style="color:white"/>
                     <p:spacer width="10" height="10" />
-                    <p:commandLink onclick="PF('dlgNotify').show();" style="color:white">News<span class="count">3</span></p:commandLink>
+                    <p:commandLink onclick="PF('dlgNotify').show();" 
+                                   style="color:white">News<span class="count">
+                                        3</span></p:commandLink>
                     <p:spacer width="20" height="10" />
                     <p:commandLink value="Logout" action="#{loginBean.logout()}"
                                    style="color: white"/>
@@ -55,6 +58,17 @@
             </h:panelGrid>
             <br/>
             <p:commandButton value="Log in" type="button" />
+        </p:dialog>
+        
+        <p:dialog header="Option" widgetVar="dlgOption" showEffect="explode" 
+                  hideEffect="bounce" height="130" position="right,top">
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <h:outputText value="Username: " /> 
+<!-- Da impostare!!! -->                
+                <p:selectBooleanCheckbox />
+            </h:panelGrid>
+            <br/>
+            <p:commandButton value="Save Option" type="button" />
         </p:dialog>
         
         <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
