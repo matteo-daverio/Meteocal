@@ -16,11 +16,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
@@ -28,8 +30,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "invitation")
-@XmlRootElement
 
+
+@NamedQueries({
+    //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
+    //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
+
+})
 public class Invitation implements Serializable {
     private static final long serialVersionUID = 1L;
     

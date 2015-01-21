@@ -25,7 +25,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -35,18 +34,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-    //@NamedQuery(name="Users.findAll", query="SELECT u FROM users u"),
-    //@NamedQuery(name="Users.count", query="SELECT count(c) FROM users u")
+    @NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
+    @NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
+    @NamedQuery(name= Users.complete, query="SELECT u.name FROM Users u WHERE u.name LIKE :valore")
 })
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-//    @Id
-//    @Basic(optional = false)
-//    @NotNull
-//    @GeneratedValue(strategy = GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-//    @Column(name = "idUsers")
-//    private Integer idUsers;
+   
+    public static final String findAll = "Users.findAll";
+    public static final String count = "Users.count";
+    public static final String complete ="Users.complete";
     
     @Size(max = 255)
     @Column(name = "mail")

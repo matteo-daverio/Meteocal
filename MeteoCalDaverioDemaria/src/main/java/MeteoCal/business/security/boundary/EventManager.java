@@ -36,14 +36,6 @@ public class EventManager {
     Principal principal;
     
     
-    public Principal getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(Principal principal) {
-        this.principal = principal;
-    }
-
 
 /////////////////////////////methods //////////////////////////////
     

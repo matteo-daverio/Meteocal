@@ -8,9 +8,11 @@ package MeteoCal.gui.security;
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Invitation;
 import MeteoCal.business.security.entity.Notification;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+
 import javax.inject.Named;
 
 /**
@@ -19,7 +21,7 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class UserBean {
+public class UserBean{
     
     @EJB
     UserManager um;

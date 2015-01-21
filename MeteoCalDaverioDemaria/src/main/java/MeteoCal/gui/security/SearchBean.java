@@ -23,8 +23,11 @@ public class SearchBean {
     
       @EJB
       private UserManager um;
+      
       private Users user;
       
+      
+      private String value; //stringa per autocomplete
       
     public SearchBean(){}
     
@@ -39,6 +42,12 @@ public class SearchBean {
         this.user = user;
     }
 
+    public List<String> complete(){
+        
+        return um.complete(value);
+        
+    }
+    
     //restituisce gli utenti che hanno quel nome
     public List<Users>Search(){
      

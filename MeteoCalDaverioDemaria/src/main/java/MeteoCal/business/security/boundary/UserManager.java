@@ -58,16 +58,16 @@ public class UserManager {
         em.persist(calendar);
         em.persist(users);
         
-        
-        //Query q; 
-        
-        //q =em.createQuery("SELECT c FROM  users c");
-        
-        
-        //List<Users> s = q.getResultList();
-       
-        //System.out.println("RISULTATO=>>"+ s.get(0).getName());
+        //Query pippo =em.createQuery("SELECT u FROM Users u");
+        //TypedQuery<Users> pippo = em.createNamedQuery(Users.findAll, Users.class);
             
+        //Query q = em.createQuery("SELECT u.name FROM Users u WHERE u.name LIKE :value").setParameter("value", "gabr");
+        //List<Users> l = pippo.getResultList();
+        
+        
+        //List<String> s = em.createNamedQuery(Users.complete).setParameter("valore", "gabr").getResultList();
+        
+        //System.out.println("RISULTATO=>" + s.get(0));
         
     }
 
@@ -97,11 +97,19 @@ public class UserManager {
     //e il loro calendario è pubblico
     public List<Users> searchUsers(Users users){
         
-      query= em.createQuery("SELECT u FROM users u WHERE u.name = name and u.idCalendar IN(SELECT c.idCalendar from calendar c WHERE c.isPublic=1) ").setParameter("name",users.getName());
+      query= em.createQuery("SELECT u FROM Users u WHERE u.name = name and u.idCalendar IN(SELECT c.idCalendar from calendar c WHERE c.isPublic=1) ").setParameter("name",users.getName());
       List<Users> u;
       u=query.getResultList();
       return u;
-    }  
+    } 
+    
+    public List<String> complete(String value){
+        
+      //Query q = em.createQuery("SELECT u.name FROM Users u WHERE u.name LIKE ' :value %'").setParameter("value", value);
+      
+        return em.createNamedQuery(Users.complete).setParameter("valore", value).getResultList();
+    
+    }
     
 
     
