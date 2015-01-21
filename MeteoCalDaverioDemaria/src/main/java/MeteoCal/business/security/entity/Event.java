@@ -32,8 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "event")
-@XmlRootElement
-
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -48,7 +46,7 @@ public class Event implements Serializable {
     private Boolean isPublic;
     
     @Size(max = 45)
-    @Column(name = "where")
+    @Column(name = "place")
     private String where;
     
     @Column(name = "isOutdoor")

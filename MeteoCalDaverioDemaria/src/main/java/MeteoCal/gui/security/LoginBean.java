@@ -51,6 +51,7 @@ public class LoginBean {
     }
 
     public String login() {
+        logger.log(Level.INFO,"Logging in");
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {

@@ -35,22 +35,24 @@
             </p:layoutUnit>
         </p:layout>
         
-        
+        <h:form>
         <p:dialog header="Log in" widgetVar="dlgLog" showEffect="explode" 
-                  hideEffect="bounce" height="130" position="right,top">
-            <h:panelGrid columns="2">
-                <h:outputText value="Username: " /> 
-                <p:inputText id="username" value="#{loginBean.username}" 
-                                 required="true"/>
-                <h:outputText value="Password: " /> 
-                <p:password id="pass" value="#{loginBean.password}" 
-                                required="true"/>
-            </h:panelGrid>
-            <br/>
-            <p:commandButton id="submit" value="Log in" 
-                             action="#{loginBean.login()}" type="button" />
-        </p:dialog>
-        
+                  hideEffect="bounce" height="130" position="right,top" modal="true">
+            
+                <h:panelGrid columns="2">
+                    <h:outputText value="Username: " /> 
+                    <p:inputText id="username" value="#{loginBean.username}" 
+                                     required="true"/>
+                    <h:outputText value="Password: " /> 
+                    <p:password id="pass" value="#{loginBean.password}" 
+                                    required="true"/>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton id="submit" value="Log in" actionListener="#{loginBean.login()}"
+                                 type="button" />
+            
+         </p:dialog>
+        </h:form>
         
         
         <style type="text/css">

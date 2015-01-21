@@ -34,26 +34,24 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "users")
-@XmlRootElement
-
 @NamedQueries({
-    @NamedQuery(name="Users.findAll", query="SELECT u FROM users u"),
-    @NamedQuery(name="Users.count", query="SELECT count(c) FROM users u")
-    
+    //@NamedQuery(name="Users.findAll", query="SELECT u FROM users u"),
+    //@NamedQuery(name="Users.count", query="SELECT count(c) FROM users u")
 })
-
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-    @Column(name = "idUsers")
-    private Integer idUsers;
+//    @Id
+//    @Basic(optional = false)
+//    @NotNull
+//    @GeneratedValue(strategy = GenerationType.AUTO)//crea automaticamente un valore per questo attributo
+//    @Column(name = "idUsers")
+//    private Integer idUsers;
     
     @Size(max = 255)
     @Column(name = "mail")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String mail;
     
     @Size(max = 255)
@@ -89,18 +87,18 @@ public class Users implements Serializable {
     public Users() {
     }
 
-    public Users(Integer idUsers) {
-        this.idUsers = idUsers;
-    }
-
-    public Integer getIdUsers() {
-        return idUsers;
-    }
-
-    public void setIdUsers(Integer idUsers) {
-        this.idUsers = idUsers;
-    }
-    
+//    public Users(Integer idUsers) {
+//        this.idUsers = idUsers;
+//    }
+//
+//    public Integer getIdUsers() {
+//        return idUsers;
+//    }
+//
+//    public void setIdUsers(Integer idUsers) {
+//        this.idUsers = idUsers;
+//    }
+//    
     public String getMail() {
         return mail;
     }
@@ -177,29 +175,29 @@ public class Users implements Serializable {
         this.calendaridCalendar = calendaridCalendar;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsers != null ? idUsers.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
-            return false;
-        }
-        Users other = (Users) object;
-        if ((this.idUsers == null && other.idUsers != null) || (this.idUsers != null && !this.idUsers.equals(other.idUsers))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "MeteoCal.business.security.entity.Users[ idUsers=" + idUsers + " ]";
-    }
+//    @Override
+//    public int hashCode() {
+//        int hash = 0;
+//        hash += (idUsers != null ? idUsers.hashCode() : 0);
+//        return hash;
+//    }
+//
+//    @Override
+//    public boolean equals(Object object) {
+//        // TODO: Warning - this method won't work in the case the id fields are not set
+//        if (!(object instanceof Users)) {
+//            return false;
+//        }
+//        Users other = (Users) object;
+//        if ((this.idUsers == null && other.idUsers != null) || (this.idUsers != null && !this.idUsers.equals(other.idUsers))) {
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "MeteoCal.business.security.entity.Users[ idUsers=" + idUsers + " ]";
+//    }
     
 }
