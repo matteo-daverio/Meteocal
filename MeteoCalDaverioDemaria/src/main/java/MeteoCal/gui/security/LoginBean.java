@@ -5,6 +5,7 @@
  */
 package MeteoCal.gui.security;
 
+import MeteoCal.business.security.LoggerProducer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class LoginBean {
     
-    //@Inject
+    @Inject
     private Logger logger;
     
 

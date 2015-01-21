@@ -17,8 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,7 +40,7 @@ public class Event implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
     @Column(name = "idEvent")
     private Integer idEvent;
     

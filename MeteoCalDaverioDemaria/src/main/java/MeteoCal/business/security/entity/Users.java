@@ -5,7 +5,7 @@
  */
 package MeteoCal.business.security.entity;
 
-import MeteoCal.businness.security.control.PasswordEncrypter;
+import MeteoCal.business.security.control.PasswordEncrypter;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -35,13 +35,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "users")
 @XmlRootElement
+
+@NamedQueries({
+    //@NamedQuery(name=Users.findAll,query="SELECT u FROM users u"),
+    //@NamedQuery(name=Users.count,query="SELECT count(c) FROM users u")
+})
+
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
     @Basic(optional = false)
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)//crea automaticamente un valore per questo attributo
     @Column(name = "idUsers")
     private Integer idUsers;
     
@@ -56,6 +62,9 @@ public class Users implements Serializable {
     @Size(max = 255)
     @Column(name = "psw")
     private String psw;
+    
+    @NotNull(message = "May not be empty")
+    private String groupName;
         
     @JoinTable(name = "participation", joinColumns = {
         @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
@@ -115,6 +124,14 @@ public class Users implements Serializable {
         this.psw = PasswordEncrypter.encryptPassword(psw);
     }
 
+    public void setGroupName(String groupName) {
+       this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+    
     @XmlTransient
     public Collection<Event> getEventCollection() {
         return eventCollection;

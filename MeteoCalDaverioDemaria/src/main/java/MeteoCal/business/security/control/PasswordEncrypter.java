@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MeteoCal.businness.security.control;
+package MeteoCal.business.security.control;
 
 import MeteoCal.business.security.entity.Users;
 import java.io.UnsupportedEncodingException;

@@ -89,7 +89,7 @@ public class EventManager {
     public void removeEvent(Event event) {
    Query query1 = em.createQuery("Delete From event e Where e = :event").setParameter(("event"), event);
         query1.executeUpdate();
-
+       
      }
     
     //
