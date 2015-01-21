@@ -42,9 +42,9 @@ public class SearchBean {
         this.user = user;
     }
 
-    public List<String> complete(){
+    public List<String> complete(String query){
         
-        return um.complete(value);
+        return um.complete(query);
         
     }
     
@@ -55,6 +55,14 @@ public class SearchBean {
     
     //
     
+    }
+    
+    public void setValue(String value) {
+        this.value = value;
+    }
+ 
+    public String getValue() {
+        return value;
     }
     
 }

@@ -18,8 +18,8 @@
                     <p:button  outcome="search" icon="ui-icon-search"  />
                     <p:watermark for="searchTxt" value="Insert username" />
                     <p:spacer width="40" height="10" /> 
-                    <p:commandLink onclick="PF('dlgOption').show();" 
-                                   value="#{userBean.name}" style="color:white"/>
+                    <p:link outcome="option"
+                              value="#{userBean.name}" style="color:white"/>
                     <p:spacer width="10" height="10" />
                     <p:link value="Home" outcome="home" style="color:white"/>
                     <p:spacer width="10" height="10" />
@@ -61,14 +61,17 @@
         </p:dialog>
         
         <p:dialog header="Option" widgetVar="dlgOption" showEffect="explode" 
-                  hideEffect="bounce" height="130" position="right,top">
-            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                <h:outputText value="Username: " /> 
-<!-- Da impostare!!! -->                
+                  hideEffect="bounce" height="100" position="top,right" width="300" resizable="false" >
+            <h:form id="dialogForm">
+            <h:panelGrid columns="2" >
+                <h:outputText value="Private Calendar: " />            
                 <p:selectBooleanCheckbox />
             </h:panelGrid>
+            </h:form>
             <br/>
-            <p:commandButton value="Save Option" type="button" />
+            <h:form id="buttonForm">
+            <p:commandButton value="Save Option" type="button" actionListener="#{test.buttonAction}" ajax="false" />
+            </h:form>
         </p:dialog>
         
         <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">

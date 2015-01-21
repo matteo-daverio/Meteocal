@@ -13,12 +13,13 @@
                     <span class="siteName"> MeteoCal </span> 
                     <p:spacer width="200" height="10" /> Search:
                     <p:spacer width="15" height="10" />                
-                    <p:inputText id="searchTxt" />
+                    <p:autoComplete id="autocomplete" maxResults="5" value="#{searchBean.value}" 
+                                    completeMethod="#{searchBean.complete}" />
                     <p:button  outcome="searchFromGuest" icon="ui-icon-search"  />
                     <p:watermark for="searchTxt" value="Insert username" />
                     <p:spacer width="310" height="10" />
-                    <p:commandLink value="Log in" 
-                                 onclick="PF('dlgLog').show();" style="color:white"/>
+                    <p:link value="Log in" outcome="login"
+                             style="color:white"/>
                     <p:spacer width="10" height="10" />
                     <p:link value="Sign in" outcome="register" style="color:white"/>
                 </div>
@@ -35,9 +36,9 @@
             </p:layoutUnit>
         </p:layout>
         
-        <h:form>
-        <p:dialog header="Log in" widgetVar="dlgLog" showEffect="explode" 
-                  hideEffect="bounce" height="130" position="right,top" modal="true">
+        
+        <p:dialog id="logDialog" header="Log in" widgetVar="dlgLog" 
+                   height="130" position="right,top">
             
                 <h:panelGrid columns="2">
                     <h:outputText value="Username: " /> 
@@ -48,11 +49,11 @@
                                     required="true"/>
                 </h:panelGrid>
                 <br/>
-                <p:commandButton id="submit" value="Log in" actionListener="#{loginBean.login()}"
-                                 type="button" />
+                <p:commandButton id="submit" value="Log in" action="#{loginBean.login()}"
+                                 type="button"/>
             
          </p:dialog>
-        </h:form>
+        
         
         
         <style type="text/css">
