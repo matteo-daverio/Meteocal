@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "notification")
-@XmlRootElement
+
 
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
