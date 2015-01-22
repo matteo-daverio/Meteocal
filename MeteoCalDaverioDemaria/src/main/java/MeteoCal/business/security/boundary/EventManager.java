@@ -6,6 +6,7 @@
 package MeteoCal.business.security.boundary;
 
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.IDEvent;
 import MeteoCal.business.security.entity.Notification;
 import MeteoCal.business.security.entity.Users;
 import java.security.Principal;
@@ -58,6 +59,26 @@ public class EventManager {
 
     
 
+
+
+    
+        /**
+     * return Event with iDEvent
+     *
+     * @param iDEvent
+     * @return
+     */
+   
+    public Event loadSpecificEvent(String iDEvent) {
+        IDEvent id = new IDEvent(Long.parseLong(iDEvent));
+        Query query = em.createQuery("SELECT e FROM Event e WHERE e.idEvent =:id").setParameter("id", id);
+        List<Event> result = new ArrayList<>(query.getResultList());
+
+        return result.get(0);
+    }
+
+    
+
     public boolean isCreator(Event event, Users user) {
         Query query = em.createQuery("SELECT n FROM Notification n WHERE n.event= :event and n.user= :user").setParameter("event", event).setParameter("user", user);
         List<Notification> result = new ArrayList<>(query.getResultList());
@@ -76,7 +97,7 @@ public class EventManager {
 
         Query query2 = em.createQuery("Delete From Notification n Where n.event= :event").setParameter(("event"), event);
         query2.executeUpdate();
-        Query query3 = em.createQuery("Delete From Event e Where e.idEvent= :event").setParameter(("event"), event.getIdEvent());
+        Query query3 = em.createQuery("Delete From Event e Where e.getIdEvent.getId= :event").setParameter(("event"), event);
         query3.executeUpdate();
 
     }

@@ -6,6 +6,7 @@
 package MeteoCal.business.security;
 
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.IDEvent;
 import MeteoCal.business.security.entity.Users;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 public class EventCreator {
     
-    private int idEvent;
+    private IDEvent idEvent;
 
     private Users creator = new Users();
 
@@ -107,11 +108,11 @@ public class EventCreator {
         this.endDate = endDate;
     }
 
-    public int getIdEvent() {
+    public IDEvent getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(int idEvent) {
+    public void setIdEvent(IDEvent idEvent) {
         this.idEvent = idEvent;
     }
 

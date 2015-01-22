@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -37,11 +38,9 @@ public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-   // @Column(name = "idEvent")
-    private Integer idEvent;
+    @OneToOne
+    private IDEvent idEvent;
+
     
     //@Column(name = "isPublic")
     private Boolean isPublic;
@@ -61,14 +60,14 @@ public class Event implements Serializable {
     
     //@Size(max = 45)
     //@Column(name = "weather")
-    private String weather;
+//    private String weather;
     
     //@Column(name = "startTime")
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp startTime;
     
     //@Column(name = "endTime")
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp endTime;
     
     //@Column(name = "date")
@@ -105,17 +104,17 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(Integer idEvent) {
+    public Event(IDEvent idEvent) {
         this.idEvent = idEvent;
     }
 
    /////GETTERS AND SETTERS 
     
-    public Integer getIdEvent() {
+    public IDEvent getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(Integer idEvent) {
+    public void setIdEvent(IDEvent idEvent) {
         this.idEvent = idEvent;
     }
 
@@ -144,13 +143,13 @@ public class Event implements Serializable {
         this.isOutdoor = isOutdoor;
     }
 
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
+//    public String getWeather() {
+//        return weather;
+//    }
+//
+//    public void setWeather(String weather) {
+//        this.weather = weather;
+//    }
 
     public Timestamp getStartTime() {
         return startTime;

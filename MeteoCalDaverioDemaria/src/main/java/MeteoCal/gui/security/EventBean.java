@@ -7,10 +7,12 @@ package MeteoCal.gui.security;
 
 import MeteoCal.business.security.EventCreator;
 import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.IDEventManagerInterface;
 import MeteoCal.business.security.boundary.NotificationManagerInterface;
 import MeteoCal.business.security.boundary.OwmClientInterface;
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.IDEvent;
 import MeteoCal.business.security.entity.Notification;
 import MeteoCal.exception.InvalidDateException;
 import java.io.Serializable;
@@ -46,6 +48,8 @@ public class EventBean implements Serializable {
     private UserManager um;
     @EJB
     private NotificationManagerInterface nm;
+    @EJB
+    private IDEventManagerInterface idm;
     @EJB
     private OwmClientInterface weather;
     
@@ -148,14 +152,14 @@ public class EventBean implements Serializable {
     private void addEvent() throws InvalidDateException {
 
         if (this.controlDate()) {
-            int idEv = new IDEvent(idm.findFirstFreeID());
+            IDEvent idEv = new IDEvent(idm.findFirstFreeID());
             eventCreated.setIdEvent(idEv);
             eventCreated.setCreator(um.getLoggedUser());
             Event event = new Event();
 
             event.loadEvent(eventCreated);
 
-            em.addEvent(event, um.getLoggedUser());
+            em.addEvent(event);
             weather.push(event.getPlace());
         } else {
             throw new InvalidDateException();

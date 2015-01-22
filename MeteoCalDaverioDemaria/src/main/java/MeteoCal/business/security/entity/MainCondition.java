@@ -20,16 +20,16 @@ public class MainCondition implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    String condition;
+    String conditione;
 
     
     //GETTERS AND SETTERS
     public String getCondition() {
-        return condition;
+        return conditione;
     }
 
     public void setCondition(String Condition) {
-        this.condition = Condition;
+        this.conditione = Condition;
     }
 
      
