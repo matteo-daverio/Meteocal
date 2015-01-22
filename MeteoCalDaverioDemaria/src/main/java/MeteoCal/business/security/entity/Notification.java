@@ -6,64 +6,88 @@
 package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  *
  * @author DeMaria
  */
 @Entity
-@Table(name = "notification")
+//@Table(name = "notification")
 
-@NamedQueries({
+//@NamedQueries({
     //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
     //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
 
-})
+//})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     
+//    @Id
+//    @Basic(optional = false)
+//    @NotNull
+//    @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
+//    @Column(name = "idNotification")
+//    private Integer idNotification;
+    
     @Id
-    @Basic(optional = false)
     @NotNull
-    @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-    @Column(name = "idNotification")
-    private Integer idNotification;
+    @GeneratedValue(generator = "increment")
+    private int idNotification;
     
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    
-    @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
-    @ManyToOne
-    private Event eventidEvent;
-    
-    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
-    @ManyToOne
-    private Users usersidUsers;
+    @ManyToOne(targetEntity = Event.class, optional = false, fetch = FetchType.EAGER)
+    private Event event;
 
+    @ManyToOne(targetEntity = Users.class, optional = false, fetch = FetchType.EAGER)
+    private Users user;
+
+    private boolean creator;
+
+    private boolean accepted;
+
+    private boolean view;
+
+    
+//    @Column(name = "date")
+//    @Temporal(TemporalType.DATE)
+//    private Date date;
+    
+//    @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
+//    @ManyToOne
+//    private Event eventidEvent;
+//    
+//    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
+//    @ManyToOne
+//    private Users usersidUsers;
+
+    ///COSTRUTTORI /////
+    
     public Notification() {
     }
 
-    public Notification(Integer idNotification) {
-        this.idNotification = idNotification;
+    
+    public Notification(Event event, Users user, boolean creator) {
+        this.event = event;
+        this.user = user;
+        this.creator = creator;
     }
 
+    
+//    public Notification(Integer idNotification) {
+//        this.idNotification = idNotification;
+//    }
+
+    
+    
+  //GETTERS AND SETTERS
+    
     public Integer getIdNotification() {
         return idNotification;
     }
@@ -71,50 +95,73 @@ public class Notification implements Serializable {
     public void setIdNotification(Integer idNotification) {
         this.idNotification = idNotification;
     }
+//
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
+//
+//    public Event getEventidEvent() {
+//        return eventidEvent;
+//    }
+//
+//    public void setEventidEvent(Event eventidEvent) {
+//        this.eventidEvent = eventidEvent;
+//    }
+//
+//    public Users getUsersidUsers() {
+//        return usersidUsers;
+//    }
+//
+//    public void setUsersidUsers(Users usersidUsers) {
+//        this.usersidUsers = usersidUsers;
+//    }
 
-    public Date getDate() {
-        return date;
+    
+    public boolean isCreator() {
+        return creator;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreator(boolean creator) {
+        this.creator = creator;
     }
 
-    public Event getEventidEvent() {
-        return eventidEvent;
+    public boolean isAccepted() {
+        return accepted;
     }
 
-    public void setEventidEvent(Event eventidEvent) {
-        this.eventidEvent = eventidEvent;
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
-    public Users getUsersidUsers() {
-        return usersidUsers;
+    public boolean isView() {
+        return view;
     }
 
-    public void setUsersidUsers(Users usersidUsers) {
-        this.usersidUsers = usersidUsers;
+    public void setView(boolean view) {
+        this.view = view;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idNotification != null ? idNotification.hashCode() : 0);
-        return hash;
+   public Event getEvent() {
+        return event;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Notification)) {
-            return false;
-        }
-        Notification other = (Notification) object;
-        if ((this.idNotification == null && other.idNotification != null) || (this.idNotification != null && !this.idNotification.equals(other.idNotification))) {
-            return false;
-        }
-        return true;
+    public void setEvent(Event event) {
+        this.event = event;
     }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+   //////////////////OVVERRIDES//////////////////////// 
 
     @Override
     public String toString() {

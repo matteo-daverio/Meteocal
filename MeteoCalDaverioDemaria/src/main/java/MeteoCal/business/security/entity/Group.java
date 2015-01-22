@@ -10,5 +10,5 @@ package MeteoCal.business.security.entity;
  * @author DeMaria
  */
 public class Group {
-    public static final String USERS = "users";
+    public static final String USERS = "USERS";
 }

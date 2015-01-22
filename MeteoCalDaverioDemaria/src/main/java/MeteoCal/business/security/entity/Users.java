@@ -7,80 +7,71 @@ package MeteoCal.business.security.entity;
 
 import MeteoCal.business.security.control.PasswordEncrypter;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author DeMaria
  */
 @Entity
-@Table(name = "users")
-@NamedQueries({
-    @NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
-    @NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
-    @NamedQuery(name= Users.complete, query="SELECT u.name FROM Users u WHERE u.name LIKE ':value%'")
-})
+//@Table(name = "users")
+//@NamedQueries({
+    //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
+    //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
+    //@NamedQuery(name= Users.complete, query="SELECT u.name FROM Users u WHERE u.name LIKE ':value%'")
+//})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
    
-    public static final String findAll = "Users.findAll";
-    public static final String count = "Users.count";
-    public static final String complete ="Users.complete";
+    //public static final String findAll = "Users.findAll";
+    //public static final String count = "Users.count";
+    //public static final String complete ="Users.complete";
     
-    @Size(max = 255)
-    @Column(name = "mail")
+    //@Size(max = 255)
+    //@Column(name = "mail")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String mail;
     
-    @Size(max = 255)
-    @Column(name = "name")
+    //@Size(max = 255)
+    //@Column(name = "name")
     private String name;
     
-    @Size(max = 255)
-    @Column(name = "psw")
+    //@Size(max = 255)
+    //@Column(name = "psw")
     private String psw;
     
     @NotNull(message = "May not be empty")
     private String groupName;
-        
-    @JoinTable(name = "participation", joinColumns = {
-        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
-        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
-    @ManyToMany
-    private Collection<Event> eventCollection;
     
-    @OneToMany(mappedBy = "usersidUsers")
-    private Collection<Notification> notificationCollection;
+    @NotNull
+    private boolean publicCalendar = false;
     
-    @OneToMany(mappedBy = "usersidUsers")
-    private Collection<Invitation> invitationCollection;
+//    @JoinTable(name = "participation", joinColumns = {
+//        @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")}, inverseJoinColumns = {
+//        @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")})
+//    @ManyToMany
+//    private Collection<Event> eventCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
-    private Collection<Event> eventCollection1;
-    
-    @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
-    @ManyToOne
-    private Calendar calendaridCalendar;
+//    @OneToMany(mappedBy = "usersidUsers")
+//    private Collection<Notification> notificationCollection;
+//    
+//    @OneToMany(mappedBy = "usersidUsers")
+//    private Collection<Invitation> invitationCollection;
+//    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersidUsers")
+//    private Collection<Event> eventCollection1;
+//    
+//    @JoinColumn(name = "Calendar_idCalendar", referencedColumnName = "idCalendar")
+//    @ManyToOne
+//    private Calendar calendaridCalendar;
 
+  ///COSTRUTTORI  
+    
     public Users() {
     }
 
@@ -96,6 +87,9 @@ public class Users implements Serializable {
 //        this.idUsers = idUsers;
 //    }
 //    
+    
+  ////GETTERS AND SETTERS
+    
     public String getMail() {
         return mail;
     }
@@ -128,49 +122,65 @@ public class Users implements Serializable {
         return groupName;
     }
     
-    @XmlTransient
-    public Collection<Event> getEventCollection() {
-        return eventCollection;
+    public boolean isPublicCalendar() {
+        return publicCalendar;
     }
 
-    public void setEventCollection(Collection<Event> eventCollection) {
-        this.eventCollection = eventCollection;
+    public void setPublicCalendar(boolean publicCalendar) {
+        this.publicCalendar = publicCalendar;
     }
 
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
+    //////OVERRIDES
+    
+    @Override
+    public String toString() {
+        return mail;
     }
 
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
+    
+//    @XmlTransient
+//    public Collection<Event> getEventCollection() {
+//        return eventCollection;
+//    }
+//
+//    public void setEventCollection(Collection<Event> eventCollection) {
+//        this.eventCollection = eventCollection;
+//    }
 
-    @XmlTransient
-    public Collection<Invitation> getInvitationCollection() {
-        return invitationCollection;
-    }
-
-    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
-        this.invitationCollection = invitationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Event> getEventCollection1() {
-        return eventCollection1;
-    }
-
-    public void setEventCollection1(Collection<Event> eventCollection1) {
-        this.eventCollection1 = eventCollection1;
-    }
-
-    public Calendar getCalendaridCalendar() {
-        return calendaridCalendar;
-    }
-
-    public void setCalendaridCalendar(Calendar calendaridCalendar) {
-        this.calendaridCalendar = calendaridCalendar;
-    }
+//    @XmlTransient
+//    public Collection<Notification> getNotificationCollection() {
+//        return notificationCollection;
+//    }
+//
+//    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+//        this.notificationCollection = notificationCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Invitation> getInvitationCollection() {
+//        return invitationCollection;
+//    }
+//
+//    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+//        this.invitationCollection = invitationCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Event> getEventCollection1() {
+//        return eventCollection1;
+//    }
+//
+//    public void setEventCollection1(Collection<Event> eventCollection1) {
+//        this.eventCollection1 = eventCollection1;
+//    }
+//
+//    public Calendar getCalendaridCalendar() {
+//        return calendaridCalendar;
+//    }
+//
+//    public void setCalendaridCalendar(Calendar calendaridCalendar) {
+//        this.calendaridCalendar = calendaridCalendar;
+//    }
 
 //    @Override
 //    public int hashCode() {

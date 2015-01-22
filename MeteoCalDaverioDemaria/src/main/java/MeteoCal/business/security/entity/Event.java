@@ -7,40 +7,32 @@ package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
 import java.security.Timestamp;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author DeMaria
  */
 @Entity
-@Table(name = "event")
+//@Table(name = "event")
 
-@NamedQueries({
+//@NamedQueries({
     //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
     //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
 
-})
+//})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -48,59 +40,63 @@ public class Event implements Serializable {
     @Basic(optional = false)
     @NotNull
     @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-    @Column(name = "idEvent")
+   // @Column(name = "idEvent")
     private Integer idEvent;
     
-    @Column(name = "isPublic")
+    //@Column(name = "isPublic")
     private Boolean isPublic;
     
-    @Column(name="title")
+    //@Column(name="title")
     private String title;
     
-    @Size(max = 45)
-    @Column(name = "place")
-    private String where;
+    //@Size(max = 45)
+    //@Column(name = "place")
+    @NotNull(message = "May not be empty6")
+    @ManyToOne(targetEntity = Place.class, optional = false, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private Place place = new Place();
+
     
-    @Column(name = "isOutdoor")
+    //@Column(name = "isOutdoor")
     private Boolean isOutdoor;
     
-    @Size(max = 45)
-    @Column(name = "weather")
+    //@Size(max = 45)
+    //@Column(name = "weather")
     private String weather;
     
-    @Column(name = "startTime")
+    //@Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp startTime;
     
-    @Column(name = "endTime")
+    //@Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp endTime;
     
-    @Column(name = "date")
+    //@Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
     
-    @Column(name ="description")
+    //@Column(name ="description")
     private String description;
     
-    @ManyToMany(mappedBy = "eventCollection")
-    private Collection<Users> usersCollection;
-    
-    @ManyToMany(mappedBy = "eventCollection")
-    private Collection<Calendar> calendarCollection;
-    
-    @OneToMany(mappedBy = "eventidEvent")
-    private Collection<Notification> notificationCollection;
-    
-    @OneToMany(mappedBy = "eventidEvent")
-    private Collection<Invitation> invitationCollection;
+//    @ManyToMany(mappedBy = "eventCollection")
+//    private Collection<Users> usersCollection;
+//    
+//    @ManyToMany(mappedBy = "eventCollection")
+//    private Collection<Calendar> calendarCollection;
+//    
+//    @OneToMany(mappedBy = "eventidEvent")
+//    private Collection<Notification> notificationCollection;
+//    
+//    @OneToMany(mappedBy = "eventidEvent")
+//    private Collection<Invitation> invitationCollection;
     
     //@JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
-    @NotNull
-    @ManyToOne(targetEntity = Users.class,optional = false)
-    private Users creator;
+//    @NotNull
+//    @ManyToOne(targetEntity = Users.class,optional = false)
+//    private Users creator;
 
     
+  ////////COSTRUTTORI
     
     public Event() {
     }
@@ -109,6 +105,8 @@ public class Event implements Serializable {
         this.idEvent = idEvent;
     }
 
+   /////GETTERS AND SETTERS 
+    
     public Integer getIdEvent() {
         return idEvent;
     }
@@ -125,13 +123,14 @@ public class Event implements Serializable {
         this.isPublic = isPublic;
     }
 
-    public String getWhere() {
-        return where;
+    public Place getPlace() {
+        return place;
     }
 
-    public void setWhere(String where) {
-        this.where = where;
+    public void setPlace(Place Place) {
+        this.place = Place;
     }
+
 
     public Boolean getIsOutdoor() {
         return isOutdoor;
@@ -173,69 +172,51 @@ public class Event implements Serializable {
         this.date = date;
     }
 
-    @XmlTransient
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
-    }
+//    @XmlTransient
+//    public Collection<Users> getUsersCollection() {
+//        return usersCollection;
+//    }
+//
+//    public void setUsersCollection(Collection<Users> usersCollection) {
+//        this.usersCollection = usersCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Calendar> getCalendarCollection() {
+//        return calendarCollection;
+//    }
+//
+//    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
+//        this.calendarCollection = calendarCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Notification> getNotificationCollection() {
+//        return notificationCollection;
+//    }
+//
+//    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+//        this.notificationCollection = notificationCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Invitation> getInvitationCollection() {
+//        return invitationCollection;
+//    }
+//
+//    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
+//        this.invitationCollection = invitationCollection;
+//    }
+//
+//    public Users getCreator() {
+//        return creator;
+//    }
+//
+//    public void setCreator(Users creator) {
+//        this.creator = creator;
+//    }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
-    }
-
-    @XmlTransient
-    public Collection<Calendar> getCalendarCollection() {
-        return calendarCollection;
-    }
-
-    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
-        this.calendarCollection = calendarCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
-    }
-
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Invitation> getInvitationCollection() {
-        return invitationCollection;
-    }
-
-    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
-        this.invitationCollection = invitationCollection;
-    }
-
-    public Users getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Users creator) {
-        this.creator = creator;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idEvent != null ? idEvent.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Event)) {
-            return false;
-        }
-        Event other = (Event) object;
-        if ((this.idEvent == null && other.idEvent != null) || (this.idEvent != null && !this.idEvent.equals(other.idEvent))) {
-            return false;
-        }
-        return true;
-    }
+ ////OVERRIDES
 
     @Override
     public String toString() {
