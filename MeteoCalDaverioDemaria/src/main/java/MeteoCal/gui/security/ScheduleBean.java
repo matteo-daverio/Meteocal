@@ -12,19 +12,15 @@ import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.Forecast;
 import java.io.Serializable;
-import java.util.Date;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
+
 import javax.inject.Named;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
-import org.primefaces.event.SelectEvent;
+
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
@@ -33,7 +29,7 @@ import org.primefaces.model.ScheduleModel;
  *
  * @author Matteo
  */
-@ViewScoped
+@SessionScoped
 @Stateful
 @Named("scheduleBean")
 public class ScheduleBean implements Serializable {

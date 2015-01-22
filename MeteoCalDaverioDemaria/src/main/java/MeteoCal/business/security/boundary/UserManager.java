@@ -115,6 +115,7 @@ public class UserManager implements UserManagerInterface {
     public void save(Users user) throws Exception {
 
         user.setGroupName(Group.USERS);
+        user.setPublicCalendar(true);
         em.persist(user);
 
     }
