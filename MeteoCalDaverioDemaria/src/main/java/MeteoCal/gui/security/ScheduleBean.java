@@ -71,7 +71,7 @@ public class ScheduleBean implements Serializable {
             weather = this.getWeather(event);  
             temp = new DefaultScheduleEvent(event.getTitle(), event.getStartTime(), 
                     event.getEndTime(),weather);
-            temp.setDescription(event.getIdEvent().toString());
+            temp.setDescription(event.getIdEvent().getId().toString());
 
             boolean repeated = false;
             for (int i = 0; i < model.getEventCount(); i++) {
