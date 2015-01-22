@@ -155,7 +155,7 @@ public class EventManager {
     public boolean isIndoor(Event event) {
         Query query = em.createQuery("SELECT e FROM Event e WHERE e= :event").setParameter("event", event);
         List<Event> result = new ArrayList<>(query.getResultList());
-        return !result.get(0).getIsOutdoor();
+        return !result.get(0).isOutdoor();
     }
 
 
@@ -164,7 +164,7 @@ public class EventManager {
     
         Query query=em.createQuery("SELECT e FROM event e WHERE e =:event").setParameter("event", event);
         List<Event> result= new ArrayList<>(query.getResultList());
-        return result.get(0).getIsPublic();
+        return result.get(0).isPublic();
         
     }
     

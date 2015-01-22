@@ -5,6 +5,7 @@
  */
 package MeteoCal.business.security.entity;
 
+import MeteoCal.business.security.EventCreator;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -77,6 +78,10 @@ public class Event implements Serializable {
     //@Column(name ="description")
     private String description;
     
+    @NotNull(message = "May not be empty1")
+    @ManyToOne(targetEntity = Users.class, optional = false)
+    private Users creator;
+    
 //    @ManyToMany(mappedBy = "eventCollection")
 //    private Collection<Users> usersCollection;
 //    
@@ -114,7 +119,7 @@ public class Event implements Serializable {
         this.idEvent = idEvent;
     }
 
-    public Boolean getIsPublic() {
+    public Boolean isPublic() {
         return isPublic;
     }
 
@@ -131,7 +136,7 @@ public class Event implements Serializable {
     }
 
 
-    public Boolean getIsOutdoor() {
+    public Boolean isOutdoor() {
         return isOutdoor;
     }
 
@@ -185,6 +190,44 @@ public class Event implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public Users getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Users creator) {
+        this.creator = creator;
+    }
+    
+    /**
+     * convert date in Timestamp
+     *
+     * @param date
+     */
+    public void convertStartDate(Date date) {
+        startTime = new java.sql.Timestamp(date.getTime());
+    }
+
+    /**
+     * convert date in Timestamp
+     *
+     * @param date
+     */
+    public void convertEndDate(Date date) {
+        endTime = new java.sql.Timestamp(date.getTime());
+    }
+
+    public void loadEvent(EventCreator e) {
+        this.title = e.getTitle();
+        this.creator = e.getCreator();
+        this.description = e.getDescription();
+        this.idEvent = e.getIdEvent();
+        this.isOutdoor = e.isOutdoor();
+        this.place = new Place(e.getPlace());
+        this.isPublic = e.isPublicEvent();
+        this.startTime = e.getStartDate();
+        this.endTime = e.getEndDate();
     }
 
 //    @XmlTransient
