@@ -8,7 +8,7 @@
         <title>MeteoCal</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="homePage">
         <p:layout fullPage="true">
             <p:layoutUnit class="layoutClass" position="north" size="88">
                 <div class="content">
@@ -40,9 +40,9 @@
                             rightHeaderTemplate="month,agendaDay"
                             timeZone="GMT+1" widgetVar="myschedule">
                     
-                    <p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}" 
+                    <p:ajax event="dateSelect" listener="#{eventBean.onDateSelect}" 
                             update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}" 
+                    <p:ajax event="eventSelect" listener="#{eventBean.onEventSelect}" 
                             update="eventDetails" oncomplete="PF('eventDialog').show();" />
           
                 </p:schedule>
