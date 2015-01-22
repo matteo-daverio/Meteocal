@@ -27,7 +27,7 @@ public class SearchBean {
       private Users user;
       
       
-      private String value; //stringa per autocomplete
+    private String value; //stringa per autocomplete
       
     public SearchBean(){}
     
@@ -57,12 +57,12 @@ public class SearchBean {
     
     }
     
-    public void setValue(String value) {
-        this.value = value;
-    }
- 
-    public String getValue() {
+    public String getValue(){
         return value;
+    }
+    
+    public void setValue(String value){
+        this.value=value;
     }
     
 }
