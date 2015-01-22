@@ -11,10 +11,8 @@
             <p:layoutUnit class="layoutClass" position="north" size="88">
                 <div class="content">
                     <span class="siteName"> MeteoCal </span> 
-                    <p:spacer width="200" height="10" /> Search:
-                    <p:spacer width="15" height="10" />                
-                    <p:button  outcome="searchFromGuest" icon="ui-icon-search"  />
-                    <p:spacer width="310" height="10" />
+                    <p:spacer width="600" height="10" />
+                    
                     <p:link value="Log in" outcome="login"
                              style="color:white"/>
                     <p:spacer width="10" height="10" />
@@ -22,7 +20,7 @@
                 </div>
             </p:layoutUnit>
             <p:layoutUnit position="center">
-                <p:schedule id="schedule" value="#{scheduleBean.model}" 
+                <p:schedule id="schedule"  
                             class="schedule" aspectRatio="2.7"
                             leftHeaderTemplate="today"
                             centerHeaderTemplate="prevYear,prev,title,next,nextYear"

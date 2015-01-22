@@ -6,9 +6,9 @@
 package MeteoCal.gui.security;
 
 import MeteoCal.business.security.boundary.BadWeatherManagerInterface;
-import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.EventManagerInterface;
 import MeteoCal.business.security.boundary.ForecastManagerInterface;
-import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.boundary.UserManagerInterface;
 import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.Forecast;
 import java.io.Serializable;
@@ -37,9 +37,9 @@ public class ScheduleBean implements Serializable {
     
     private ScheduleModel model;
     @EJB
-    private EventManager em;
+    private EventManagerInterface em;
     @EJB
-    private UserManager um;
+    private UserManagerInterface um;
     @EJB
     private BadWeatherManagerInterface bwm;
     @EJB
