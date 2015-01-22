@@ -171,6 +171,22 @@ public class Event implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
+    
+    public String getTitle() {       
+        return title;
+    }
+
+    public void setTitle(String Title) {
+        this.title = Title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 //    @XmlTransient
 //    public Collection<Users> getUsersCollection() {

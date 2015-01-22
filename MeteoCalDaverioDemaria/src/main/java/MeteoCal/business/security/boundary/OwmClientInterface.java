@@ -5,6 +5,7 @@
  */
 package MeteoCal.business.security.boundary;
 
+import MeteoCal.business.security.entity.Place;
 import forecastService.WeatherForecastResponse;
 import forecastService.WeatherStatusResponse;
 import java.io.IOException;

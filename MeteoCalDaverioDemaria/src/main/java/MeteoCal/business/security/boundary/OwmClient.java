@@ -5,6 +5,9 @@
  */
 package MeteoCal.business.security.boundary;
 
+import MeteoCal.business.security.entity.Forecast;
+import MeteoCal.business.security.entity.MainCondition;
+import MeteoCal.business.security.entity.Place;
 import MeteoCal.gui.security.EventBean;
 import forecastService.ForecastWeatherData;
 import forecastService.StatusWeatherData;

@@ -6,6 +6,8 @@
 package MeteoCal.business.security.boundary;
 
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.Forecast;
+import MeteoCal.business.security.entity.Place;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remote;

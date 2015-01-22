@@ -9,8 +9,8 @@ import MeteoCal.business.security.EventCreator;
 import MeteoCal.business.security.boundary.EventManager;
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.Notification;
 import MeteoCal.exception.InvalidDateException;
-import MeteoCal.exception.OverlappingException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +47,7 @@ public class EventBean implements Serializable {
      * List of users selected by creator user
      */
     private List<String> selectedUsers = new ArrayList<>();
-    private UserEvent userEvent;
+    private Notification notification;
     private EventCreator eventCreated = new EventCreator();
     
     //booleans used to enable/disable buttons in dialog
@@ -66,9 +66,7 @@ public class EventBean implements Serializable {
         try {
             this.addEvent();
             this.addUserEvent();
-            context.addMessage(null, new FacesMessage("Successful", "Event Created"));
-        } catch (OverlappingException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e.getMessage()));
+            context.addMessage(null, new FacesMessage("Successful", "Event Created")); 
         } catch (InvalidDateException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Warning!", "Date not correct"));
         }
@@ -95,7 +93,6 @@ public class EventBean implements Serializable {
         this.startDate = selectedEvent.getStartDate();
         this.endDate = selectedEvent.getEndDate();
         this.loadInvitations();
-        this.loadPreferences();
     }
 
     
@@ -116,7 +113,7 @@ public class EventBean implements Serializable {
         this.setEndDate(correction);
     }
     
-    private void addEvent() throws OverlappingException, InvalidDateException {
+    private void addEvent() throws InvalidDateException {
 
         if (this.controlDate()) {
             IDEvent idEv = new IDEvent(idm.findFirstFreeID());
@@ -138,12 +135,12 @@ public class EventBean implements Serializable {
     private void addUserEvent() {
         Event event = new Event();
         event.loadEvent(eventCreated);
-        userEvent = new UserEvent(event, um.getLoggedUser(), true);
-        uem.addUserEvent(userEvent);
+        notification = new Notification(event, um.getLoggedUser(), true);
+        uem.addUserEvent(notification);
         for (String invitated1 : selectedUsers) {
-            userEvent = new UserEvent(event, um.findByMail(invitated1), false);
-            uem.addUserEvent(userEvent);
-            mailSender.sendMail(invitated1, "Invitation", userEvent.getEvent().toString());
+            notification = new Notification(event, um.findByMail(invitated1), false);
+            uem.addUserEvent(notification);
+            mailSender.sendMail(invitated1, "Invitation", notification.getEvent().toString());
         }
     }
     
