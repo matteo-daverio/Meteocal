@@ -62,8 +62,8 @@ public class ForecastManager implements ForecastManagerInterface {
     public List<Forecast> getForecastOfEvent(Event event) {
 
         Query query = em.createQuery("SELECT distinct f FROM Forecast f JOIN f.place p WHERE p.city =:city and CAST(f.date AS DATE) between  CAST(:start AS DATE) and  CAST(:end AS DATE)").setParameter("city", event.getPlace().getCity());
-        query.setParameter("start", event.getStartDate());
-        query.setParameter("end", event.getEndDate());
+        query.setParameter("start", event.getStartTime());
+        query.setParameter("end", event.getEndTime());
         List<Forecast> result = new ArrayList<>(query.getResultList());
         return result;
 

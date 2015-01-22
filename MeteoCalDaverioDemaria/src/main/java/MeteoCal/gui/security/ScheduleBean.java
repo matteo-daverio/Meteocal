@@ -5,9 +5,12 @@
  */
 package MeteoCal.gui.security;
 
+import MeteoCal.business.security.boundary.BadWeatherManagerInterface;
 import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.ForecastManagerInterface;
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
+import MeteoCal.business.security.entity.Forecast;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +44,10 @@ public class ScheduleBean implements Serializable {
     private EventManager em;
     @EJB
     private UserManager um;
+    @EJB
+    private BadWeatherManagerInterface bwm;
+    @EJB
+    private ForecastManagerInterface fm;
     
     
     
@@ -86,7 +93,22 @@ public class ScheduleBean implements Serializable {
     private String getWeather(Event event) {
         String weather="";
         
-        
+        List<Forecast> forecastEvent = fm.getForecastOfEvent(event);
+        if (forecastEvent.isEmpty() || em.isIndoor(event)) {
+            return "NoForecast";
+        } else {
+
+        }
+        if (forecastEvent.size() > 1) {
+            weather = weather + "Variable";
+        } else {
+            weather = weather + forecastEvent.get(0).getMainCondition().getCondition();
+        }
+        if (bwm.isWarned(event)) {
+            weather = weather + "Warned";
+        } else {
+            weather = weather + "NotWarned";
+        }
         
         return weather;
     }
