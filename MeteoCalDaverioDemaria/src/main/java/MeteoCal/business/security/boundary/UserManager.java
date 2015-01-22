@@ -19,7 +19,7 @@ import javax.persistence.Query;
  * @author DeMaria
  */
 @Stateless
-public class UserManager {
+public class UserManager implements UserManagerInterface {
     
     @PersistenceContext
     EntityManager em;
@@ -42,7 +42,7 @@ public class UserManager {
      *
      * @return a list with all registered users
      */
-
+    @Override
     public List<String> getListUsers() {
         Query query;
         query = em.createQuery("SELECT e.mail FROM Users e WHERE e.mail!= :usermail").setParameter("usermail", principal.getName());
@@ -58,7 +58,7 @@ public class UserManager {
      * @param mail
      * @return the user
      */
- 
+    @Override
     public Users findByMail(String mail) {
 
         Query query;
@@ -79,7 +79,7 @@ public class UserManager {
      * @param status
      * @param user
      */
-  
+  @Override
     public void setCalendar(boolean status, Users user) {
 
         try {
@@ -100,7 +100,7 @@ public class UserManager {
      * @return a list of emails that contains all users with calendar sets as
      * public
      */
-   
+   @Override
     public List<String> getListUsersPublic() {
 
         Query query;
@@ -111,7 +111,7 @@ public class UserManager {
     }
 
 
-    
+    @Override
     public void save(Users user) throws Exception {
 
         user.setGroupName(Group.USERS);
@@ -119,12 +119,12 @@ public class UserManager {
 
     }
 
-   
+   @Override
     public void unregister() {
         em.remove(getLoggedUser());
     }
 
-  
+  @Override
     public Users getLoggedUser() {
         return em.find(Users.class, principal.getName());
 
