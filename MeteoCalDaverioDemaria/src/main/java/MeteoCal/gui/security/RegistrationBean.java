@@ -11,6 +11,8 @@ import MeteoCal.business.security.entity.Users;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 
 
@@ -49,7 +51,14 @@ public class RegistrationBean {
      * @return 
      */
     public String register() {
+       try{ 
         um.save(user);
         return "user/home?faces-redirect=true";
+       } catch (Exception e) {
+      FacesContext context = FacesContext.getCurrentInstance(); 
+       context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Username Already USED"));
+    return "";
+       }
     }
+
 } 

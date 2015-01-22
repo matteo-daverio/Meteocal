@@ -5,8 +5,8 @@
  */
 package MeteoCal.gui.security;
 
-import MeteoCal.business.security.boundary.UserManager;
-import MeteoCal.business.security.entity.Users;
+import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.entity.Event;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -21,48 +21,47 @@ import javax.inject.Named;
 @RequestScoped
 public class SearchBean {
     
+    
+    ///FIELDS
+    
       @EJB
-      private UserManager um;
+      private EventManager em;
       
-      private Users user;
+      private String user_mail;
       
+     
+     ///GETTERS AND SETTERS 
+      public EventManager get_em(){
+          return this.em;
+      }
       
-    private String value; //stringa per autocomplete
+      public void set_em(EventManager em){
+          this.em=em;
+      }
       
+      public String get_user_mail(){
+          return this.user_mail;
+      }
+      
+      public void  set_user_mail(String mail){
+          this.user_mail = mail;
+      }
+      
+   
+    //CONSTRUCTORS  
     public SearchBean(){}
     
-    public Users getUser() {
-        if (user == null) {
-            user = new Users();
-        }
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public List<String> complete(String query){
-        
-        return um.complete(value);
-        
-    }
     
-    //restituisce gli utenti che hanno quel nome
-    public List<Users>Search(){
-     
-    return um.searchUsers(user);
+    /**
+     * given a mail it return the public events of that user
+     * @return 
+     */
+    public List<Event> Search(){
+    return  em.loadPublicCalendar(user_mail);
+ 
     
     //
     
-    }
-    
-    public String getValue(){
-        return value;
-    }
-    
-    public void setValue(String value){
-        this.value=value;
     }
     
 }
