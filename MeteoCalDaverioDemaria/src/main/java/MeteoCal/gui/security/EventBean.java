@@ -124,7 +124,7 @@ public class EventBean implements Serializable {
             eventCreated.setCreator(um.getLoggedUser());
             Event event = new Event();
 
-            event.loadEvent(beanEvent);
+            event.loadEvent(eventCreated);
 
             em.addEvent(event, um.getLoggedUser());
             weather.push(event.getPlace());
