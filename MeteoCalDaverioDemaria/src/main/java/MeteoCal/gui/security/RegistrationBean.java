@@ -30,7 +30,7 @@ public class RegistrationBean {
   private UserManager um;
   
   
-  private Users user;
+  private Users user=new Users();
     
     public RegistrationBean() {
     }
@@ -53,7 +53,7 @@ public class RegistrationBean {
     public String register() {
        try{ 
         um.save(user);
-        return "user/home?faces-redirect=true";
+        return "index.xhtml?faces-redirect=true";
        } catch (Exception e) {
       FacesContext context = FacesContext.getCurrentInstance(); 
        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "Username Already USED"));
