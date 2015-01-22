@@ -61,13 +61,13 @@ public class UserManager {
         //Query pippo =em.createQuery("SELECT u FROM Users u");
         //TypedQuery<Users> pippo = em.createNamedQuery(Users.findAll, Users.class);
             
-        //Query q = em.createQuery("SELECT u.name FROM Users u WHERE u.name LIKE :value").setParameter("value", "gabr");
+        //Query q = em.createQuery("SELECT u.name FROM Users u WHERE u.name LIKE 'g%'");
         //List<Users> l = pippo.getResultList();
         
         
-        //List<String> s = em.createNamedQuery(Users.complete).setParameter("valore", "gabr").getResultList();
+        List<String> s = em.createNamedQuery(Users.complete).setParameter("value", "g").getResultList();
         
-        //System.out.println("RISULTATO=>" + s.get(0));
+        System.out.println("RISULTATO=>" + s.get(0));
         
     }
 

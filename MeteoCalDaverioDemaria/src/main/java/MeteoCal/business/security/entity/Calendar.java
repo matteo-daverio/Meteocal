@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
    // @NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
    // @NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
+    //@NamedQuery(name = Calendar.finAllUsersEvent, query= "SELECT e FROM event_has_calendar")
 
 })
 

@@ -33,7 +33,7 @@ public class EventManager {
     }
     
     @Inject
-    Principal principal;
+    Principal principal;//rappresenta il chiamante, viene iniettata ad ogni nuova chiamata
     
     
 

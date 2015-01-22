@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
     @NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
-    @NamedQuery(name= Users.complete, query="SELECT u.name FROM Users u WHERE u.name LIKE :valore")
+    @NamedQuery(name= Users.complete, query="SELECT u.name FROM Users u WHERE u.name LIKE ':value%'")
 })
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;

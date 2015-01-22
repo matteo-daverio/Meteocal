@@ -6,6 +6,7 @@
 package MeteoCal.business.security.entity;
 
 import java.io.Serializable;
+import java.security.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -53,6 +54,9 @@ public class Event implements Serializable {
     @Column(name = "isPublic")
     private Boolean isPublic;
     
+    @Column(name="title")
+    private String title;
+    
     @Size(max = 45)
     @Column(name = "place")
     private String where;
@@ -66,15 +70,18 @@ public class Event implements Serializable {
     
     @Column(name = "startTime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private Timestamp startTime;
     
     @Column(name = "endTime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private Timestamp endTime;
     
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    
+    @Column(name ="description")
+    private String description;
     
     @ManyToMany(mappedBy = "eventCollection")
     private Collection<Users> usersCollection;
@@ -88,10 +95,13 @@ public class Event implements Serializable {
     @OneToMany(mappedBy = "eventidEvent")
     private Collection<Invitation> invitationCollection;
     
-    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
-    @ManyToOne(optional = false)
-    private Users usersidUsers;
+    //@JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
+    @NotNull
+    @ManyToOne(targetEntity = Users.class,optional = false)
+    private Users creator;
 
+    
+    
     public Event() {
     }
 
@@ -139,19 +149,19 @@ public class Event implements Serializable {
         this.weather = weather;
     }
 
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -199,12 +209,12 @@ public class Event implements Serializable {
         this.invitationCollection = invitationCollection;
     }
 
-    public Users getUsersidUsers() {
-        return usersidUsers;
+    public Users getCreator() {
+        return creator;
     }
 
-    public void setUsersidUsers(Users usersidUsers) {
-        this.usersidUsers = usersidUsers;
+    public void setCreator(Users creator) {
+        this.creator = creator;
     }
 
     @Override
