@@ -8,6 +8,7 @@ package MeteoCal.gui.security;
 import MeteoCal.business.security.boundary.EventManager;
 import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,7 +25,7 @@ import org.primefaces.model.ScheduleModel;
  */
 @ViewScoped
 @Named
-public class PublicScheduleBean {
+public class PublicScheduleBean implements Serializable {
     
     @EJB
     EventManager em;
@@ -69,6 +70,7 @@ public class PublicScheduleBean {
     
     /**
      * getter e setter
+     * @return
      */
     public ScheduleModel getEventModel() {
         return eventModel;

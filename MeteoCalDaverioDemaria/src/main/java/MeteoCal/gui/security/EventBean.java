@@ -478,6 +478,13 @@ public class EventBean implements Serializable {
         this.r = r;
     }
     
+     public IDEventManagerInterface getIdm() {
+        return idm;
+    }
+
+    public void setIdm(IDEventManagerInterface idm) {
+        this.idm = idm;
+    }
     
     
     
