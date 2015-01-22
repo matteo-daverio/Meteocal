@@ -295,12 +295,10 @@ public class EventBean implements Serializable {
      * of warning for weather condition
      *
      * @param event the @Event to change
-     * @param pref @Event preferences
      * @param userEvent @Event invitations
-     * @throws OverlappingException
      * @throws InvalidDateException
      */
-    public void modifyFromWarning(Event event, List<String> pref, List<String> userEvent) throws InvalidDateException {
+    public void modifyFromWarning(Event event, List<String> userEvent) throws InvalidDateException {
         em.removeEvent(event);
         this.resetBean();
         this.selectedUsers = userEvent;

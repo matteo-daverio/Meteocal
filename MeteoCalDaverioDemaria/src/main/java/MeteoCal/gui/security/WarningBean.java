@@ -42,9 +42,7 @@ public class WarningBean {
     @EJB
     EventManagerInterface em;
     @EJB
-    PreferenceManagerInterface pm;
-    @EJB
-    NotificationManagerInterface uem;
+    NotificationManagerInterface nm;
 
 
     /*
@@ -155,10 +153,7 @@ public class WarningBean {
      */
     public void modify(Event event, Timestamp solut, EventBean eb) throws  InvalidDateException {
 
-
-       List<String> preferenceEvent = pm.getPreferenceOfEvent(event);
-       
-        List<String> userEvent = uem.invitedUsersOfEvent(event);
+        List<String> userEvent = nm.invitedUsersOfEvent(event);
         long diff = event.getEndTime().getTime() - event.getStartTime().getTime();
         Timestamp help;
 
@@ -166,7 +161,7 @@ public class WarningBean {
         help = new Timestamp(0);
         help.setTime(solut.getTime() + diff);
         event.setEndTime(help);
-        eb.modifyFromWarning(event, preferenceEvent, userEvent);
+        eb.modifyFromWarning(event, userEvent);
     }
 
     /**
