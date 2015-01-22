@@ -27,6 +27,7 @@ public class SearchBean {
       @EJB
       private EventManager em;
       
+      
       private String user_mail;
       
      

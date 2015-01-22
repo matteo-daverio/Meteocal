@@ -34,7 +34,7 @@ public class Users implements Serializable {
     //@Size(max = 255)
     //@Column(name = "mail")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private String mail;
     
     //@Size(max = 255)
