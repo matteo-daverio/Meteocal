@@ -9,31 +9,30 @@
     </h:head>
     <h:body>
         <h:form id="homePage">
-        <p:layout fullPage="true">
-            <p:layoutUnit class="layoutClass" position="north" size="88">
-                <div class="content">
-                    <span class="siteName"> MeteoCal </span> 
-                    <p:spacer width="180" height="10" /> Search:
-                    <p:spacer width="15" height="10" />                
-                    <p:inputText id="searchTxt" />
-                    <p:button  outcome="search" icon="ui-icon-search"  />
-                    <p:watermark for="searchTxt" value="Insert username" />
-                    <p:spacer width="40" height="10" /> 
-                    <p:link outcome="option"
-                              value="ANCORA DA INSERIRE" style="color:white"/>
-                    <p:spacer width="10" height="10" />
-                    <p:link value="Home" outcome="home" style="color:white"/>
-                    <p:spacer width="10" height="10" />
-                    <p:link outcome="notification"
-                                   style="color:white">News<span class="count">
-                                        3</span></p:link>
-                    <p:spacer width="20" height="10" />
-                    <p:commandLink value="Logout" action="#{loginBean.logout()}"
+            <p:layout fullPage="true">
+                <p:layoutUnit class="layoutClass" position="north" size="88">
+                    <div class="content">
+                        <span class="siteName"> MeteoCal </span> 
+                        <p:spacer width="180" height="10" /> Search:
+                        <p:spacer width="15" height="10" />                
+                        <p:inputText id="searchTxt" />
+                        <p:button  outcome="search" icon="ui-icon-search"  />
+                        <p:watermark for="searchTxt" value="Insert username" />
+                        <p:spacer width="40" height="10" /> 
+                        <p:link outcome="option"
+                                value="ANCORA DA INSERIRE" style="color:white"/>
+                        <p:spacer width="10" height="10" />
+                        <p:link value="Home" outcome="home" style="color:white"/>
+                        <p:spacer width="10" height="10" />
+                        <p:link value="News" outcome="notification" style="color:white" />
+                        <span class="count">3</span>
+                        <p:spacer width="20" height="10" />
+                        <p:commandLink value="Logout" action="#{loginBean.logout()}"
                                    style="color: white"/>
-                </div>
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <p:schedule id="schedule"  
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <p:schedule id="schedule"  
                             class="schedule" aspectRatio="2.7"
                             leftHeaderTemplate="today"
                             centerHeaderTemplate="prev,title,next"
@@ -41,59 +40,59 @@
                             timeZone="GMT+1" widgetVar="myschedule">
                     
           
-                </p:schedule>
-            </p:layoutUnit>
-        </p:layout>
+                    </p:schedule>
+                </p:layoutUnit>
+            </p:layout>
         
-        <p:dialog header="Notification" widgetVar="dlgNotify" showEffect="explode" 
+            <p:dialog header="Notification" widgetVar="dlgNotify" showEffect="explode" 
                   hideEffect="bounce" height="130" position="right,top">
-            <h:panelGrid columns="3">
-                <h:outputText value="Username: " /> 
-                <p:inputText />
-                <h:outputText value="Password: " /> 
-                <p:password />
-            </h:panelGrid>
-            <br/>
-            <p:commandButton value="Log in" type="button" />
-        </p:dialog>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Username: " /> 
+                    <p:inputText />
+                    <h:outputText value="Password: " /> 
+                    <p:password />
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Log in" type="button" />
+            </p:dialog>
         
-        <p:dialog header="Option" widgetVar="dlgOption" showEffect="explode" 
+            <p:dialog header="Option" widgetVar="dlgOption" showEffect="explode" 
                   hideEffect="bounce" height="100" position="top,right" width="300" resizable="false" >
-            <h:form id="dialogForm">
-            <h:panelGrid columns="2" >
+                <h:form id="dialogForm">
+                <h:panelGrid columns="2" >
                 <h:outputText value="Private Calendar: " />            
                 <p:selectBooleanCheckbox />
-            </h:panelGrid>
-            </h:form>
-            <br/>
-            <h:form id="buttonForm">
-            <p:commandButton value="Save Option" type="button" ajax="false" />
-            </h:form>
-        </p:dialog>
+                </h:panelGrid>
+                </h:form>
+                <br/>
+                <h:form id="buttonForm">
+                <p:commandButton value="Save Option" type="button" ajax="false" />
+                </h:form>
+            </p:dialog>
         
-        <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
-            <h:panelGrid id="eventDetails" columns="2">
-                <h:outputLabel for="title" value="Title:" />
-                <p:inputText id="title"  required="true" />
+            <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                <h:panelGrid id="eventDetails" columns="2">
+                    <h:outputLabel for="title" value="Title:" />
+                    <p:inputText id="title"  required="true" />
  
-                <h:outputLabel for="from" value="From:" />
-                <p:inputMask id="from"  mask="99/99/9999">
-                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+1"/>
-                </p:inputMask>
+                    <h:outputLabel for="from" value="From:" />
+                    <p:inputMask id="from"  mask="99/99/9999">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+1"/>
+                    </p:inputMask>
  
-                <h:outputLabel for="to" value="To:" />
-                <p:inputMask id="to"  mask="99/99/9999">
-                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+1"/>
-                </p:inputMask>
+                    <h:outputLabel for="to" value="To:" />
+                    <p:inputMask id="to"  mask="99/99/9999">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+1"/>
+                    </p:inputMask>
  
-                <h:outputLabel for="allDay" value="All Day:" />
-                <h:selectBooleanCheckbox id="allDay"  />
+                    <h:outputLabel for="allDay" value="All Day:" />
+                    <h:selectBooleanCheckbox id="allDay"  />
  
-                <p:commandButton type="reset" value="Reset" />
-                <p:commandButton id="addButton" value="Save" 
+                    <p:commandButton type="reset" value="Reset" />
+                    <p:commandButton id="addButton" value="Save" 
                                  oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-            </h:panelGrid>
-        </p:dialog>    
+                </h:panelGrid>
+            </p:dialog>    
         </h:form>
         <style type="text/css">
             
