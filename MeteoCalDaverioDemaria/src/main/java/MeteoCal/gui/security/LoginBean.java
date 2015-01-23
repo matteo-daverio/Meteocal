@@ -55,7 +55,7 @@ public class LoginBean {
      * @return
      */
     public String getName() {
-        return um.getLoggedUser().getMail();
+        return um.getLoggedUser().getName();
     }
     
     public String login() {

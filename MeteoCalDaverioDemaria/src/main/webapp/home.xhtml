@@ -20,7 +20,7 @@
                         <p:watermark for="searchTxt" value="Insert username" />
                         <p:spacer width="40" height="10" /> 
                         <p:link outcome="option"
-                                value="ANCORA DA INSERIRE" style="color:white"/>
+                                value="#{loginBean.name}" style="color:white"/>
                         <p:spacer width="10" height="10" />
                         <p:link value="Home" outcome="home" style="color:white"/>
                         <p:spacer width="10" height="10" />
@@ -32,7 +32,7 @@
                     </div>
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
-                    <p:schedule id="schedule"  
+                    <p:schedule id="schedule"  value="#{scheduleBean.model}"
                             class="schedule" aspectRatio="2.7"
                             leftHeaderTemplate="today"
                             centerHeaderTemplate="prev,title,next"
