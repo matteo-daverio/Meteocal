@@ -77,7 +77,7 @@ public class InvitationBean implements Serializable {
     public int loadNumberOfInvites(Users user){
       return nm.counterNotification(user);
     }
-    
+    //
     /**
      * User Accept Invitation
      *
