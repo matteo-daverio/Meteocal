@@ -5,14 +5,13 @@
  */
 package MeteoCal.gui.security;
 
-import MeteoCal.business.security.LoggerProducer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import MeteoCal.business.security.boundary.UserManagerInterface;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,13 +19,13 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author DeMaria
  */
-@Named
+@Named("loginBean")
 @RequestScoped
+@Stateful
 public class LoginBean {
     
-    @Inject
-    private Logger logger;
-    
+    @EJB
+    UserManagerInterface um;    
 
     private String username;
     private String password;
@@ -50,24 +49,35 @@ public class LoginBean {
         this.password = password;
     }
 
+    /**
+     * Return email of logged User
+     *
+     * @return
+     */
+    public String getName() {
+        return um.getLoggedUser().getMail();
+    }
+    
     public String login() {
-        logger.log(Level.INFO,"Logging in");
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.login(this.username, this.password);
-            return "/user/home";
         } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login Failed","Login Failed"));
-            logger.log(Level.SEVERE,"Login Failed");
-            return null;
+            context.addMessage(null, new FacesMessage("Login Failed"));
+            return "";
         }
+        
+        return "home?faces-redirect=true";
     }
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        request.getSession().invalidate();
-        logger.log(Level.INFO, "User Logged out");
-        return "/index?faces-redirect=true";
+        try{
+            request.logout();
+        } catch(ServletException e){
+            context.addMessage(null, new FacesMessage("Logout Failed"));
+        }
+        return "index?faces-redirect=true";
     }
 }

@@ -5,8 +5,8 @@
  */
 package MeteoCal.gui.security;
 
-import MeteoCal.business.security.boundary.EventManager;
-import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.boundary.EventManagerInterface;
+import MeteoCal.business.security.boundary.UserManagerInterface;
 import MeteoCal.business.security.entity.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,9 +28,9 @@ import org.primefaces.model.ScheduleModel;
 public class PublicScheduleBean implements Serializable {
     
     @EJB
-    EventManager em;
+    EventManagerInterface em;
     @EJB
-    UserManager um;
+    UserManagerInterface um;
     
     private List<String> users = new ArrayList<>();
     private Event event;

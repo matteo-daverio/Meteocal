@@ -6,11 +6,11 @@
 package MeteoCal.gui.security;
 
 import MeteoCal.business.security.EventCreator;
-import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.EventManagerInterface;
 import MeteoCal.business.security.boundary.IDEventManagerInterface;
 import MeteoCal.business.security.boundary.NotificationManagerInterface;
 import MeteoCal.business.security.boundary.OwmClientInterface;
-import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.boundary.UserManagerInterface;
 import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.IDEvent;
 import MeteoCal.business.security.entity.Notification;
@@ -43,9 +43,9 @@ public class EventBean implements Serializable {
     RequestContext r;
     
     @EJB
-    private EventManager em;
+    private EventManagerInterface em;
     @EJB
-    private UserManager um;
+    private UserManagerInterface um;
     @EJB
     private NotificationManagerInterface nm;
     @EJB
@@ -256,7 +256,7 @@ public class EventBean implements Serializable {
     }
     
     /**
-     * Function that cancel ( and all consequent invitations and preferences )
+     * Function that cancel ( and all consequent invitations)
      * the event selected in database using fields modified by user
      */
     public void cancel() {
@@ -287,7 +287,7 @@ public class EventBean implements Serializable {
 
         Notification ue=nm.getNotificationofUser(event, um.getLoggedUser());
         nm.modifyNotification(ue, false, false);
-        return "calendar?faces-redirect=true";
+        return "home?faces-redirect=true";
     }
     
     /**
@@ -396,11 +396,11 @@ public class EventBean implements Serializable {
     }
 
 
-    public EventManager getEm() {
+    public EventManagerInterface getEm() {
         return em;
     }
 
-    public void setEm(EventManager em) {
+    public void setEm(EventManagerInterface em) {
         this.em = em;
     }
 
@@ -412,11 +412,11 @@ public class EventBean implements Serializable {
         this.nm = nm;
     }
 
-    public UserManager getUm() {
+    public UserManagerInterface getUm() {
         return um;
     }
 
-    public void setUm(UserManager um) {
+    public void setUm(UserManagerInterface um) {
         this.um = um;
     }
 

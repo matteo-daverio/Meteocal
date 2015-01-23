@@ -6,9 +6,9 @@
 package MeteoCal.gui.security;
 
 import MeteoCal.business.security.EventCreator;
-import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.EventManagerInterface;
 import MeteoCal.business.security.boundary.NotificationManagerInterface;
-import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.boundary.UserManagerInterface;
 import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.Notification;
 import java.io.Serializable;
@@ -28,9 +28,9 @@ import javax.inject.Named;
 public class InvitationBean implements Serializable {
     
     @EJB
-    EventManager em;
+    EventManagerInterface em;
     @EJB
-    UserManager um;
+    UserManagerInterface um;
     @EJB
     NotificationManagerInterface nm;
     
@@ -85,7 +85,7 @@ public class InvitationBean implements Serializable {
         Notification notification = nm.getNotificationofUser(event, um.getLoggedUser());
         nm.modifyNotification(notification, true, true);
         invites.remove(eventC);
-        return "calendar?faces-redirect=true";
+        return "home?faces-redirect=true";
     }
 
     /**
@@ -106,7 +106,7 @@ public class InvitationBean implements Serializable {
             noInvitation.setTitle("No Invitation");
             invites.add(noInvitation);
         }
-        return "calendar?faces-redirect=true";
+        return "home?faces-redirect=true";
     }
     
     

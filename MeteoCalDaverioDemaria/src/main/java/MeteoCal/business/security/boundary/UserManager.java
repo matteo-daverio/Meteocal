@@ -22,7 +22,11 @@ import javax.persistence.Query;
 public class UserManager implements UserManagerInterface {
     
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
+    
+    
+    @Inject
+    Principal principal;
    
     public EntityManager getEm() {
         return em;
@@ -33,8 +37,6 @@ public class UserManager implements UserManagerInterface {
     }
 
     
-    @Inject
-    Principal principal;
    
     
     

@@ -5,7 +5,7 @@
  */
 package MeteoCal.gui.security;
 
-import MeteoCal.business.security.boundary.UserManager;
+import MeteoCal.business.security.boundary.UserManagerInterface;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -19,7 +19,7 @@ import javax.inject.Named;
 public class SetCalendarBean {
     
     @EJB
-    UserManager um;
+    UserManagerInterface um;
     
     private boolean status = true;
     

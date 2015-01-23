@@ -108,7 +108,6 @@ public class WarningBean {
      * @param event
      * @param eb
      * @return
-     * @throws OverlappingException
      * @throws InvalidDateException
      */
     public String modifyButton(Event event, EventBean eb) throws InvalidDateException {
@@ -132,7 +131,7 @@ public class WarningBean {
                     }
                 }
             }
-            return "calendar?faces-redirect=true";
+            return "home?faces-redirect=true";
         }
         {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", "No Event To Modify"));
@@ -148,7 +147,6 @@ public class WarningBean {
      * @param event
      * @param solut
      * @param eb
-     * @throws OverlappingException
      * @throws InvalidDateException
      */
     public void modify(Event event, Timestamp solut, EventBean eb) throws  InvalidDateException {

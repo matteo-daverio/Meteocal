@@ -5,9 +5,8 @@
  */
 package MeteoCal.gui.security;
 
-import MeteoCal.business.security.boundary.EventManager;
+import MeteoCal.business.security.boundary.EventManagerInterface;
 import MeteoCal.business.security.boundary.NotificationManagerInterface;
-import MeteoCal.business.security.boundary.UserManager;
 import MeteoCal.business.security.entity.Event;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,11 +28,9 @@ public class PublicEventBean {
     
     
     @EJB
-    private EventManager em;
+    private EventManagerInterface em;
     @EJB
     private NotificationManagerInterface nm;
-    @EJB
-    private UserManager um;
     
     
     /**
