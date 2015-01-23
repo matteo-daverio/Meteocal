@@ -70,7 +70,7 @@ public class PublicEventBean {
     * getter e setter
     */
     public String getPublicEvent() {
-        if (event.isPublic()) {
+        if (event.isPubblico()) {
             return "public";
         } else {
             return "private";

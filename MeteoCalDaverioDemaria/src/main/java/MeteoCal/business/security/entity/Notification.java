@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.validation.constraints.NotNull;
 
 
@@ -20,23 +19,9 @@ import javax.validation.constraints.NotNull;
  * @author DeMaria
  */
 @Entity
-//@Table(name = "notification")
-
-//@NamedQueries({
-    //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
-    //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
-
-//})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-//    @Id
-//    @Basic(optional = false)
-//    @NotNull
-//    @GeneratedValue(strategy=GenerationType.AUTO)//crea automaticamente un valore per questo attributo
-//    @Column(name = "idNotification")
-//    private Integer idNotification;
-    
+
     @Id
     @NotNull
     @GeneratedValue(generator = "increment")
@@ -54,18 +39,6 @@ public class Notification implements Serializable {
 
     private boolean view;
 
-    
-//    @Column(name = "date")
-//    @Temporal(TemporalType.DATE)
-//    private Date date;
-    
-//    @JoinColumn(name = "Event_idEvent", referencedColumnName = "idEvent")
-//    @ManyToOne
-//    private Event eventidEvent;
-//    
-//    @JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
-//    @ManyToOne
-//    private Users usersidUsers;
 
     ///COSTRUTTORI /////
     
@@ -80,12 +53,6 @@ public class Notification implements Serializable {
     }
 
     
-//    public Notification(Integer idNotification) {
-//        this.idNotification = idNotification;
-//    }
-
-    
-    
   //GETTERS AND SETTERS
     
     public Integer getIdNotification() {
@@ -95,31 +62,6 @@ public class Notification implements Serializable {
     public void setIdNotification(Integer idNotification) {
         this.idNotification = idNotification;
     }
-//
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
-//
-//    public Event getEventidEvent() {
-//        return eventidEvent;
-//    }
-//
-//    public void setEventidEvent(Event eventidEvent) {
-//        this.eventidEvent = eventidEvent;
-//    }
-//
-//    public Users getUsersidUsers() {
-//        return usersidUsers;
-//    }
-//
-//    public void setUsersidUsers(Users usersidUsers) {
-//        this.usersidUsers = usersidUsers;
-//    }
-
     
     public boolean isCreator() {
         return creator;

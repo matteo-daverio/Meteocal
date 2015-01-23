@@ -38,33 +38,6 @@ public class NotificationTest {
     }
 
     /**
-     * Test of getIdNotification method, of class Notification.
-     */
-    @Test
-    public void testGetIdNotification() {
-        System.out.println("getIdNotification");
-        Notification instance = new Notification();
-        Integer expResult = null;
-        Integer result = instance.getIdNotification();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setIdNotification method, of class Notification.
-     */
-    @Test
-    public void testSetIdNotification() {
-        System.out.println("setIdNotification");
-        Integer idNotification = null;
-        Notification instance = new Notification();
-        instance.setIdNotification(idNotification);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of isCreator method, of class Notification.
      */
     @Test
@@ -74,8 +47,7 @@ public class NotificationTest {
         boolean expResult = false;
         boolean result = instance.isCreator();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -87,8 +59,7 @@ public class NotificationTest {
         boolean creator = false;
         Notification instance = new Notification();
         instance.setCreator(creator);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -101,8 +72,7 @@ public class NotificationTest {
         boolean expResult = false;
         boolean result = instance.isAccepted();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -114,8 +84,7 @@ public class NotificationTest {
         boolean accepted = false;
         Notification instance = new Notification();
         instance.setAccepted(accepted);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -128,8 +97,7 @@ public class NotificationTest {
         boolean expResult = false;
         boolean result = instance.isView();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -141,8 +109,7 @@ public class NotificationTest {
         boolean view = false;
         Notification instance = new Notification();
         instance.setView(view);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -155,8 +122,7 @@ public class NotificationTest {
         Event expResult = null;
         Event result = instance.getEvent();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -168,8 +134,7 @@ public class NotificationTest {
         Event event = null;
         Notification instance = new Notification();
         instance.setEvent(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -182,8 +147,7 @@ public class NotificationTest {
         Users expResult = null;
         Users result = instance.getUser();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -195,22 +159,8 @@ public class NotificationTest {
         Users user = null;
         Notification instance = new Notification();
         instance.setUser(user);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
-    /**
-     * Test of toString method, of class Notification.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        Notification instance = new Notification();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
     
 }

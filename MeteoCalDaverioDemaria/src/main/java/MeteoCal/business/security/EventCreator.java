@@ -65,7 +65,7 @@ public class EventCreator {
         this.idEvent = e.getIdEvent();
         this.outdoor = e.isOutdoor();
         this.place = e.getPlace().getCity();
-        this.publicEvent = e.isPublic();
+        this.publicEvent = e.isPubblico();
         this.startDate = e.getStartTime();
         this.endDate = e.getEndTime();
     }

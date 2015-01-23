@@ -9,12 +9,9 @@ import MeteoCal.business.security.EventCreator;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -27,13 +24,6 @@ import javax.validation.constraints.NotNull;
  * @author DeMaria
  */
 @Entity
-//@Table(name = "event")
-
-//@NamedQueries({
-    //@NamedQuery(name= Users.findAll, query = "SELECT u FROM Users u"),
-    //@NamedQuery(name= Users.count, query="SELECT count(u) FROM Users u"),
-
-//})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -41,63 +31,34 @@ public class Event implements Serializable {
     @OneToOne
     private IDEvent idEvent;
 
+ 
+    private Boolean pubblico;
     
-    //@Column(name = "isPublic")
-    private Boolean isPublic;
-    
-    //@Column(name="title")
+
     private String title;
     
-    //@Size(max = 45)
-    //@Column(name = "place")
+
     @NotNull(message = "May not be empty6")
     @ManyToOne(targetEntity = Place.class, optional = false, cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Place place = new Place();
 
     
-    //@Column(name = "isOutdoor")
-    private Boolean isOutdoor;
+    private Boolean outdoor;
     
-    //@Size(max = 45)
-    //@Column(name = "weather")
-//    private String weather;
-    
-    //@Column(name = "startTime")
-    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp startTime;
     
-    //@Column(name = "endTime")
-    //@Temporal(TemporalType.TIMESTAMP)
     private Timestamp endTime;
     
-    //@Column(name = "date")
+   
     @Temporal(TemporalType.DATE)
     private Date date;
-    
-    //@Column(name ="description")
+   
     private String description;
     
     @NotNull(message = "May not be empty1")
     @ManyToOne(targetEntity = Users.class, optional = false)
     private Users creator;
     
-//    @ManyToMany(mappedBy = "eventCollection")
-//    private Collection<Users> usersCollection;
-//    
-//    @ManyToMany(mappedBy = "eventCollection")
-//    private Collection<Calendar> calendarCollection;
-//    
-//    @OneToMany(mappedBy = "eventidEvent")
-//    private Collection<Notification> notificationCollection;
-//    
-//    @OneToMany(mappedBy = "eventidEvent")
-//    private Collection<Invitation> invitationCollection;
-    
-    //@JoinColumn(name = "Users_idUsers", referencedColumnName = "idUsers")
-//    @NotNull
-//    @ManyToOne(targetEntity = Users.class,optional = false)
-//    private Users creator;
-
     
   ////////COSTRUTTORI
     
@@ -118,12 +79,12 @@ public class Event implements Serializable {
         this.idEvent = idEvent;
     }
 
-    public Boolean isPublic() {
-        return isPublic;
+    public Boolean isPubblico() {
+        return pubblico;
     }
 
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setPubblico(Boolean pubblico) {
+        this.pubblico = pubblico;
     }
 
     public Place getPlace() {
@@ -136,20 +97,12 @@ public class Event implements Serializable {
 
 
     public Boolean isOutdoor() {
-        return isOutdoor;
+        return outdoor;
     }
 
-    public void setIsOutdoor(Boolean isOutdoor) {
-        this.isOutdoor = isOutdoor;
+    public void setOutdoor(Boolean outdoor) {
+        this.outdoor = outdoor;
     }
-
-//    public String getWeather() {
-//        return weather;
-//    }
-//
-//    public void setWeather(String weather) {
-//        this.weather = weather;
-//    }
 
     public Timestamp getStartTime() {
         return startTime;
@@ -222,56 +175,12 @@ public class Event implements Serializable {
         this.creator = e.getCreator();
         this.description = e.getDescription();
         this.idEvent = e.getIdEvent();
-        this.isOutdoor = e.isOutdoor();
+        this.outdoor = e.isOutdoor();
         this.place = new Place(e.getPlace());
-        this.isPublic = e.isPublicEvent();
+        this.pubblico = e.isPublicEvent();
         this.startTime = e.getStartDate();
         this.endTime = e.getEndDate();
     }
-
-//    @XmlTransient
-//    public Collection<Users> getUsersCollection() {
-//        return usersCollection;
-//    }
-//
-//    public void setUsersCollection(Collection<Users> usersCollection) {
-//        this.usersCollection = usersCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Calendar> getCalendarCollection() {
-//        return calendarCollection;
-//    }
-//
-//    public void setCalendarCollection(Collection<Calendar> calendarCollection) {
-//        this.calendarCollection = calendarCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Notification> getNotificationCollection() {
-//        return notificationCollection;
-//    }
-//
-//    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-//        this.notificationCollection = notificationCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Invitation> getInvitationCollection() {
-//        return invitationCollection;
-//    }
-//
-//    public void setInvitationCollection(Collection<Invitation> invitationCollection) {
-//        this.invitationCollection = invitationCollection;
-//    }
-//
-//    public Users getCreator() {
-//        return creator;
-//    }
-//
-//    public void setCreator(Users creator) {
-//        this.creator = creator;
-//    }
 
  ////OVERRIDES
 

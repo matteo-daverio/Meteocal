@@ -204,7 +204,7 @@ public class EventManager implements EventManagerInterface{
     
         Query query=em.createQuery("SELECT e FROM event e WHERE e =:event").setParameter("event", event);
         List<Event> result= new ArrayList<>(query.getResultList());
-        return result.get(0).isPublic();
+        return result.get(0).isPubblico();
         
     }
     
