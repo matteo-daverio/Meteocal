@@ -30,7 +30,7 @@
 
 
                     <h:panelGrid id="principalgrid" columnClasses="value" style ="margin : 0px auto;width: 100%">
-                        <p:schedule id="schedule" value="#{scheduleView.eventModel}" style="width: 70%;;margin: 0px auto;" widgetVar="myschedule" timeZone="GMT+2">
+                        <p:schedule id="schedule" value="#{scheduleBean.model}" style="width: 70%;;margin: 0px auto;" widgetVar="myschedule" timeZone="GMT+2">
                             <p:ajax event="dateSelect"  listener="#{eventBean.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                             <p:ajax event="eventSelect" listener="#{eventBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                         </p:schedule>
@@ -42,7 +42,7 @@
                             <p:selectManyButton style="background-color: transparent">
                                 <p:commandButton value="Export" id="export"  action="#{exportBean.export()}" update="growl" oncomplete="PF('dlg-settings').hide()">     
                                 </p:commandButton>
-                                <p:commandButton value="Import" id="import" action="#{importBean.imports()}" actionListener="#{scheduleView.loadCalendar()}" update="schedule,growl" oncomplete="PF('myschedule').update();PF('dlg-settings').hide()" />
+                                <p:commandButton value="Import" id="import" action="#{importBean.imports()}" actionListener="#{scheduleBean.loadCalendar()}" update="schedule,growl" oncomplete="PF('myschedule').update();PF('dlg-settings').hide()" />
                                 <p:selectBooleanCheckbox value="#{setCalendarBean.status}">
                                     <p:ajax listener="#{setCalendarBean.saveDecision()}" update="panelsetting"  />
                                 </p:selectBooleanCheckbox>
@@ -51,16 +51,16 @@
                     </p:dialog>
 
                     <p:dialog header="Users"  showEffect="fade" hideEffect="fade"  widgetVar="dlg-users">
-                        <p:selectOneMenu  value="#{scheduleViewPublic.username}" 
+                        <p:selectOneMenu  value="#{publicScheduleBean.username}" 
                                           filter="true" filterMatchMode="contains"  >
-                            <f:selectItems value="#{scheduleViewPublic.users}" />                             
+                            <f:selectItems value="#{publicScheduleBean.users}" />                             
                         </p:selectOneMenu>
-                        <p:commandButton value="Go" id="goToCalendar" actionListener="#{scheduleViewPublic.loadCalendar()}" update="panelpubcal" process="@parent" oncomplete="PF('dlg-pubcal').show();PF('dlg-users').hide()" />
+                        <p:commandButton value="Go" id="goToCalendar" actionListener="#{publicScheduleBean.loadCalendar()}" update="panelpubcal" process="@parent" oncomplete="PF('dlg-pubcal').show();PF('dlg-users').hide()" />
                     </p:dialog>
 
                     <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  id="dialogpubcal" widgetVar="dlg-pubcal">
                         <h:panelGrid id="panelpubcal" columnClasses="value" style ="margin : 0px auto">
-                            <p:schedule id="pubcal" value="#{scheduleViewPublic.eventModel}"  widgetVar="publicCalendar" timeZone="GMT+2">
+                            <p:schedule id="pubcal" value="#{publicScheduleBean.eventModel}"  widgetVar="publicCalendar" timeZone="GMT+2">
                                 <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" update="eventDetailsPublic" oncomplete="PF('eventDialogPublic').show();" />
                             </p:schedule>
                         </h:panelGrid>
@@ -110,10 +110,10 @@
                                 <f:selectItems value="#{eventBean.listUser()}" var="listUser" itemLabel="#{listUser}" itemValue="#{listUser}" />
                             </p:selectManyMenu>
 
-                            <p:commandButton id="declineButton" value="Decline" action="#{eventBean.decline()}" actionListener="#{scheduleView.loadCalendar()}" rendered="#{eventBean.canDecline}" update="growl,:formcentral" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-                            <p:commandButton id="modifyButton" value="Modify" actionListener="#{eventBean.modify()}" action="#{scheduleView.loadCalendar()}" rendered="#{!eventBean.creating}" update="growl,:formcentral"  disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"  />
-                            <p:commandButton id="addButton" value="Save" actionListener="#{eventBean.create()}" action="#{scheduleView.loadCalendar()}"  rendered="#{eventBean.creating}" update="growl,:formcentral" disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
-                            <p:commandButton id="deleteButton" value="Delete" actionListener="#{eventBean.cancel()}" action="#{scheduleView.loadCalendar()}" rendered="#{!eventBean.creating}" update="growl,:formcentral" disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
+                            <p:commandButton id="declineButton" value="Decline" action="#{eventBean.decline()}" actionListener="#{scheduleBean.loadCalendar()}" rendered="#{eventBean.canDecline}" update="growl,:formcentral" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                            <p:commandButton id="modifyButton" value="Modify" actionListener="#{eventBean.modify()}" action="#{scheduleBean.loadCalendar()}" rendered="#{!eventBean.creating}" update="growl,:formcentral"  disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"  />
+                            <p:commandButton id="addButton" value="Save" actionListener="#{eventBean.create()}" action="#{scheduleBean.loadCalendar()}"  rendered="#{eventBean.creating}" update="growl,:formcentral" disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
+                            <p:commandButton id="deleteButton" value="Delete" actionListener="#{eventBean.cancel()}" action="#{scheduleBean.loadCalendar()}" rendered="#{!eventBean.creating}" update="growl,:formcentral" disabled="#{!eventBean.isOwnEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
 
                         </h:panelGrid>
      

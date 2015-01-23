@@ -57,7 +57,7 @@ public class ScheduleBean implements Serializable {
         return model;
     }
 
-    private void loadCalendar() {
+    public void loadCalendar() {
         List<Event> Calendar = em.loadCalendar(um.getLoggedUser());
         model = new DefaultScheduleModel();
         for (Event event : Calendar) {
