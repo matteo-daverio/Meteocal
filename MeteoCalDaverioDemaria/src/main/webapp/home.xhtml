@@ -9,7 +9,10 @@
     </h:head>
     <h:body>
         <h:form id="homePage">
+            
             <p:layout fullPage="true">
+                                
+                
                 <p:layoutUnit class="layoutClass" position="north" size="88">
                     <div class="content">
                         <span class="siteName"> MeteoCal </span> 
@@ -32,6 +35,9 @@
                                    style="color: white"/>
                     </div>
                 </p:layoutUnit>
+                
+                
+                
                 <p:layoutUnit position="center">
                     <p:schedule id="schedule"  value="#{scheduleBean.model}"
                             class="schedule" aspectRatio="2.7"
@@ -47,20 +53,19 @@
                         
                     </p:schedule>
                 </p:layoutUnit>
+                
+                
             </p:layout>
         
-            <p:dialog header="Notification" widgetVar="dlgNotify" showEffect="explode" 
-                  hideEffect="bounce" height="130" position="right,top">
-                <h:panelGrid columns="3">
-                    <h:outputText value="Username: " /> 
-                    <p:inputText />
-                    <h:outputText value="Password: " /> 
-                    <p:password />
-                </h:panelGrid>
-                <br/>
-                <p:commandButton value="Log in" type="button" />
-            </p:dialog>
-        
+            
+            
+            
+            
+            
+           
+                   
+            
+            
             <p:dialog id="dialogOption" header="Option" widgetVar="dlgOption" showEffect="explode" 
                   hideEffect="fade" position="top,right" resizable="false" style="width: auto;height: auto" >
                 
@@ -72,6 +77,15 @@
                 </h:panelGrid>
             </p:dialog>
         
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
                 <h:panelGrid id="eventDetails" columns="2">
                     <h:outputLabel for="title" value="Title:" />
@@ -94,7 +108,65 @@
                     <p:commandButton id="addButton" value="Save" 
                                  oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                 </h:panelGrid>
-            </p:dialog>    
+            </p:dialog>   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  id="dialogpubcal" widgetVar="publicCalendarDialog">
+                <h:panelGrid id="panelpubcal" columnClasses="value" style ="margin : 0px auto">
+                    <p:schedule id="publicCal" value="#{publicScheduleBean.eventModel}"  
+                                widgetVar="publicCalendar" timeZone="GMT+1">
+                        <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" 
+                                update="eventDetailsPublic" oncomplete="PF('publicEventDialog').show();" />
+                    </p:schedule>
+                </h:panelGrid>
+            </p:dialog>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog widgetVar="publicEventDialog" showEffect="fade" hideEffect="fade"  header="Details" >
+                <h:panelGrid id="eventDetailsPublic" columns="2">
+                    <h:outputLabel for="titlePublic" value="Title:" />
+                    <p:outputLabel id="titlePublic" value="#{publicEventBean.event.title}" />
+
+                    <p:outputLabel for="startDatePublic" value="From:" />
+                    <p:outputLabel id="startDatePublic" value="#{publicEventBean.startDate}"/>
+
+                    <p:outputLabel for="endDatePublic" value="To:" />
+                    <p:outputLabel id="endDatePublic" value="#{publicEventBean.endDate}"/>
+
+                    <h:outputLabel for="placePublic" value="Place:" />
+                    <p:outputLabel id="placePublic" value="#{publicEventBean.event.place.city}"/>
+
+                    <h:outputLabel for="descriptionPublic" value="Description:" />
+                    <p:outputLabel id="descriptionPublic" value="#{publicEventBean.event.description}"/>
+
+                    <p:outputLabel for="outdoorPublic" value="Outdoor:"  />
+                    <p:outputLabel id="outdoorPublic" value="#{publicEventBean.event.}"/>
+                            
+                    <p:outputLabel for="invitationPublic" value="invitations"  />
+
+                    <p:dataList id="invitationPublic" value="#{publicEventBean.invitated}" var="invit" type="ordered">
+                        #{invit}
+                    </p:dataList>
+                </h:panelGrid>
+            </p:dialog> 
+            
         </h:form>
         <style type="text/css">
             
