@@ -46,20 +46,21 @@ public class WarningManagerChecker implements WarningManagerCheckerInterface {
         @Schedule(second = "0", minute = "0", hour = "0", persistent = false),
         @Schedule(second = "0", minute = "0", hour = "12", persistent = false)
     })
-    private void warningEvery12Hours() {
-
-        System.out.println("Begin warningEvery12Hours " + count);
-        count++;
-
-        List<Users> users = nm.getUsersCreator();
-        Iterator<Users> ite = users.iterator();
-        while (ite.hasNext()) {
-            Users u = ite.next();
-            List<Event> eventWarning = bm.findWarnings(u);
-
-
-        }
-    }
+    
+//    private void warningEvery12Hours() {
+//
+//        System.out.println("Begin warningEvery12Hours " + count);
+//        count++;
+//
+//        List<Users> users = nm.getUsersCreator();
+//        Iterator<Users> ite = users.iterator();
+//        while (ite.hasNext()) {
+//            Users u = ite.next();
+//            List<Event> eventWarning = bm.findWarnings(u);
+//
+//
+//        }
+//    }
 
     /**
      * this function checks if there are warnings for events that start in three

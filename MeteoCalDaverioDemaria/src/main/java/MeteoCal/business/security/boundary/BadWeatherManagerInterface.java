@@ -18,7 +18,7 @@ public interface BadWeatherManagerInterface {
     
     public List<Event> findWarnings(Users creator);
 
-    public List<Timestamp> findSolution(List<Event> eventWarning);
+    //public List<Timestamp> findSolution(List<Event> eventWarning);
 
     public boolean isWarned(Event event);
     

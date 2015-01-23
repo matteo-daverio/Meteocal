@@ -80,9 +80,9 @@ public class WarningBean {
     /**
      * Funtion that search a solution for every event with warning
      */
-    public void searchSolution() {
-        solutions = bwnm.findSolution(warnings);
-    }
+//    public void searchSolution() {
+//        solutions = bwnm.findSolution(warnings);
+//    }
 
     /**
      * call the method findWarnings that returns a list of event with warning
@@ -90,10 +90,11 @@ public class WarningBean {
     public void loadWarnings() {
         warnings = new ArrayList<>();
         warnings = bwnm.findWarnings(um.getLoggedUser());
-        if (!warnings.isEmpty()) {
-            searchSolution();
-            enableModify = true;
-        } else {
+        //if (!warnings.isEmpty()) {
+            //searchSolution();
+          //  enableModify = true;
+        //} else
+        {
             enableModify = false;
             Event noWarning = new Event();
             noWarning.setTitle("No Warnings");
@@ -102,6 +103,14 @@ public class WarningBean {
         }
     }
 
+    
+    
+    public int countWarnings(){
+        return this.warnings.size();
+    }
+    
+    
+    
     /**
      * modify the event setting as a start day the date suggested
      *

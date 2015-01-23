@@ -11,6 +11,7 @@ import MeteoCal.business.security.boundary.NotificationManagerInterface;
 import MeteoCal.business.security.boundary.UserManagerInterface;
 import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.Notification;
+import MeteoCal.business.security.entity.Users;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,10 @@ public class InvitationBean implements Serializable {
         }
     }
 
+    public int loadNumberOfInvites(Users user){
+      return nm.counterNotification(user);
+    }
+    
     /**
      * User Accept Invitation
      *

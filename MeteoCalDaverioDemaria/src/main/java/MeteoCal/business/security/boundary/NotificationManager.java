@@ -53,6 +53,13 @@ public class NotificationManager implements NotificationManagerInterface {
         return user.get(0);
 
     }
+    
+    @Override
+     public int counterNotification(Users user){
+         Query query;
+         query=em.createQuery("SELECT count(n) FROM Notification n WHERE n.user= :user and n.view=0 and n.creator=0").setParameter("user", user);
+         return ((Number)query.getSingleResult()).intValue();
+     }
 
     /**
      * returns the tuple in Notification entity that match with the

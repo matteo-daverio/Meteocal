@@ -33,6 +33,8 @@ public interface NotificationManagerInterface {
     public List<Users> getUsersCreator();
 
     public List<Users> getInvitedWhoAccepted(Event event);
+    
+    public int counterNotification(Users user);
 
     
 }
