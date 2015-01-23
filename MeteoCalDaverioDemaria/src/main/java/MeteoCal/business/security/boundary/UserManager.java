@@ -22,7 +22,7 @@ import javax.persistence.Query;
 public class UserManager implements UserManagerInterface {
     
     @PersistenceContext
-    private EntityManager em;
+    public EntityManager em;
     
     
     @Inject
