@@ -18,8 +18,9 @@
                         <p:inputText id="searchTxt" />
                         <p:button  outcome="search" icon="ui-icon-search"  />
                         <p:watermark for="searchTxt" value="Insert username" />
-                        <p:spacer width="40" height="10" /> 
-                        <p:link outcome="option"
+                        <p:spacer width="80" height="10" /> 
+                        <p:commandLink id="option" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlgOption').show();" process="@this"
                                 value="#{loginBean.name}" style="color:white"/>
                         <p:spacer width="10" height="10" />
                         <p:link value="Home" outcome="home" style="color:white"/>
@@ -27,7 +28,7 @@
                         <p:link value="News" outcome="notification" style="color:white" />
                         <span class="count">3</span>
                         <p:spacer width="20" height="10" />
-                        <p:commandLink value="Logout" action="#{loginBean.logout()}"
+                        <p:commandLink value="Logout" id="logout" action="#{loginBean.logout()}"
                                    style="color: white"/>
                     </div>
                 </p:layoutUnit>
@@ -38,8 +39,12 @@
                             centerHeaderTemplate="prev,title,next"
                             rightHeaderTemplate="month,agendaDay"
                             timeZone="GMT+1" widgetVar="myschedule">
-                    
-          
+                        
+                        <p:ajax event="dateSelect"  listener="#{eventBean.onDateSelect}" 
+                                update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                        <p:ajax event="eventSelect" listener="#{eventBean.onEventSelect}" 
+                                update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                        
                     </p:schedule>
                 </p:layoutUnit>
             </p:layout>
@@ -56,18 +61,15 @@
                 <p:commandButton value="Log in" type="button" />
             </p:dialog>
         
-            <p:dialog header="Option" widgetVar="dlgOption" showEffect="explode" 
-                  hideEffect="bounce" height="100" position="top,right" width="300" resizable="false" >
-                <h:form id="dialogForm">
-                <h:panelGrid columns="2" >
-                <h:outputText value="Private Calendar: " />            
-                <p:selectBooleanCheckbox />
+            <p:dialog id="dialogOption" header="Option" widgetVar="dlgOption" showEffect="explode" 
+                  hideEffect="fade" position="top,right" resizable="false" style="width: auto;height: auto" >
+                
+                <h:panelGrid id="panelOption" columns="2" >
+                    <h:outputText value="Public Calendar:  " />            
+                    <p:selectBooleanCheckbox value="#{setCalendarBean.status}">
+                        <p:ajax listener="#{setCalendarBean.saveDecision()}" update="panelOption"  />
+                    </p:selectBooleanCheckbox>
                 </h:panelGrid>
-                </h:form>
-                <br/>
-                <h:form id="buttonForm">
-                <p:commandButton value="Save Option" type="button" ajax="false" />
-                </h:form>
             </p:dialog>
         
             <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
