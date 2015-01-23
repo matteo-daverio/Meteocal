@@ -32,8 +32,14 @@
                         <p:spacer width="10" height="10" />
                         <p:link value="Home" outcome="home" style="color:white"/>
                         <p:spacer width="10" height="10" />
-                        <p:link value="News" outcome="notification" style="color:white" />
+                        <p:commandLink value="News" id="invitations" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlg-invitations').show();" process="@this" 
+                                       style="color:white" />
                         <span class="count">3</span>
+                        <p:spacer width="20" height="10" />
+                        <p:commandLink id="warn" value="Warnings" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlg-warnings').show();" process="@this" 
+                                       style="color:white"/>
                         <p:spacer width="20" height="10" />
                         <p:commandLink value="Logout" id="logout" action="#{loginBean.logout()}"
                                        style="color: white"/>
@@ -195,7 +201,78 @@
             
             
             
+            <p:dialog header="Warnings" widgetVar="dlg-warnings" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialogW" width="800px" height="300px" resizable="false">
+                <p:carousel value="#{warningBean.warnings}" var="eventWarning" numVisible="1" 
+                            itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                            headerText="Warning" style="margin-bottom:0;">         
+                    <p:tab>
+                        <p:panelGrid columns="2" id="panelW" columnClasses="label,value">
+                            <h:outputText value="Title:" />
+                            <h:outputText value="#{eventWarning.title}"  />
+                            <h:outputText value="It's possible to postpone the event at: " />
+                            <h:outputText value="#{warningBean.getDate(eventWarning.idEvent.id)}" />
+                            <f:facet name="footer">
+                                <p:commandButton value="Modify" rendered="#{warningBean.enableModify}" 
+                                                 id="enablemodify" 
+                                                 action="#{warningBean.modifyButton(eventWarning, eventBean)}" 
+                                                 update=":homePage:growl" 
+                                                 oncomplete="PF('dlg-warnings').hide();" /> 
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:carousel> 
+            </p:dialog>
+
             
+            
+            
+            <p:dialog header="Invitations" widgetVar="dlg-invitations" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialog" width="800px" height="300px" resizable="false">
+                <h:panelGrid>
+
+                    <p:carousel value="#{invitationBean.invites}" var="event" numVisible="1" 
+                                itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                                headerText="Invitation" style="margin-bottom:0;">
+
+                        <p:tab> 
+                            <p:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputText value="Title:" />
+                                <h:outputText value="#{event.title}"  />
+
+                                <h:outputText value="Invitor:" />
+                                <h:outputText value="#{event.creator.email}" />
+
+                                <h:outputText value="Place:" />
+                                <h:outputText value="#{event.place}" />
+
+                                <h:outputText value="When:"/>
+                                <h:outputText value="From : #{event.startDate} To #{event.endDate}"/>
+
+                                <h:outputText value="Description:"/>
+                                <h:outputText value="#{event.description}" />
+                            </p:panelGrid>
+                   
+                        </p:tab>
+                        <p:commandButton value="Accept" rendered="#{invitationBean.enableInvitation}" 
+                                         id="accept-inv" update=":homePage:growl,:homePage:schedule" 
+                                         action="#{invitationBean.acceptInvite(event)}" 
+                                         actionListener="#{scheduleView.loadCalendar()}" 
+                                         oncomplete="PF('myschedule').update();"  />
+                        <p:commandButton value="Decline"  rendered="#{invitationBean.enableInvitation}" 
+                                         id="decline-inv"  update=":homePage:inv-dialog"  
+                                         action="#{invitationBean.declineInvite(event)}" 
+                                         oncomplete="PF('myschedule').update()" />                                   
+                                          
+                    </p:carousel> 
+              
+                </h:panelGrid>
+            </p:dialog>
+            
+            
+            
+            
+        
             
             
             <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  id="dialogpubcal" widgetVar="publicCalendarDialog">
@@ -236,7 +313,7 @@
                     <p:outputLabel id="descriptionPublic" value="#{publicEventBean.event.description}"/>
 
                     <p:outputLabel for="outdoorPublic" value="Outdoor:"  />
-                    <p:outputLabel id="outdoorPublic" value="#{publicEventBean.event.outdoor}"/>
+                    <p:outputLabel id="outdoorPublic" value="#{publicEventBean.event.isOutdoor()}"/>
                             
                     <p:outputLabel for="invitationPublic" value="invitations"  />
 

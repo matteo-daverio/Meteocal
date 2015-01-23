@@ -35,7 +35,7 @@ public class BadWeatherManager implements BadWeatherManagerInterface {
     Principal principal;
 
     @EJB
-    private EventManager emi;
+    private EventManagerInterface emi;
     
     @Override
     public boolean isWarned(Event event) {
