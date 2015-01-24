@@ -22,7 +22,7 @@ import javax.persistence.Query;
 public class UserManager implements UserManagerInterface {
     
     @PersistenceContext
-    public EntityManager em;
+    private EntityManager em;
     
     
     @Inject
@@ -117,7 +117,6 @@ public class UserManager implements UserManagerInterface {
     public void save(Users user) throws Exception {
 
         user.setGroupName(Group.USERS);
-        user.setPublicCalendar(true);
         em.persist(user);
 
     }

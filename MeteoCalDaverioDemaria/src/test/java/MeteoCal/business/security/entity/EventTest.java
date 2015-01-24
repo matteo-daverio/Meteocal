@@ -48,8 +48,8 @@ public class EventTest {
     public void testIsPubblico() {
         System.out.println("isPubblico");
         Event instance = new Event();
-        Boolean expResult = null;
-        Boolean result = instance.isPubblico();
+        boolean expResult = false;
+        boolean result = instance.isPubblico();
         assertEquals(expResult, result);
 
     }
@@ -60,7 +60,7 @@ public class EventTest {
     @Test
     public void testSetPubblico() {
         System.out.println("setPubblico");
-        Boolean pubblico = null;
+        boolean pubblico = true;
         Event instance = new Event();
         instance.setPubblico(pubblico);
 
@@ -86,8 +86,8 @@ public class EventTest {
     public void testIsOutdoor() {
         System.out.println("isOutdoor");
         Event instance = new Event();
-        Boolean expResult = null;
-        Boolean result = instance.isOutdoor();
+        boolean expResult = false;
+        boolean result = instance.isOutdoor();
         assertEquals(expResult, result);
 
     }
@@ -98,7 +98,7 @@ public class EventTest {
     @Test
     public void testSetOutdoor() {
         System.out.println("setOutdoor");
-        Boolean outdoor = null;
+        boolean outdoor = true;
         Event instance = new Event();
         instance.setOutdoor(outdoor);
 

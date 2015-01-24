@@ -5,14 +5,12 @@
  */
 package MeteoCal.business.security.boundary;
 
-import MeteoCal.business.security.entity.Group;
+import MeteoCal.business.security.entity.Event;
 import MeteoCal.business.security.entity.Users;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
@@ -23,12 +21,13 @@ import static org.mockito.Mockito.verify;
  *
  * @author DeMaria
  */
-public class UserManager_MokitoTest {
-      private UserManager cut;
+public class EventManager_MokitoTest {
+  
+    private EventManager cut;
     
     @Before
     public void setUp() {
-        cut = new UserManager();
+        cut = new EventManager();
         cut.setEm(mock(EntityManager.class));
     }
     
@@ -37,16 +36,21 @@ public class UserManager_MokitoTest {
     }
 
     @Test
-    public void newUsersShouldSavedOnce(){
-        Users newUser = new Users();
+    public void newEventShouldSavedOnce(){
         
-          try {
-              cut.save(newUser);
-          } catch (Exception ex) {
-              Logger.getLogger(UserManager_MokitoTest.class.getName()).log(Level.SEVERE, null, ex);
-          }
+        Event e =new Event();
+        e.setOutdoor(Boolean.TRUE);
+        cut.addEvent(e);
+        
+        //assertThat(cut.isIndoor(e),false);
+//          try {
+//             // cut.save(newUser);
+//          } catch (Exception ex) {
+//              Logger.getLogger(UserManager_MokitoTest.class.getName()).log(Level.SEVERE, null, ex);
+//          }
           
         //assertThat(newUser.getGroupName(),is(Group.USERS));
-        verify(cut.getEm(),times(1)).persist(newUser);
-    }  
+       // verify(cut.em,times(1)).persist(newUser);
+    } 
+    
 }

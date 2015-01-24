@@ -10,18 +10,22 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  *
  * @author DeMaria
  */
-@Entity
+@Entity(name = "USERS")
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
    
 
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+            message = "invalid mail")
+    @NotNull(message = "May not be empty")
     private String mail;
     
 
@@ -30,7 +34,6 @@ public class Users implements Serializable {
 
     private String psw;
     
-    @NotNull(message = "May not be empty")
     private String groupName;
     
     @NotNull
