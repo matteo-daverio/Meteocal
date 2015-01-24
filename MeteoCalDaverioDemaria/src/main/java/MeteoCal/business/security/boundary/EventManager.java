@@ -163,7 +163,7 @@ public class EventManager implements EventManagerInterface{
 @Override
     public List<Event> loadPublicCalendar(String username) {
 
-        Query query = em.createQuery("SELECT n.event FROM Notification n WHERE (n.user.mail = :user AND (n.accepted=true OR n.creator=true) AND n.event.isPublic=true)").setParameter(("user"), username);
+        Query query = em.createQuery("SELECT n.event FROM Notification n WHERE (n.user.mail = :user AND (n.accepted=true OR n.creator=true) AND n.event.pubblico=true)").setParameter(("user"), username);
         List<Event> tempSet = new ArrayList<>(query.getResultList());
 
         return tempSet;
