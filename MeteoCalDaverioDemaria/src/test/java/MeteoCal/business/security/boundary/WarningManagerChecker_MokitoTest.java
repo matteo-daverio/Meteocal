@@ -15,6 +15,8 @@ import static org.mockito.Mockito.verify;
  *
  * @author DeMaria
  */
+
+
 public class WarningManagerChecker_MokitoTest {
     
     private WarningManagerChecker cut;
