@@ -335,7 +335,7 @@ public class EventBean implements Serializable {
     }
 
     private void updateEvent() throws InvalidDateException {
-        Event oldEvent = em.loadSpecificEvent(eventCreated.getIdEvent().toString());
+        Event oldEvent = em.loadSpecificEvent(eventCreated.getIdEvent().getId().toString());
         temporaryEvent.loadEvent(oldEvent);
         Event event = new Event();
         event.loadEvent(eventCreated);

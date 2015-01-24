@@ -7,52 +7,50 @@
         <title>MeteoCal</title>
     </h:head>
     <h:body>
-        <h:form id="indexPage">
-            <p:growl id="growl" showDetail="true"/> 
-            
-            <p:layout fullPage="true">
-                <p:layoutUnit class="layoutClass" position="north" size="88">
-                    <div class="content">
-                        <span class="siteName"> MeteoCal </span> 
-                        <p:spacer width="600" height="10" />
+        <p:layout fullPage="true">
+            <p:layoutUnit class="layoutClass" position="north" size="88">
+                <div class="content">
+                    <span class="siteName"> MeteoCal </span> 
+                    <p:spacer width="600" height="10" />
                     
-                        <p:commandLink value="Log in" oncomplete="PF('dlgLog').show();" 
-                                       process="@this" style="color:white"/>
-                        <p:spacer width="10" height="10" />
-                        <p:link value="Sign in" outcome="register" style="color:white"/>
-                    </div>
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <p:schedule id="schedule"  
-                                class="schedule" aspectRatio="2.7"
-                                leftHeaderTemplate="today"
-                                centerHeaderTemplate="prev,title,next"
-                                rightHeaderTemplate="month,agendaDay"
-                                timeZone="GMT+1">
+                    <p:link value="Log in" outcome="login"
+                             style="color:white"/>
+                    <p:spacer width="10" height="10" />
+                    <p:link value="Sign in" outcome="register" style="color:white"/>
+                </div>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <p:schedule id="schedule"  
+                            class="schedule" aspectRatio="2.7"
+                            leftHeaderTemplate="today"
+                            centerHeaderTemplate="prev,title,next"
+                            rightHeaderTemplate="month,agendaDay"
+                            timeZone="GMT+1">
                     
-                    </p:schedule>
-                </p:layoutUnit>
-            </p:layout>
+                </p:schedule>
+            </p:layoutUnit>
+        </p:layout>
         
         
-            <p:dialog id="logDialog" header="Log in" widgetVar="dlgLog" showEffect="explode"                      
-                      hideEffect="fade" position="top,right" resizable="false" style="width: auto;height: auto">
+        <p:dialog id="logDialog" header="Log in" widgetVar="dlgLog" 
+                   height="130" position="right,top">
             
-                <h:panelGrid id="panelLog" columns="2">
-                    
-                    <p:outputLabel for="username" value="Email"/>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Username: " /> 
                     <p:inputText id="username" value="#{loginBean.username}" 
-                                 required="true" />
-                    <p:outputLabel for="pass" value="Password"/>
+                                     required="true"/>
+                    <h:outputText value="Password: " /> 
                     <p:password id="pass" value="#{loginBean.password}" 
-                                required="true" />
-                    <p:commandButton id="submit" action="#{loginBean.login()}" value="Login" ajax="true"/>
+                                    required="true"/>
                 </h:panelGrid>
-                <h:messages  style="color: red"/>
-            </p:dialog>
+                <br/>
+                <p:commandButton id="submit" value="Log in" action="#{loginBean.login()}"
+                                 type="button"/>
+            
+         </p:dialog>
         
         
-        </h:form>
+        
         <style type="text/css">
             
             @import url(http://fonts.googleapis.com/css?family=Bitter:400,700);

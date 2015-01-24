@@ -70,8 +70,7 @@ public class EventManager implements EventManagerInterface{
     @Override
     public void removeAllEvent(Users user) {
         System.out.println("Utente: " + user.getMail());
-        Query query1 = em.createQuery("Delete From Preference p Where p.event in (Select e From Event e Where e.creator.mail = :mail)").setParameter(("mail"), user.getMail());
-        query1.executeUpdate();
+
         Query query2 = em.createQuery("Delete From Notification n  Where n.event in (Select e From Event e Where e.creator.mail= :mail)").setParameter(("mail"), user.getMail());
         query2.executeUpdate();
         Query query3 = em.createQuery("Delete From Event e where e.creator.mail = :mail").setParameter(("mail"), user.getMail());
@@ -116,8 +115,10 @@ public class EventManager implements EventManagerInterface{
 
         Query query2 = em.createQuery("Delete From Notification n Where n.event= :event").setParameter(("event"), event);
         query2.executeUpdate();
-        Query query3 = em.createQuery("Delete From Event e Where e.getIdEvent.getId= :event").setParameter(("event"), event);
+        Query query3 = em.createQuery("Delete From Event e Where e.idEvent.event= :event").setParameter(("event"), event);
         query3.executeUpdate();
+        Query query4 = em.createQuery("Delete From IDEvent e Where e.event= :event").setParameter(("event"), event);
+        query4.executeUpdate();
 
     }
 
@@ -202,7 +203,7 @@ public class EventManager implements EventManagerInterface{
    
     public boolean eventIsPublic(Event event){
     
-        Query query=em.createQuery("SELECT e FROM event e WHERE e =:event").setParameter("event", event);
+        Query query=em.createQuery("SELECT e FROM Event e WHERE e =:event").setParameter("event", event);
         List<Event> result= new ArrayList<>(query.getResultList());
         return result.get(0).isPubblico();
         
@@ -210,8 +211,6 @@ public class EventManager implements EventManagerInterface{
     
         @Override
        public void removeEventByID(Event event) {
-        Query query1 = em.createQuery("Delete From Preference p Where p.event.idEvent.id= :event").setParameter(("event"), event.getIdEvent().getId());
-        query1.executeUpdate();
         Query query2 = em.createQuery("Delete From Notification n Where n.event.idEvent.id= :event").setParameter(("event"), event.getIdEvent().getId());
         query2.executeUpdate();
         Query query3 = em.createQuery("Delete From Event e Where e.idEvent.event.idEvent.id= :event").setParameter(("event"), event.getIdEvent().getId());

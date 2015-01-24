@@ -17,7 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 
 import javax.inject.Named;
 
@@ -29,7 +29,7 @@ import org.primefaces.model.ScheduleModel;
  *
  * @author Matteo
  */
-@SessionScoped
+@ViewScoped
 @Stateful
 @Named("scheduleBean")
 public class ScheduleBean implements Serializable {

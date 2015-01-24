@@ -20,7 +20,7 @@
                         <p:spacer width="180" height="10" /> Search:
                         <p:spacer width="15" height="10" />                
                         <p:inputText id="searchTxt" value="#{publicScheduleBean.username}" />
-                        <p:commandButton  icon="ui-icon-search" id="goToCalendar" 
+                        <p:commandButton  icon="ui-icon-search" id="searchCalendar" 
                                           actionListener="#{publicScheduleBean.loadCalendar()}" 
                                           update="panelpubcal" process="@parent" 
                                           oncomplete="PF('publicCalendarDialog').show();"/>
