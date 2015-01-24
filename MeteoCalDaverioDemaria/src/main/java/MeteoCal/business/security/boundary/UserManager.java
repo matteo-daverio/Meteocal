@@ -86,7 +86,7 @@ public class UserManager implements UserManagerInterface {
 
         try {
 
-            Query query = em.createQuery("UPDATE Users SET publicCalendar= :status where mail= :user");
+            Query query = em.createQuery("UPDATE Users SET publicCalendar= :status WHERE mail= :user");
             query.setParameter("status", status);
             query.setParameter("user", user.getMail());
             query.executeUpdate();

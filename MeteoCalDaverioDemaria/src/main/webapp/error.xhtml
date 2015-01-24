@@ -17,6 +17,17 @@
                 <p:layoutUnit class="layoutClass" position="north" size="88">
                     <div class="content">
                         <span class="siteName"> MeteoCal </span> 
+                        <p:spacer width="180" height="10" /> Search:
+                        <p:spacer width="15" height="10" />
+                        
+                        
+                        <p:spacer width="80" height="10" /> 
+                        <p:commandLink id="option" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlgOption').show();" process="@this"
+                                       value="BOH" style="color:white"/>
+                        <p:spacer width="10" height="10" />
+                        
+                        
                         
                         <p:commandLink value="Logout" id="logout" action="#{loginBean.logout()}"
                                        style="color: white"/>
@@ -41,8 +52,6 @@
                 
             </p:layout>
         
-            
-            
             
             
             

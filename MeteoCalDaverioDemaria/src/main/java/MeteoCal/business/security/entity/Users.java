@@ -9,6 +9,7 @@ import MeteoCal.business.security.control.PasswordEncrypter;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -16,7 +17,8 @@ import javax.validation.constraints.Pattern;
  *
  * @author DeMaria
  */
-@Entity(name = "USERS")
+@Entity(name = "Users")
+@Table(name = "Users")
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
    
