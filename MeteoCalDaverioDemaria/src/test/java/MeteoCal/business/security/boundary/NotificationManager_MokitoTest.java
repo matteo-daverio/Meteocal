@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verify;
  *
  * @author DeMaria
  */
+
 public class NotificationManager_MokitoTest {
         
     private NotificationManager cut;
