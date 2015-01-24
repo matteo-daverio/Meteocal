@@ -10,17 +10,13 @@ import MeteoCal.business.security.entity.Notification;
 import MeteoCal.business.security.entity.Users;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
 
 /**
  *
@@ -85,6 +81,42 @@ public class EventManager_MokitoTest {
         List<Event> someList =new ArrayList<Event>();
         
         Mockito.when(testClass.loadCalendar(user)).thenReturn(someList);
+          
+    }
+    
+    @Test 
+    public void findInvitatedEvents() throws Exception {
+    
+        System.out.println("findInvitatedEvents");
+        
+        EventManager testClass = Mockito.mock(EventManager.class);
+   
+        NotificationManager nm = Mockito.mock(NotificationManager.class);
+        
+        UserManager um =Mockito.mock(UserManager.class);
+        
+        
+        
+        Users user1 = new Users();
+        Users user2 = new Users();
+        
+        Event e =new Event();  
+        
+        Notification n1 =new Notification(e,user1,true); //creatore evento
+        
+        Notification n2 = new Notification(e,user2,false); //invito
+        
+        n2.setView(false);
+        
+        um.save(user1);
+        um.save(user2);
+        testClass.addEvent(e);
+        nm.addNotification(n1);
+        nm.addNotification(n2);
+        
+        List<Event> someList =new ArrayList<Event>();
+        
+        Mockito.when(testClass.findInvitatedEvent(user2)).thenReturn(someList);
           
     }
     

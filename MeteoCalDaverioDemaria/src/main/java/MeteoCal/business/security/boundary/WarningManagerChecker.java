@@ -67,7 +67,7 @@ public class WarningManagerChecker implements WarningManagerCheckerInterface {
      * days If there are, this function sents email to creators
      */
     @Schedule(second = "0", minute = "0", hour = "0", persistent = false)
-    private void threeDaysWarning() {
+    public void threeDaysWarning() {
 
         System.out.println("Inizio check three day warning");
         Timestamp now = new Timestamp(new java.util.Date().getTime());
@@ -100,7 +100,7 @@ public class WarningManagerChecker implements WarningManagerCheckerInterface {
      * invitees
      */
     @Schedule(second = "0", minute = "0", hour = "0", persistent = false)
-    private void oneDayWarning() {
+    public void oneDayWarning() {
 
         System.out.println("Inizio check one day warning");
         Timestamp now = new Timestamp(new java.util.Date().getTime());
