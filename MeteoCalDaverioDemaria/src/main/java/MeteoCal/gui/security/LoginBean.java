@@ -68,7 +68,7 @@ public class LoginBean {
             return "";
         }
         
-        return "error?faces-redirect=true";
+        return "home?faces-redirect=true";
     }
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();

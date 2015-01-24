@@ -18,17 +18,27 @@
                     <div class="content">
                         <span class="siteName"> MeteoCal </span> 
                         <p:spacer width="180" height="10" /> Search:
-                        <p:spacer width="15" height="10" />
-                        
-                        
+                        <p:spacer width="15" height="10" />                
+                        <p:inputText id="searchTxt" value="#{publicScheduleBean.username}" />
+                        <p:commandButton  icon="ui-icon-search" id="goToCalendar" 
+                                          actionListener="#{publicScheduleBean.loadCalendar()}" 
+                                          update="panelpubcal" process="@parent" 
+                                          oncomplete="PF('publicCalendarDialog').show();"/>
+                        <p:watermark for="searchTxt" value="Insert username" />
                         <p:spacer width="80" height="10" /> 
                         <p:commandLink id="option" action="#{eventBean.unload()}" 
                                        oncomplete="PF('dlgOption').show();" process="@this"
-                                       value="BOH" style="color:white"/>
+                                       value="#{loginBean.name}" style="color:white"/>
                         <p:spacer width="10" height="10" />
-                        
-                        
-                        
+                        <p:commandLink value="News" id="invitations" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlg-invitations').show();" process="@this" 
+                                       style="color:white" />
+                        <span class="count">3</span>
+                        <p:spacer width="20" height="10" />
+                        <p:commandLink id="warn" value="Warnings" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('dlg-warnings').show();" process="@this" 
+                                       style="color:white"/>
+                        <p:spacer width="20" height="10" />
                         <p:commandLink value="Logout" id="logout" action="#{loginBean.logout()}"
                                        style="color: white"/>
                     </div>
@@ -58,6 +68,8 @@
             
             
             
+            
+            
            
                    
             
@@ -73,6 +85,26 @@
                 </h:panelGrid>
             </p:dialog>
         
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog header="Users"  showEffect="fade" hideEffect="fade"  widgetVar="userDialog">
+                <p:selectOneMenu  value="#{publicScheduleBean.username}" 
+                        filter="true" filterMatchMode="contains"  >
+                    <f:selectItems value="#{scheduleViewPublic.users}" />                             
+                </p:selectOneMenu>
+                <p:commandButton value="Go" id="goToCalendar" 
+                                 actionListener="#{scheduleViewPublic.loadCalendar()}" 
+                                 update="panelpubcal" process="@parent" 
+                                 oncomplete="PF('publicCalendarDialog').show();PF('userDialog').hide()" />
+            </p:dialog>
+            
+            
+            
             
             
             
@@ -132,32 +164,122 @@
                     
                     <p:commandButton id="declineButton" value="Decline" 
                                      action="#{eventBean.decline()}" 
-                                     actionListener="#{scheduleBean.loadCalendar()}" 
+                                     actionListener="#{scheduleView.loadCalendar()}" 
                                      rendered="#{eventBean.canDecline}" 
-                                     update="growl,:homePage" 
+                                     update="growl,:homePage:inv-dialogW" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                     <p:commandButton id="modifyButton" value="Modify" 
                                      actionListener="#{eventBean.modify()}" 
-                                     action="#{scheduleBean.loadCalendar()}" 
+                                     action="#{scheduleView.loadCalendar()}" 
                                      rendered="#{!eventBean.creating}" 
-                                     update="growl,:homePage"  
+                                     update="growl,:homePage:inv-dialogW"  
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();"  />
                     <p:commandButton id="addButton" value="Save" 
                                      actionListener="#{eventBean.create()}" 
-                                     action="#{scheduleBean.loadCalendar()}"  
+                                     action="#{scheduleView.loadCalendar()}"  
                                      rendered="#{eventBean.creating}" 
-                                     update="growl,:homePage" 
+                                     update="growl,:homePage:inv-dialogW" 
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
                     <p:commandButton id="deleteButton" value="Delete" 
                                      actionListener="#{eventBean.cancel()}" 
-                                     action="#{scheduleBean.loadCalendar()}" 
+                                     action="#{scheduleView.loadCalendar()}" 
                                      rendered="#{!eventBean.creating}" 
-                                     update="growl,:homePage" 
+                                     update="growl,:homePage:inv-dialogW" 
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
 
+                </h:panelGrid>
+            </p:dialog>   
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog header="Warnings" widgetVar="dlg-warnings" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialogW" width="800px" height="300px" resizable="false">
+                <p:carousel value="#{warningBean.warnings}" var="eventWarning" numVisible="1" 
+                            itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                            headerText="Warning" style="margin-bottom:0;">         
+                    <p:tab>
+                        <p:panelGrid columns="2" id="panelW" columnClasses="label,value">
+                            <h:outputText value="Title:" />
+                            <h:outputText value="#{eventWarning.title}"  />
+                            <h:outputText value="It's possible to postpone the event at: " />
+                            <h:outputText value="#{warningBean.getDate(eventWarning.idEvent.id)}" />
+                            <f:facet name="footer">
+                                <p:commandButton value="Modify" rendered="#{warningBean.enableModify}" 
+                                                 id="enablemodify" 
+                                                 action="#{warningBean.modifyButton(eventWarning, eventBean)}" 
+                                                 update=":homePage:growl" 
+                                                 oncomplete="PF('dlg-warnings').hide();" /> 
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:carousel> 
+            </p:dialog>
+
+            
+            
+            
+            <p:dialog header="Invitations" widgetVar="dlg-invitations" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialog" width="800px" height="300px" resizable="false">
+                <h:panelGrid>
+
+                    <p:carousel value="#{invitationBean.invites}" var="event" numVisible="1" 
+                                itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                                headerText="Invitation" style="margin-bottom:0;">
+
+                        <p:tab> 
+                            <p:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputText value="Title:" />
+                                <h:outputText value="#{event.title}"  />
+
+                                <h:outputText value="Invitor:" />
+                                <h:outputText value="#{event.creator.email}" />
+
+                                <h:outputText value="Place:" />
+                                <h:outputText value="#{event.place}" />
+
+                                <h:outputText value="When:"/>
+                                <h:outputText value="From : #{event.startDate} To #{event.endDate}"/>
+
+                                <h:outputText value="Description:"/>
+                                <h:outputText value="#{event.description}" />
+                            </p:panelGrid>
+                   
+                        </p:tab>
+                        <p:commandButton value="Accept" rendered="#{invitationBean.enableInvitation}" 
+                                         id="accept-inv" update=":homePage:growl,:homePage:schedule" 
+                                         action="#{invitationBean.acceptInvite(event)}" 
+                                         actionListener="#{scheduleView.loadCalendar()}" 
+                                         oncomplete="PF('myschedule').update();"  />
+                        <p:commandButton value="Decline"  rendered="#{invitationBean.enableInvitation}" 
+                                         id="decline-inv"  update=":homePage:inv-dialog"  
+                                         action="#{invitationBean.declineInvite(event)}" 
+                                         oncomplete="PF('myschedule').update()" />                                   
+                                          
+                    </p:carousel> 
+              
+                </h:panelGrid>
+            </p:dialog>
+            
+            
+            
+            
+        
+            
+            
+            <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  id="dialogpubcal" widgetVar="publicCalendarDialog">
+                <h:panelGrid id="panelpubcal" columnClasses="value" style ="margin : 0px auto">
+                    <p:schedule id="publicCal" value="#{publicScheduleBean.eventModel}"  
+                                widgetVar="publicCalendar" timeZone="GMT+1">
+                        <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" 
+                                update="eventDetailsPublic" oncomplete="PF('publicEventDialog').show();" />
+                    </p:schedule>
                 </h:panelGrid>
             </p:dialog>
             
@@ -167,6 +289,37 @@
             
             
             
+            
+            
+            
+            
+            <p:dialog widgetVar="publicEventDialog" showEffect="fade" hideEffect="fade"  header="Details" >
+                <h:panelGrid id="eventDetailsPublic" columns="2">
+                    <h:outputLabel for="titlePublic" value="Title:" />
+                    <p:outputLabel id="titlePublic" value="#{publicEventBean.event.title}" />
+
+                    <p:outputLabel for="startDatePublic" value="From:" />
+                    <p:outputLabel id="startDatePublic" value="#{publicEventBean.startDate}"/>
+
+                    <p:outputLabel for="endDatePublic" value="To:" />
+                    <p:outputLabel id="endDatePublic" value="#{publicEventBean.endDate}"/>
+
+                    <h:outputLabel for="placePublic" value="Place:" />
+                    <p:outputLabel id="placePublic" value="#{publicEventBean.event.place.city}"/>
+
+                    <h:outputLabel for="descriptionPublic" value="Description:" />
+                    <p:outputLabel id="descriptionPublic" value="#{publicEventBean.event.description}"/>
+
+                    <p:outputLabel for="outdoorPublic" value="Outdoor:"  />
+                    <p:outputLabel id="outdoorPublic" value="#{publicEventBean.event.isOutdoor()}"/>
+                            
+                    <p:outputLabel for="invitationPublic" value="invitations"  />
+
+                    <p:dataList id="invitationPublic" value="#{publicEventBean.invitated}" var="invit" type="ordered">
+                        #{invit}
+                    </p:dataList>
+                </h:panelGrid>
+            </p:dialog> 
             
         </h:form>
         <style type="text/css">
