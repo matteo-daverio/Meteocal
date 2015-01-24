@@ -29,9 +29,6 @@ public class EventManager_MokitoTest {
     @Before
     public void setUp() {
         cut= mock(EventManager.class);
-        
-         //cut = new EventManager();
-        //cut.setEm(mock(EntityManager.class));
     }
     
     @After

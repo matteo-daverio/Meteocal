@@ -33,6 +33,8 @@ public class UserManager_MokitoTest {
     @After
     public void tearDown() {
     }
+    
+    
 
     @Test
     public void newUsersShouldSavedOnce(){
