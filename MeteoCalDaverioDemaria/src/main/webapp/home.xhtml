@@ -24,7 +24,7 @@
                         <p:spacer width="80" height="10" /> 
                         <p:commandLink id="option" action="#{eventBean.unload()}" 
                                        oncomplete="PF('dlgOption').show();" process="@this"
-                                       value="BOH" style="color:white"/>
+                                       value="#{loginBean.name}" style="color:white"/>
                         <p:spacer width="10" height="10" />
                         
                         
@@ -134,27 +134,27 @@
                                      action="#{eventBean.decline()}" 
                                      actionListener="#{scheduleBean.loadCalendar()}" 
                                      rendered="#{eventBean.canDecline}" 
-                                     update="growl,:homePage" 
+                                     update="growl" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                     <p:commandButton id="modifyButton" value="Modify" 
                                      actionListener="#{eventBean.modify()}" 
                                      action="#{scheduleBean.loadCalendar()}" 
                                      rendered="#{!eventBean.creating}" 
-                                     update="growl,:homePage"  
+                                     update="growl"  
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();"  />
                     <p:commandButton id="addButton" value="Save" 
                                      actionListener="#{eventBean.create()}" 
                                      action="#{scheduleBean.loadCalendar()}"  
                                      rendered="#{eventBean.creating}" 
-                                     update="growl,:homePage" 
+                                     update="growl" 
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
                     <p:commandButton id="deleteButton" value="Delete" 
                                      actionListener="#{eventBean.cancel()}" 
                                      action="#{scheduleBean.loadCalendar()}" 
                                      rendered="#{!eventBean.creating}" 
-                                     update="growl,:homePage" 
+                                     update="growl" 
                                      disabled="#{!eventBean.isOwnEvent}" 
                                      oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />  
 
