@@ -32,7 +32,7 @@ public class Event implements Serializable {
     private IDEvent idEvent;
 
  
-    private Boolean pubblico;
+    private boolean pubblico;
     
 
     private String title;
@@ -43,7 +43,7 @@ public class Event implements Serializable {
     private Place place = new Place();
 
     
-    private Boolean outdoor;
+    private boolean outdoor;
     
     private Timestamp startTime;
     
@@ -83,7 +83,7 @@ public class Event implements Serializable {
         return pubblico;
     }
 
-    public void setPubblico(Boolean pubblico) {
+    public void setPubblico(boolean pubblico) {
         this.pubblico = pubblico;
     }
 
@@ -100,7 +100,7 @@ public class Event implements Serializable {
         return outdoor;
     }
 
-    public void setOutdoor(Boolean outdoor) {
+    public void setOutdoor(boolean outdoor) {
         this.outdoor = outdoor;
     }
 
