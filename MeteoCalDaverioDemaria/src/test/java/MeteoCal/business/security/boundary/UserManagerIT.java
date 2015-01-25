@@ -5,7 +5,7 @@
  */
 package MeteoCal.business.security.boundary;
 
-/*
+
 import MeteoCal.business.security.control.PasswordEncrypter;
 import MeteoCal.business.security.entity.Users;
 import java.util.logging.Level;
@@ -28,7 +28,7 @@ import static org.hamcrest.CoreMatchers.*;
  *
  * @author DeMaria
  */
-/*
+
 @RunWith(Arquillian.class)
 public class UserManagerIT {
     
@@ -93,4 +93,3 @@ public class UserManagerIT {
     }
     
 }
- */

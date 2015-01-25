@@ -95,10 +95,10 @@
             <p:dialog header="Users"  showEffect="fade" hideEffect="fade"  widgetVar="userDialog">
                 <p:selectOneMenu  value="#{publicScheduleBean.username}" 
                         filter="true" filterMatchMode="contains"  >
-                    <f:selectItems value="#{scheduleViewPublic.users}" />                             
+                    <f:selectItems value="#{publicScheduleBean.users}" />                             
                 </p:selectOneMenu>
                 <p:commandButton value="Go" id="goToCalendar" 
-                                 actionListener="#{scheduleViewPublic.loadCalendar()}" 
+                                 actionListener="#{publicScheduleBean.loadCalendar()}" 
                                  update="panelpubcal" process="@parent" 
                                  oncomplete="PF('publicCalendarDialog').show();PF('userDialog').hide()" />
             </p:dialog>
