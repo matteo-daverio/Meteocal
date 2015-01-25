@@ -89,6 +89,6 @@ public class IDEvent implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.iDEvent[ id=" + id + " ]";
+        return Long.toString(id);
     }
 }

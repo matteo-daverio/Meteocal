@@ -22,10 +22,15 @@
                         
                         
                         
-                        <p:inputText id="searchTxt" />
+                        <p:selectOneMenu  value="#{publicScheduleBean.username}" 
+                                          filter="true" filterMatchMode="contains"  >
+                            <f:selectItems value="#{publicScheduleBean.users}" />                             
+                        </p:selectOneMenu>
+                        <p:spacer width="10" height="10" />
                         <p:commandButton  icon="ui-icon-search" id="searchCalendar" 
-                                          />
-                        <p:watermark for="searchTxt" value="Insert username" />
+                                          actionListener="#{publicScheduleBean.loadCalendar()}" 
+                                          update="panelpubcal" process="@parent" 
+                                          oncomplete="PF('publicCalendarDialog').show();"/>
                         
                         
                         
@@ -40,7 +45,8 @@
                         
                         
                         
-                        <p:commandLink value="News" id="invitations" 
+                        <p:commandLink value="News" id="invitations" action="#{eventBean.unload()}" 
+                                       oncomplete="PF('inviteDialog').show();" process="@this"
                                        style="color:white" />
                         <span class="count">3</span>
                         <p:spacer width="20" height="10" />
@@ -140,11 +146,11 @@
                     <p:inputTextarea id="description" disabled="#{!eventBean.isOwnEvent}" 
                                      value="#{eventBean.beanEvent.description}" 
                                      rows="4" cols="36" required="#{eventBean.required}"  
-                                     requiredMessage="Insert Desctiption" style=" overflow-x: scroll; overflow-y: scroll; height:150px" />
+                                     requiredMessage="Insert Desctiption" style=" overflow-x: scroll; overflow-y: scroll; height:130px" />
 
                     <p:outputLabel for="invites" value="Invites:" />
                     <p:selectManyMenu  disabled="#{!eventBean.isOwnEvent}" id="invites"
-                                       value="#{eventBean.toInviteUsers}" style="height:170px; width:350px; overflow-x:scroll "
+                                       value="#{eventBean.toInviteUsers}" style="height:160px; width:350px; overflow-x:scroll "
                                        filter="true" filterMatchMode="contains" showCheckbox="true" >
                         <f:selectItems value="#{eventBean.listUser()}" var="listUser" 
                                        itemLabel="#{listUser}" itemValue="#{listUser}" />
@@ -186,7 +192,119 @@
             
             
             
+            
+            
+            <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  
+                      id="dialogpubcal" widgetVar="publicCalendarDialog">
+                <h:panelGrid id="panelpubcal" columnClasses="value" 
+                             style ="margin : 0px auto; width: 600px; height: 400px">
+                    <h3 align="center">#{publicScheduleBean.username}'s Calendar</h3>
+                    <p:schedule id="publicCal" value="#{publicScheduleBean.eventModel}"  
+                                widgetVar="publicCalendar" timeZone="GMT+1" 
+                                aspectRatio="2.7" style=" width: available"
+                                leftHeaderTemplate="today"
+                                centerHeaderTemplate="prev,title,next"
+                                rightHeaderTemplate="month,agendaDay">
+                        <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" 
+                                update="eventDetailsPublic" oncomplete="PF('publicEventDialog').show();" />
+                    </p:schedule>
+                </h:panelGrid>
+            </p:dialog>
            
+            
+            
+            
+            
+            
+            
+            <p:dialog widgetVar="publicEventDialog" showEffect="fade" hideEffect="fade"  header="Details" >
+                <h:panelGrid id="eventDetailsPublic" columns="2">
+                    <h:outputLabel for="titlePublic" value="Title:" />
+                    <p:outputLabel id="titlePublic" value="#{publicEventBean.event.title}" />
+
+                    <p:outputLabel for="startDatePublic" value="From:" />
+                    <p:outputLabel id="startDatePublic" value="#{publicEventBean.startDate}"/>
+
+                    <p:outputLabel for="endDatePublic" value="To:" />
+                    <p:outputLabel id="endDatePublic" value="#{publicEventBean.endDate}"/>
+
+                    <h:outputLabel for="placePublic" value="Place:" />
+                    <p:outputLabel id="placePublic" value="#{publicEventBean.event.place.city}"/>
+
+                    <h:outputLabel for="descriptionPublic" value="Description:" />
+                    <p:outputLabel id="descriptionPublic" value="#{publicEventBean.event.description}"/>
+
+                    <p:outputLabel for="outdoorPublic" value="Outdoor:"  />
+                    <p:outputLabel id="outdoorPublic" value="#{publicEventBean.event.isOutdoor()}"/>
+                            
+                    <p:outputLabel for="invitationPublic" value="invitations"  />
+
+                    <p:dataList id="invitationPublic" value="#{publicEventBean.invitated}" var="invit" type="ordered">
+                        #{invit}
+                    </p:dataList>
+                </h:panelGrid>
+            </p:dialog> 
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog header="Invitations" widgetVar="inviteDialog" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialog" width="800px" height="300px" resizable="false">
+                <h:panelGrid>
+
+                    <p:carousel value="#{invitationBean.invites}" var="event" numVisible="1" 
+                                itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                                headerText="Invitation" style="margin-bottom:0;">
+
+                        <p:tab> 
+                            <p:panelGrid columns="2" columnClasses="label,value">
+                                <h:outputText value="Event Name:" />
+                                <h:outputText value="#{event.title}"  />
+
+                                <h:outputText value="Creator:" />
+                                <h:outputText value="#{event.creator.mail}" />
+
+                                <h:outputText value="Place:" />
+                                <h:outputText value="#{event.place}" />
+
+                                <h:outputText value="When:"/>
+                                <h:outputText value="From : #{event.startDate} To #{event.endDate}"/>
+
+                                <h:outputText value="Detail:"/>
+                                <h:outputText value="#{event.description}" />
+                            </p:panelGrid>
+                   
+                        </p:tab>
+                        <p:commandButton value="Accept" rendered="#{invitationBean.enableInvitation}" 
+                                         id="accept-inv" update=":homePage:growl,:homePage:schedule" 
+                                         action="#{invitationBean.acceptInvite(event)}" 
+                                         actionListener="#{scheduleBean.loadCalendar()}" 
+                                         oncomplete="PF('myschedule').update();"  />
+                        <p:commandButton value="Decline"  rendered="#{invitationBean.enableInvitation}" 
+                                         id="decline-inv"  update=":homePage:inv-dialog"  
+                                         action="#{invitationBean.declineInvite(event)}" 
+                                         oncomplete="PF('myschedule').update()" />                                   
+                                          
+                    </p:carousel> 
+              
+                </h:panelGrid>
+            </p:dialog>
+            
+            
+            
+            
+            
+            
+            
             
             
             

@@ -186,7 +186,7 @@ public class Event implements Serializable {
 
     @Override
     public String toString() {
-        return "MeteoCal.business.security.entity.Event[ idEvent=" + idEvent + " ]";
+        return title + "\n" + "Creator: " + creator + "\n" + "Title: " + title + "\n" + "Description: " + description + "\n" + "Place: " + place.getCity() + "\n" + "Starting from: " + startTime + "\n" + "To: " + endTime + "\n" + "OutDoor: " + outdoor + "\n";
     }
     
 }

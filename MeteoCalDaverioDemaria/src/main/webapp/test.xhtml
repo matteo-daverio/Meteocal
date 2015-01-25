@@ -58,10 +58,13 @@
                         <p:commandButton value="Go" id="goToCalendar" actionListener="#{publicScheduleBean.loadCalendar()}" update="panelpubcal" process="@parent" oncomplete="PF('dlg-pubcal').show();PF('dlg-users').hide()" />
                     </p:dialog>
 
-                    <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade"  id="dialogpubcal" widgetVar="dlg-pubcal">
+                    <p:dialog header="Public Calendar"   showEffect="fade" hideEffect="fade" 
+                              id="dialogpubcal" widgetVar="dlg-pubcal">
                         <h:panelGrid id="panelpubcal" columnClasses="value" style ="margin : 0px auto">
-                            <p:schedule id="pubcal" value="#{publicScheduleBean.eventModel}"  widgetVar="publicCalendar" timeZone="GMT+2">
-                                <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" update="eventDetailsPublic" oncomplete="PF('eventDialogPublic').show();" />
+                            <p:schedule id="pubcal" value="#{publicScheduleBean.eventModel}"  
+                                        widgetVar="publicCalendar" timeZone="GMT+2">
+                                <p:ajax event="eventSelect"  listener="#{publicEventBean.onEventSelect}" 
+                                        update="eventDetailsPublic" oncomplete="PF('eventDialogPublic').show();" />
                             </p:schedule>
                         </h:panelGrid>
                     </p:dialog>
