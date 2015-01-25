@@ -89,11 +89,11 @@ public class WarningBean {
      */
     public void loadWarnings() {
         warnings = new ArrayList<>();
-        warnings = bwnm.findWarnings(um.getLoggedUser());
-        //if (!warnings.isEmpty()) {
+        //warnings = bwnm.findWarnings(um.getLoggedUser());
+        if (!warnings.isEmpty()) {
             //searchSolution();
           //  enableModify = true;
-        //} else
+        } else
         {
             enableModify = false;
             Event noWarning = new Event();

@@ -39,18 +39,30 @@ public class BadWeatherManager implements BadWeatherManagerInterface {
     
     @Override
     public boolean isWarned(Event event) {
-        Query query1 = em.createQuery("Select distinct e From Event e, Notification n, Forecast f Where n.event= :event and e.outdoor=1 and f.place=e.place and CAST(f.date AS DATE) between CAST(e.startTime AS DATE) and CAST(e.endTime AS DATE) and f.mainCondition not in ('Clear') ").setParameter("event", event);
+        
+        MainCondition cond=new MainCondition();
+        cond.setCondition("Clear");
+        /*
+        Query query1 = em.createQuery("Select distinct e From Event e, Notification n, Forecast f Where n.event= :event and e.outdoor=1 and f.place=e.place and CAST(f.date AS DATE) between CAST(e.startTime AS DATE) and CAST(e.endTime AS DATE) and f.mainCondition not in :cond ").setParameter("event", event).setParameter("cond", cond);
         List<Event> eventWarning = query1.getResultList();
         return !eventWarning.isEmpty();
+        */
+        return true;
     }
     
     @Override
     public List<Event> findWarnings(Users creator) {
-
-        Query query1 = em.createQuery("Select distinct e From Event e, Notification n, Forecast f Where n.event=e and n.creator=1 and e.outdoor=1 and e.creator.mail= :mail and f.place=e.place and CAST(f.date AS DATE) between  CAST(e.startTime AS DATE) and  CAST(e.endTime AS DATE) and f.mainCondition not in ('Clear') ").setParameter("mail", creator.getMail());
+        
+        MainCondition cond=new MainCondition();
+        cond.setCondition("Clear");
+        
+        /*
+        Query query1 = em.createQuery("Select distinct e From Event e, Notification n, Forecast f Where n.event=e and n.creator=1 and e.outdoor=1 and e.creator.mail= :mail and f.place=e.place and CAST(f.date AS DATE) between  CAST(e.startTime AS DATE) and  CAST(e.endTime AS DATE) and f.mainCondition not in :cond ").setParameter("mail", creator.getMail()).setParameter("cond", cond);
         List<Event> eventWarning = query1.getResultList();
 
         return eventWarning;
+                */
+        return null;
     }
     
 //    @Override

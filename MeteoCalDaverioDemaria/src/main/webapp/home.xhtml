@@ -48,7 +48,7 @@
                         <p:commandLink value="News" id="invitations" action="#{eventBean.unload()}" 
                                        oncomplete="PF('inviteDialog').show();" process="@this"
                                        style="color:white" />
-                        <span class="count">3</span>
+                        <span class="count">#{invitationBean.loadNumberOfInvites()}</span>
                         <p:spacer width="20" height="10" />
                         <p:commandLink id="warn" value="Warnings" 
                                        style="color:white"/>
@@ -299,6 +299,38 @@
                 </h:panelGrid>
             </p:dialog>
             
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <p:dialog header="Warnings" widgetVar="warningDialog" showEffect="fade" 
+                      hideEffect="fade"  id="inv-dialogW" width="800px" height="300px" resizable="false">
+                <p:carousel value="#{warningBean.warnings}" var="eventWarning" numVisible="1" 
+                            itemStyle="height:200px;width:750px;" effect="easeInStrong" 
+                            headerText="Warning" style="margin-bottom:0;">         
+                    <p:tab>
+                        <p:panelGrid columns="2" id="panelW" columnClasses="label,value">
+                            <h:outputText value="Title:" />
+                            <h:outputText value="#{eventWarning.title}"  />
+                            <h:outputText value="It's possible to postpone the event at: " />
+                            <h:outputText value="#{warningBean.getDate(eventWarning.idEvent.id)}" />
+                            <f:facet name="footer">
+                                <p:commandButton value="Modify" rendered="#{warningBean.enableModify}" 
+                                                 id="enablemodify" 
+                                                 action="#{warningBean.modifyButton(eventWarning, eventBean)}" 
+                                                 update=":homePage:growl" 
+                                                 oncomplete="PF('warningDialog').hide();" /> 
+                            </f:facet>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:carousel> 
+            </p:dialog>
             
             
             
